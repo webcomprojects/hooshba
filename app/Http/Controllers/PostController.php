@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -44,31 +45,35 @@ class PostController extends Controller
     public function store(Request $request)
     {
         try {
+            // اعتبارسنجی ورودی‌ها
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'content' => 'required|string',
-                'slug' => 'required|string|unique:posts',
-                'user_uuid' => 'required|exists:users,uuid',
-                'featured_image' => 'nullable|string',
+                'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', // بهینه‌تر برای مدیریت فایل‌ها
                 'is_published' => 'boolean',
                 'published_at' => 'nullable|date',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
             ]);
 
-            $imagePath = $this->uploadImage($request);
+            $validated['slug'] = Str::slug($validated['title'], '-');
 
-            $validated['featured_image'] = $imagePath;
+            $validated['user_uuid'] = $request->user()->uuid;
+
+            if ($request->hasFile('featured_image')) {
+                $imagePath = $this->uploadImage($request);
+                $validated['featured_image'] = $imagePath;
+            }
 
             $post = Post::create($validated);
 
-            if (isset($validated['categories'])) {
-                $post->categories()->attach($validated['categories']);
+            if (!empty($validated['categories'])) {
+                $post->categories()->sync($validated['categories']);
             }
 
-            return response()->json($post, 201);
+            return response()->json(['message' => 'Post created successfully', 'post' => $post], 201);
         } catch (ValidationException $e) {
-            return response()->json(['error' => 'Validation failed', 'message' => $e->errors()], 422);
+            return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to create post', 'message' => $e->getMessage()], 500);
         }
