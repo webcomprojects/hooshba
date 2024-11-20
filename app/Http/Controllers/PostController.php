@@ -85,7 +85,7 @@ class PostController extends Controller
                 'title' => 'sometimes|string|max:255',
                 'content' => 'sometimes|string',
                 'slug' => 'sometimes|string|unique:posts,slug,' . $id,
-                'featured_image' => 'nullable|string',
+                'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'is_published' => 'boolean',
                 'published_at' => 'nullable|date',
                 'categories' => 'nullable|array',
@@ -93,17 +93,27 @@ class PostController extends Controller
             ]);
 
             $post = Post::findOrFail($id);
+
+            if (!isset($validated['slug']) && isset($validated['title'])) {
+                $validated['slug'] = Str::slug($validated['title'], '-');
+            }
+
+            if ($request->hasFile('featured_image')) {
+                $imagePath = $this->uploadImage($request);
+                $validated['featured_image'] = $imagePath;
+            }
+
             $post->update($validated);
 
             if (isset($validated['categories'])) {
                 $post->categories()->sync($validated['categories']);
             }
 
-            return response()->json($post);
+            return response()->json(['message' => 'Post updated successfully', 'post' => $post]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Post not found'], 404);
         } catch (ValidationException $e) {
-            return response()->json(['error' => 'Validation failed', 'message' => $e->errors()], 422);
+            return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to update post', 'message' => $e->getMessage()], 500);
         }
