@@ -48,4 +48,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $fallbackUserId = "a349a991-30b3-43f1-bf94-54a381ff47a3";
+            $user->posts()->update(['user_uuid' => $fallbackUserId]);
+        });
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

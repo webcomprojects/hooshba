@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +27,15 @@ Route::middleware('throttle:100,1')->group(function () {
 Route::post('/send-verification-code', [AuthController::class, 'sendVerificationCode']);
 Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/authentication', [AuthController::class, 'authentication'])->middleware(['auth:sanctum']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
+
+// admin panel
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/authentication', [AuthController::class, 'authentication']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('posts/published', [PostController::class, 'published']);
+    Route::get('posts/draft', [PostController::class, 'draft']);
+    Route::apiResource('posts', PostController::class);
+    Route::apiResource('categories', CategoryController::class);
+});
+
