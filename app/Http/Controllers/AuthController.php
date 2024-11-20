@@ -72,7 +72,7 @@ class AuthController extends Controller
     {
         $cachedMobile = Cache::get('mobile');
 
-        $existingUser = User::where('mobile', isset($request->mobile) ? $request->mobile : $cachedMobile )->first();
+        $existingUser = User::where('mobile', isset($request->mobile) ? $request->mobile : $cachedMobile)->first();
         if ($existingUser) {
             return response()->json(['message' => 'This mobile number is already verified and registered.'], 400);
         }
@@ -109,8 +109,17 @@ class AuthController extends Controller
 
     public function authentication(Request $request)
     {
-        return $request->user();
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'error' => 'User not authenticated'
+            ], 401);
+        }
+
+        return response()->json($user, 200);
     }
+
 
     public function login(Request $request)
     {
