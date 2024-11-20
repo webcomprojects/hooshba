@@ -50,10 +50,11 @@ class PostController extends Controller
                 'content' => 'required|string',
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'is_published' => 'boolean',
-                'published_at' => 'nullable|date',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
             ]);
+
+            $validated['published_at'] = now();
 
             $validated['slug'] = Str::slug($validated['title'], '-');
 
@@ -87,7 +88,6 @@ class PostController extends Controller
                 'slug' => 'sometimes|string|unique:posts,slug,' . $id,
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'is_published' => 'boolean',
-                'published_at' => 'nullable|date',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
             ]);

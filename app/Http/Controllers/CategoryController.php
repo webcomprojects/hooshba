@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -36,10 +37,12 @@ class CategoryController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255|unique:categories',
-                'slug' => 'required|string|max:255|unique:categories',
             ]);
 
-            // Create the category
+            
+
+            $validated['slug'] = $this->generateSlug($validated['name']);
+
             $category = Category::create($validated);
 
             return response()->json($category, 201);
@@ -55,10 +58,14 @@ class CategoryController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'sometimes|string|max:255|unique:categories,name,' . $id,
-                'slug' => 'sometimes|string|max:255|unique:categories,slug,' . $id,
             ]);
 
             $category = Category::findOrFail($id);
+
+            if (isset($validated['name'])) {
+                $validated['slug'] = $this->generateSlug($validated['name']);
+            }
+
             $category->update($validated);
 
             return response()->json($category);
@@ -83,5 +90,10 @@ class CategoryController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to delete category'], 500);
         }
+    }
+
+    private function generateSlug($name)
+    {
+        return Str::slug($name, '-');
     }
 }

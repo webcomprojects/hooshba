@@ -5,11 +5,21 @@ meta {
 }
 
 post {
-  url: http://127.0.0.1:8000/api/posts
-  body: none
-  auth: bearer
+  url: http://127.0.0.1:8000/api/posts?title=پست تستی&content=توضیحات تستی&is_published=true
+  body: multipartForm
+  auth: none
 }
 
-auth:bearer {
-  token: 2|zvzSKdIQjkSeioICSN8TX1kDRmD5b1OBXTVsOEkg21e11cfb
+params:query {
+  title: پست تستی
+  content: توضیحات تستی
+  is_published: true
+}
+
+headers {
+  Authorization: Bearer 2|zvzSKdIQjkSeioICSN8TX1kDRmD5b1OBXTVsOEkg21e11cfb
+}
+
+body:multipart-form {
+  featured_image: @file(C:\Users\PicoNet\Desktop\Untitled-2-scaled_prev_ui-CFcqocUw (1).png)
 }

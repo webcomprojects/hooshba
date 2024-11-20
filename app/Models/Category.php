@@ -10,6 +10,11 @@ class Category extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $fillable = [
+        'name',
+        'slug',
+    ];
+
     public function posts()
     {
         return $this->belongsToMany(Post::class);

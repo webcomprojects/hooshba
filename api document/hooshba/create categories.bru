@@ -1,13 +1,17 @@
 meta {
-  name: authentication
+  name: create categories
   type: http
-  seq: 6
+  seq: 9
 }
 
 post {
-  url: http://127.0.0.1:8000/api/authentication
+  url: http://127.0.0.1:8000/api/categories?name=دسته یک
   body: none
   auth: none
+}
+
+params:query {
+  name: دسته یک
 }
 
 headers {
