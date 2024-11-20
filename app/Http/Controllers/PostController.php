@@ -45,11 +45,10 @@ class PostController extends Controller
     public function store(Request $request)
     {
         try {
-            // اعتبارسنجی ورودی‌ها
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'content' => 'required|string',
-                'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', // بهینه‌تر برای مدیریت فایل‌ها
+                'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'is_published' => 'boolean',
                 'published_at' => 'nullable|date',
                 'categories' => 'nullable|array',
