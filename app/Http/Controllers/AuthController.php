@@ -36,14 +36,14 @@ class AuthController extends Controller
                     ->where('mobile', $request->mobile)
                     ->update([
                         'code' => $code,
-                        'expires_at' => now()->addMinutes(5),
+                        'expires_at' => now()->addMinutes(6),
                     ]);
             } else {
                 DB::table('verification_codes')->insert([
                     'uuid' => Str::uuid()->toString(),
                     'mobile' => $request->mobile,
                     'code' => $code,
-                    'expires_at' => now()->addMinutes(5),
+                    'expires_at' => now()->addMinutes(6),
                 ]);
             }
         }
@@ -51,7 +51,7 @@ class AuthController extends Controller
 
 
 
-        Cache::put($cach_key, $request->mobile, now()->addMinutes(5));
+        Cache::put($cach_key, $request->mobile, now()->addMinutes(6));
 
         // اینجا می‌توانید کد ارسال پیامک را اضافه کنید
         // مثلا:
@@ -187,10 +187,10 @@ class AuthController extends Controller
                     ->where('mobile', $cachedMobile)
                     ->update([
                         'code' => $code,
-                        'expires_at' => now()->addMinutes(5),
+                        'expires_at' => now()->addMinutes(6),
                     ]);
 
-                Cache::put('mobile', $cachedMobile, now()->addMinutes(5));
+                Cache::put('mobile', $cachedMobile, now()->addMinutes(6));
             }
         } else {
             return response()->json(['message' => 'زمان شما به پایان رسید.'], 404);
