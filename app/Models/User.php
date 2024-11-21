@@ -54,7 +54,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::deleting(function ($user) {
-            $fallbackUserId = "a349a991-30b3-43f1-bf94-54a381ff47a3";
+            $fallbackUserId = "7eaa26ab-a7e6-11ef-a955-c8cbb812e5a4";
             $user->posts()->update(['user_uuid' => $fallbackUserId]);
         });
     }
