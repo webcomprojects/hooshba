@@ -4,15 +4,14 @@ meta {
   seq: 10
 }
 
-post {
-  url: http://127.0.0.1:8000/api/posts?id=9d8a2fda-1fba-4855-9599-1d1acaede643&title=عنوان تغییر کرد
+put {
+  url: http://127.0.0.1:8000/api/posts/9d8a2fda-1fba-4855-9599-1d1acaede643?title=test
   body: none
   auth: none
 }
 
 params:query {
-  id: 9d8a2fda-1fba-4855-9599-1d1acaede643
-  title: عنوان تغییر کرد
+  title: test
 }
 
 headers {
