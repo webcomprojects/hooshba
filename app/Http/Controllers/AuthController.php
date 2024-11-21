@@ -57,7 +57,7 @@ class AuthController extends Controller
         // مثلا:
         // SmsService::send($request->mobile, "Your verification code is: $code");
 
-        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cach_key' => $cach_key], 200);
+        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cach_key' => $cach_key, 'code' => $code], 200);
     }
 
     public function verifyCode(Request $request)
@@ -201,7 +201,7 @@ class AuthController extends Controller
         // اینجا می‌توانید کد ارسال پیامک را اضافه کنید
         // SmsService::send($request->mobile, "Your verification code is: $code");
 
-        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.'], 200);
+        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'code' => $code], 200);
     }
 
 }
