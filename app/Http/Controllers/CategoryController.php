@@ -39,7 +39,7 @@ class CategoryController extends Controller
                 'name' => 'required|string|max:255|unique:categories',
             ]);
 
-            
+
 
             $validated['slug'] = $this->generateSlug($validated['name']);
 
@@ -55,6 +55,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        
         try {
             $validated = $request->validate([
                 'name' => 'sometimes|string|max:255|unique:categories,name,' . $id,

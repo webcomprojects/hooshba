@@ -5,21 +5,22 @@ meta {
 }
 
 post {
-  url: http://127.0.0.1:8000/api/posts?title=پست تستی&content=توضیحات تستی&is_published=true
+  url: http://127.0.0.1:8000/api/posts?title=پست دوم&content=توضیحات تستی&is_published=1&categories[]=9d88af2d-37a1-45cb-ab8b-7a37e7d5c932
   body: multipartForm
   auth: none
 }
 
 params:query {
-  title: پست تستی
+  title: پست دوم
   content: توضیحات تستی
-  is_published: true
+  is_published: 1
+  categories[]: 9d88af2d-37a1-45cb-ab8b-7a37e7d5c932
 }
 
 headers {
-  Authorization: Bearer 2|zvzSKdIQjkSeioICSN8TX1kDRmD5b1OBXTVsOEkg21e11cfb
+  Authorization: Bearer 2|2I8uiRGqMM14ONHYjS7lOYFQZQXIFTAexg3ZXQXu93c469fb
 }
 
 body:multipart-form {
-  featured_image: @file(C:\Users\PicoNet\Desktop\Untitled-2-scaled_prev_ui-CFcqocUw (1).png)
+  : @file(C:\Users\PicoNet\Desktop\Untitled-2-scaled_prev_ui-CFcqocUw (1).png)
 }

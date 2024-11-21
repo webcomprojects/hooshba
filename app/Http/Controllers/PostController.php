@@ -45,19 +45,21 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
+        $slug = Str::slug($request->title, '-');
+        $data = array_merge($request->all(), ['slug' => $slug]);
+
         try {
-            $validated = $request->validate([
+            $validated = validator($data, [
                 'title' => 'required|string|max:255',
                 'content' => 'required|string',
+                'slug' => 'required|string|unique:posts,slug',
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'is_published' => 'boolean',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
-            ]);
+            ])->validate();
 
             $validated['published_at'] = now();
-
-            $validated['slug'] = Str::slug($validated['title'], '-');
 
             $validated['user_uuid'] = $request->user()->uuid;
 
@@ -82,8 +84,12 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $slug = Str::slug($request->title, '-');
+        $data = array_merge($request->all(), ['slug' => $slug]);
+
         try {
-            $validated = $request->validate([
+            $validated = validator($data, [
                 'title' => 'sometimes|string|max:255',
                 'content' => 'sometimes|string',
                 'slug' => 'sometimes|string|unique:posts,slug,' . $id,
@@ -91,13 +97,9 @@ class PostController extends Controller
                 'is_published' => 'boolean',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
-            ]);
+            ])->validate();
 
             $post = Post::findOrFail($id);
-
-            if (!isset($validated['slug']) && isset($validated['title'])) {
-                $validated['slug'] = Str::slug($validated['title'], '-');
-            }
 
             if ($request->hasFile('featured_image')) {
                 $imagePath = $this->uploadImage($request);
