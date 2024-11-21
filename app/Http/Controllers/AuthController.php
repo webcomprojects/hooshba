@@ -85,7 +85,7 @@ class AuthController extends Controller
             }
             return response()->json(['message' => 'کد نامعتبر است یا منقضی شده است.'], 422);
         } else {
-            return response()->json(['message' => 'اطلاعاتی وجود ندارد.'], 404);
+            return response()->json(['message' => 'زمان شما به پایان رسید.'], 404);
         }
 
 
@@ -193,7 +193,7 @@ class AuthController extends Controller
                 Cache::put('mobile', $cachedMobile, now()->addMinutes(5));
             }
         } else {
-            return response()->json(['message' => 'اطلاعاتی وجود ندارد.'], 404);
+            return response()->json(['message' => 'زمان شما به پایان رسید.'], 404);
         }
 
 
