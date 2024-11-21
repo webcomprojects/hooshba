@@ -26,7 +26,7 @@ class PostController extends Controller
 
             return response()->json($posts);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch posts', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'دریافت پست‌ها با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -36,15 +36,14 @@ class PostController extends Controller
             $post = Post::with(['user', 'categories'])->findOrFail($id);
             return response()->json($post);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Post not found'], 404);
+            return response()->json(['error' => 'پست یافت نشد.'], 404);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch post', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'دریافت پست با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
     }
 
     public function store(Request $request)
     {
-
         $slug = Str::slug($request->title, '-');
         $data = array_merge($request->all(), ['slug' => $slug]);
 
@@ -60,7 +59,6 @@ class PostController extends Controller
             ])->validate();
 
             $validated['published_at'] = now();
-
             $validated['user_uuid'] = $request->user()->uuid;
 
             if ($request->hasFile('featured_image')) {
@@ -74,17 +72,16 @@ class PostController extends Controller
                 $post->categories()->sync($validated['categories']);
             }
 
-            return response()->json(['message' => 'Post created successfully', 'post' => $post], 201);
+            return response()->json(['message' => 'پست با موفقیت ایجاد شد.', 'post' => $post], 201);
         } catch (ValidationException $e) {
-            return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
+            return response()->json(['error' => 'اعتبارسنجی شکست خورد.', 'details' => $e->errors()], 422);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to create post', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'ایجاد پست با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
     }
 
     public function update(Request $request, $id)
     {
-
         $slug = Str::slug($request->title, '-');
         $data = array_merge($request->all(), ['slug' => $slug]);
 
@@ -112,13 +109,13 @@ class PostController extends Controller
                 $post->categories()->sync($validated['categories']);
             }
 
-            return response()->json(['message' => 'Post updated successfully', 'post' => $post]);
+            return response()->json(['message' => 'پست با موفقیت به‌روزرسانی شد.', 'post' => $post]);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Post not found'], 404);
+            return response()->json(['error' => 'پست یافت نشد.'], 404);
         } catch (ValidationException $e) {
-            return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
+            return response()->json(['error' => 'اعتبارسنجی شکست خورد.', 'details' => $e->errors()], 422);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to update post', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'به‌روزرسانی پست با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -128,11 +125,11 @@ class PostController extends Controller
             $post = Post::findOrFail($id);
             $post->delete();
 
-            return response()->json(['message' => 'Post deleted successfully']);
+            return response()->json(['message' => 'پست با موفقیت حذف شد.']);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Post not found'], 404);
+            return response()->json(['error' => 'پست یافت نشد.'], 404);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to delete post', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'حذف پست با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -142,7 +139,7 @@ class PostController extends Controller
             $posts = Post::published()->with(['user', 'categories'])->paginate(10);
             return response()->json($posts);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch published posts', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'دریافت پست‌های منتشرشده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -152,7 +149,7 @@ class PostController extends Controller
             $posts = Post::draft()->with(['user', 'categories'])->paginate(10);
             return response()->json($posts);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch draft posts', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => 'دریافت پست‌های پیش‌نویس با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -174,7 +171,7 @@ class PostController extends Controller
 
             return '/storage/' . $filePath;
         } catch (\Exception $e) {
-            throw new \Exception('Failed to upload image: ' . $e->getMessage());
+            throw new \Exception('آپلود تصویر با شکست مواجه شد: ' . $e->getMessage());
         }
     }
 }

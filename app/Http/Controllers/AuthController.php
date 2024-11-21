@@ -20,7 +20,7 @@ class AuthController extends Controller
 
         $existingUser = User::where('mobile', $request->mobile)->first();
         if ($existingUser) {
-            return response()->json(['message' => 'This mobile number is already verified and registered.'], 400);
+            return response()->json(['message' => 'این شماره موبایل قبلاً تایید و ثبت شده است.'], 400);
         }
 
         $code = rand(100000, 999999);
@@ -38,7 +38,7 @@ class AuthController extends Controller
         // مثلا:
         // SmsService::send($request->mobile, "Your verification code is: $code");
 
-        return response()->json(['message' => 'Verification code sent successfully.'], 200);
+        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.'], 200);
     }
 
     public function verifyCode(Request $request)
@@ -48,10 +48,6 @@ class AuthController extends Controller
         ]);
 
         $cachedMobile = Cache::get('mobile');
-        // if ($cachedCode && $cachedCode == $request->code) {
-        //     Cache::forget('verification_code_' . $request->mobile);
-        //     return response()->json(['message' => 'Mobile verified successfully.']);
-        // }
 
         $record = DB::table('verification_codes')
             ->where('mobile', $cachedMobile)
@@ -59,13 +55,12 @@ class AuthController extends Controller
             ->where('expires_at', '>=', now())
             ->first();
 
-
         if ($record) {
             DB::table('verification_codes')->where('uuid', $record->uuid)->delete();
-            return response()->json(['message' => 'Mobile verified successfully.']);
+            return response()->json(['message' => 'شماره موبایل با موفقیت تایید شد.']);
         }
 
-        return response()->json(['message' => 'Invalid code or code expired.'], 422);
+        return response()->json(['message' => 'کد نامعتبر است یا منقضی شده است.'], 422);
     }
 
     public function register(Request $request)
@@ -74,7 +69,7 @@ class AuthController extends Controller
 
         $existingUser = User::where('mobile', isset($request->mobile) ? $request->mobile : $cachedMobile)->first();
         if ($existingUser) {
-            return response()->json(['message' => 'This mobile number is already verified and registered.'], 400);
+            return response()->json(['message' => 'این شماره موبایل قبلاً تایید و ثبت شده است.'], 400);
         }
 
         $validator = Validator::make($request->all(), [
@@ -86,8 +81,6 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
-
 
         $user = User::create([
             'uuid' => Str::uuid()->toString(),
@@ -102,7 +95,7 @@ class AuthController extends Controller
         Cache::forget('mobile');
 
         return response()->json([
-            'message' => 'User registered successfully.',
+            'message' => 'کاربر با موفقیت ثبت نام کرد.',
             'token' => $token,
         ], 201);
     }
@@ -113,13 +106,12 @@ class AuthController extends Controller
 
         if (!$user) {
             return response()->json([
-                'error' => 'User not authenticated'
+                'error' => 'کاربر احراز هویت نشده است.',
             ], 401);
         }
 
         return response()->json($user, 200);
     }
-
 
     public function login(Request $request)
     {
@@ -130,14 +122,14 @@ class AuthController extends Controller
 
         $user = User::where('mobile', $request->mobile)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Invalid credentials.'], 401);
+            return response()->json(['message' => 'اطلاعات ورود نامعتبر است.'], 401);
         }
 
         $user->tokens()->delete();
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Logged in successfully.',
+            'message' => 'ورود با موفقیت انجام شد.',
             'token' => $token,
         ]);
     }
@@ -147,7 +139,7 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
 
         return response()->json([
-            'message' => 'Logged out successfully.',
+            'message' => 'خروج با موفقیت انجام شد.',
         ]);
     }
 }

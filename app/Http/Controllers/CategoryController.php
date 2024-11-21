@@ -16,7 +16,7 @@ class CategoryController extends Controller
             $categories = Category::with('posts')->paginate(10);
             return response()->json($categories);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch categories'], 500);
+            return response()->json(['error' => 'دریافت دسته‌بندی‌ها با شکست مواجه شد.'], 500);
         }
     }
 
@@ -26,9 +26,9 @@ class CategoryController extends Controller
             $category = Category::with('posts')->findOrFail($id);
             return response()->json($category);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Category not found'], 404);
+            return response()->json(['error' => 'دسته‌بندی یافت نشد.'], 404);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch category'], 500);
+            return response()->json(['error' => 'دریافت دسته‌بندی با شکست مواجه شد.'], 500);
         }
     }
 
@@ -39,23 +39,20 @@ class CategoryController extends Controller
                 'name' => 'required|string|max:255|unique:categories',
             ]);
 
-
-
             $validated['slug'] = $this->generateSlug($validated['name']);
 
             $category = Category::create($validated);
 
             return response()->json($category, 201);
         } catch (ValidationException $e) {
-            return response()->json(['error' => $e->errors()], 422);
+            return response()->json(['error' => 'اعتبارسنجی شکست خورد.', 'details' => $e->errors()], 422);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to create category'], 500);
+            return response()->json(['error' => 'ایجاد دسته‌بندی با شکست مواجه شد.'], 500);
         }
     }
 
     public function update(Request $request, $id)
     {
-        
         try {
             $validated = $request->validate([
                 'name' => 'sometimes|string|max:255|unique:categories,name,' . $id,
@@ -71,11 +68,11 @@ class CategoryController extends Controller
 
             return response()->json($category);
         } catch (ValidationException $e) {
-            return response()->json(['error' => $e->errors()], 422);
+            return response()->json(['error' => 'اعتبارسنجی شکست خورد.', 'details' => $e->errors()], 422);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Category not found'], 404);
+            return response()->json(['error' => 'دسته‌بندی یافت نشد.'], 404);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to update category'], 500);
+            return response()->json(['error' => 'به‌روزرسانی دسته‌بندی با شکست مواجه شد.'], 500);
         }
     }
 
@@ -85,11 +82,11 @@ class CategoryController extends Controller
             $category = Category::findOrFail($id);
             $category->delete();
 
-            return response()->json(['message' => 'Category deleted successfully']);
+            return response()->json(['message' => 'دسته‌بندی با موفقیت حذف شد.']);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Category not found'], 404);
+            return response()->json(['error' => 'دسته‌بندی یافت نشد.'], 404);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to delete category'], 500);
+            return response()->json(['error' => 'حذف دسته‌بندی با شکست مواجه شد.'], 500);
         }
     }
 
