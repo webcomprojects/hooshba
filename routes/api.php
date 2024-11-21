@@ -23,7 +23,7 @@ Route::middleware('throttle:100,1')->group(function () {
 });
 
 
-
+Route::post('/resend-verification-code', [AuthController::class, 'resendVerificationCode']);
 Route::post('/send-verification-code', [AuthController::class, 'sendVerificationCode']);
 Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 Route::post('/register', [AuthController::class, 'register']);

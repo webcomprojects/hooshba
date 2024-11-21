@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid()->unique()->primary();
             $table->string('mobile')->unique();
             $table->string('code');
+            $table->unsignedTinyInteger('status')->default(0);
             $table->timestamp('expires_at');
             $table->timestamps();
 
