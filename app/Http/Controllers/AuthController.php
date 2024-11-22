@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
  *         description="This is the API documentation for the project."
  *     ),
  *     @OA\Server(
- *         url="http://localhost/api",
+ *         url="https://hooshba.webcomcoai.com/api",
  *         description="Local Development Server"
  *     )
  * )

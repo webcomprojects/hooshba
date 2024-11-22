@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost/api",
+            "url": "https://hooshba.webcomcoai.com/api",
             "description": "Local Development Server"
         }
     ],
