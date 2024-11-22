@@ -115,19 +115,20 @@ class Batch implements Arrayable, JsonSerializable
      * @param  \Carbon\CarbonImmutable|null  $finishedAt
      * @return void
      */
-    public function __construct(QueueFactory $queue,
-                                BatchRepository $repository,
-                                string $id,
-                                string $name,
-                                int $totalJobs,
-                                int $pendingJobs,
-                                int $failedJobs,
-                                array $failedJobIds,
-                                array $options,
-                                CarbonImmutable $createdAt,
-                                ?CarbonImmutable $cancelledAt = null,
-                                ?CarbonImmutable $finishedAt = null)
-    {
+    public function __construct(
+        QueueFactory $queue,
+        BatchRepository $repository,
+        string $id,
+        string $name,
+        int $totalJobs,
+        int $pendingJobs,
+        int $failedJobs,
+        array $failedJobIds,
+        array $options,
+        CarbonImmutable $createdAt,
+        ?CarbonImmutable $cancelledAt = null,
+        ?CarbonImmutable $finishedAt = null,
+    ) {
         $this->queue = $queue;
         $this->repository = $repository;
         $this->id = $id;
@@ -450,7 +451,7 @@ class Batch implements Arrayable, JsonSerializable
      * @param  \Throwable|null  $e
      * @return void
      */
-    protected function invokeHandlerCallback($handler, Batch $batch, Throwable $e = null)
+    protected function invokeHandlerCallback($handler, Batch $batch, ?Throwable $e = null)
     {
         try {
             return $handler($batch, $e);

@@ -1,0 +1,538 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "This is the API documentation for the project.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api",
+            "description": "Local Development Server"
+        }
+    ],
+    "paths": {
+        "/send-verification-code": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Send a verification code",
+                "description": "این متد برای ارسال کد تایید به شماره موبایل استفاده می‌شود.",
+                "operationId": "sendVerificationCode",
+                "parameters": [
+                    {
+                        "name": "mobile",
+                        "in": "query",
+                        "description": "شماره موبایل کاربر",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "09121234567"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "کد تایید با موفقیت ارسال شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "کد تایید با موفقیت ارسال شد."
+                                        },
+                                        "cach_key": {
+                                            "type": "string",
+                                            "example": "mobile_12345"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 123456
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "این شماره موبایل قبلاً تایید و ثبت شده است.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "این شماره موبایل قبلاً تایید و ثبت شده است."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verify-code": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Verify the verification code",
+                "description": "این متد برای تایید کد ارسالی استفاده می‌شود.",
+                "operationId": "verifyCode",
+                "parameters": [
+                    {
+                        "name": "cach_key",
+                        "in": "query",
+                        "description": "کلید ذخیره شده برای موبایل",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "mobile_12345"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "کد تایید ارسال شده",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 123456
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "شماره موبایل با موفقیت تایید شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "شماره موبایل با موفقیت تایید شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "کد نامعتبر است یا منقضی شده است.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "کد نامعتبر است یا منقضی شده است."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "زمان شما به پایان رسید.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "زمان شما به پایان رسید."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "description": "این متد برای ثبت کاربر جدید استفاده می‌شود.",
+                "operationId": "register",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "نام کامل کاربر",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "John Doe"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "ایمیل کاربر",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "john.doe@example.com"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "رمز عبور کاربر",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "password123"
+                        }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "تایید رمز عبور",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "password123"
+                        }
+                    },
+                    {
+                        "name": "cach_key",
+                        "in": "query",
+                        "description": "کلید ذخیره شده برای موبایل",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "mobile_12345"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "کاربر با موفقیت ثبت نام کرد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "کاربر با موفقیت ثبت نام کرد."
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "token12345"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "این شماره موبایل قبلاً تایید و ثبت شده است.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "این شماره موبایل قبلاً تایید و ثبت شده است."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/authentication": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authenticate the user",
+                "description": "این متد بررسی می‌کند که آیا کاربر احراز هویت شده است یا خیر.",
+                "operationId": "authentication",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "کاربر احراز هویت شده است.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "John Doe"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "john.doe@example.com"
+                                        },
+                                        "mobile": {
+                                            "type": "string",
+                                            "example": "09121234567"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "کاربر احراز هویت نشده است.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "کاربر احراز هویت نشده است."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log in a user",
+                "description": "این متد برای ورود کاربر استفاده می‌شود.",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "mobile",
+                        "in": "query",
+                        "description": "شماره موبایل کاربر",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "09121234567"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "رمز عبور کاربر",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "password123"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ورود با موفقیت انجام شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "ورود با موفقیت انجام شد."
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "token12345"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "اطلاعات ورود نامعتبر است.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "اطلاعات ورود نامعتبر است."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log out a user",
+                "description": "این متد برای خروج کاربر استفاده می‌شود و تمام توکن‌های کاربر را باطل می‌کند.",
+                "operationId": "logout",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "خروج با موفقیت انجام شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "خروج با موفقیت انجام شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "کاربر احراز هویت نشده است.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "کاربر احراز هویت نشده است."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/resend-verification-code": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Resend the verification code",
+                "description": "این متد برای ارسال مجدد کد تایید به شماره موبایل استفاده می‌شود.",
+                "operationId": "resendVerificationCode",
+                "parameters": [
+                    {
+                        "name": "cach_key",
+                        "in": "query",
+                        "description": "کلید ذخیره شده برای موبایل",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "mobile_12345"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "کد تایید با موفقیت ارسال شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "کد تایید با موفقیت ارسال شد."
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 123456
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "این شماره موبایل قبلاً تایید و ثبت شده است.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "این شماره موبایل قبلاً تایید و ثبت شده است."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "زمان شما به پایان رسید.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "زمان شما به پایان رسید."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        }
+    ]
+}

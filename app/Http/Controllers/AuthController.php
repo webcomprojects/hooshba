@@ -3,17 +3,65 @@
 namespace App\Http\Controllers;
 
 use App\Models\verification_code;
-use DB;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
+/**
+ * @OA\OpenApi(
+ *     @OA\Info(
+ *         title="API Documentation",
+ *         version="1.0.0",
+ *         description="This is the API documentation for the project."
+ *     ),
+ *     @OA\Server(
+ *         url="http://localhost/api",
+ *         description="Local Development Server"
+ *     )
+ * )
+ */
 class AuthController extends Controller
 {
 
+    /**
+     * @OA\Post(
+     *     path="/send-verification-code",
+     *     summary="Send a verification code",
+     *     description="این متد برای ارسال کد تایید به شماره موبایل استفاده می‌شود.",
+     *     operationId="sendVerificationCode",
+     *     tags={"Authentication"},
+     *     @OA\Parameter(
+     *         name="mobile",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="09121234567"
+     *         ),
+     *         description="شماره موبایل کاربر"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="کد تایید با موفقیت ارسال شد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="کد تایید با موفقیت ارسال شد."),
+     *             @OA\Property(property="cach_key", type="string", example="mobile_12345"),
+     *             @OA\Property(property="code", type="integer", example=123456)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="این شماره موبایل قبلاً تایید و ثبت شده است.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="این شماره موبایل قبلاً تایید و ثبت شده است.")
+     *         )
+     *     )
+     * )
+     */
     public function sendVerificationCode(Request $request)
     {
         $uniqid = uniqid();
@@ -60,6 +108,56 @@ class AuthController extends Controller
         return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cach_key' => $cach_key, 'code' => $code], 200);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/verify-code",
+     *     summary="Verify the verification code",
+     *     description="این متد برای تایید کد ارسالی استفاده می‌شود.",
+     *     operationId="verifyCode",
+     *     tags={"Authentication"},
+     *     @OA\Parameter(
+     *         name="cach_key",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="mobile_12345"
+     *         ),
+     *         description="کلید ذخیره شده برای موبایل"
+     *     ),
+     *     @OA\Parameter(
+     *         name="code",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=123456
+     *         ),
+     *         description="کد تایید ارسال شده"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="شماره موبایل با موفقیت تایید شد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="شماره موبایل با موفقیت تایید شد.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="کد نامعتبر است یا منقضی شده است.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="کد نامعتبر است یا منقضی شده است.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="زمان شما به پایان رسید.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="زمان شما به پایان رسید.")
+     *         )
+     *     )
+     * )
+     */
     public function verifyCode(Request $request)
     {
         $request->validate([
@@ -87,10 +185,82 @@ class AuthController extends Controller
         } else {
             return response()->json(['message' => 'زمان شما به پایان رسید.'], 404);
         }
-
-
     }
 
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     summary="Register a new user",
+     *     description="این متد برای ثبت کاربر جدید استفاده می‌شود.",
+     *     operationId="register",
+     *     tags={"Authentication"},
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="John Doe"
+     *         ),
+     *         description="نام کامل کاربر"
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="john.doe@example.com"
+     *         ),
+     *         description="ایمیل کاربر"
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="password123"
+     *         ),
+     *         description="رمز عبور کاربر"
+     *     ),
+     *     @OA\Parameter(
+     *         name="password_confirmation",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="password123"
+     *         ),
+     *         description="تایید رمز عبور"
+     *     ),
+     *     @OA\Parameter(
+     *         name="cach_key",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="mobile_12345"
+     *         ),
+     *         description="کلید ذخیره شده برای موبایل"
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="کاربر با موفقیت ثبت نام کرد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="کاربر با موفقیت ثبت نام کرد."),
+     *             @OA\Property(property="token", type="string", example="token12345")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="این شماره موبایل قبلاً تایید و ثبت شده است.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="این شماره موبایل قبلاً تایید و ثبت شده است.")
+     *         )
+     *     )
+     * )
+     */
     public function register(Request $request)
     {
         $cachedMobile = Cache::get($request->cach_key);
@@ -128,6 +298,42 @@ class AuthController extends Controller
         ], 201);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/authentication",
+     *     summary="Authenticate the user",
+     *     description="این متد بررسی می‌کند که آیا کاربر احراز هویت شده است یا خیر.",
+     *     operationId="authentication",
+     *     tags={"Authentication"},
+     *     @OA\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+     *         ),
+     *         description="توکن احراز هویت به صورت Bearer Token"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="کاربر احراز هویت شده است.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example=1),
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="string", example="john.doe@example.com"),
+     *             @OA\Property(property="mobile", type="string", example="09121234567")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="کاربر احراز هویت نشده است.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="کاربر احراز هویت نشده است.")
+     *         )
+     *     )
+     * )
+     */
     public function authentication(Request $request)
     {
         $user = $request->user();
@@ -141,6 +347,50 @@ class AuthController extends Controller
         return response()->json($user, 200);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/login",
+     *     summary="Log in a user",
+     *     description="این متد برای ورود کاربر استفاده می‌شود.",
+     *     operationId="login",
+     *     tags={"Authentication"},
+     *     @OA\Parameter(
+     *         name="mobile",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="09121234567"
+     *         ),
+     *         description="شماره موبایل کاربر"
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="password123"
+     *         ),
+     *         description="رمز عبور کاربر"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="ورود با موفقیت انجام شد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="ورود با موفقیت انجام شد."),
+     *             @OA\Property(property="token", type="string", example="token12345")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="اطلاعات ورود نامعتبر است.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="اطلاعات ورود نامعتبر است.")
+     *         )
+     *     )
+     * )
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -162,6 +412,39 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/logout",
+     *     summary="Log out a user",
+     *     description="این متد برای خروج کاربر استفاده می‌شود و تمام توکن‌های کاربر را باطل می‌کند.",
+     *     operationId="logout",
+     *     tags={"Authentication"},
+     *     @OA\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+     *         ),
+     *         description="توکن احراز هویت به صورت Bearer Token"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="خروج با موفقیت انجام شد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="خروج با موفقیت انجام شد.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="کاربر احراز هویت نشده است.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="کاربر احراز هویت نشده است.")
+     *         )
+     *     )
+     * )
+     */
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
@@ -171,6 +454,47 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/resend-verification-code",
+     *     summary="Resend the verification code",
+     *     description="این متد برای ارسال مجدد کد تایید به شماره موبایل استفاده می‌شود.",
+     *     operationId="resendVerificationCode",
+     *     tags={"Authentication"},
+     *     @OA\Parameter(
+     *         name="cach_key",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="mobile_12345"
+     *         ),
+     *         description="کلید ذخیره شده برای موبایل"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="کد تایید با موفقیت ارسال شد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="کد تایید با موفقیت ارسال شد."),
+     *             @OA\Property(property="code", type="integer", example=123456)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="این شماره موبایل قبلاً تایید و ثبت شده است.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="این شماره موبایل قبلاً تایید و ثبت شده است.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="زمان شما به پایان رسید.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="زمان شما به پایان رسید.")
+     *         )
+     *     )
+     * )
+     */
     public function resendVerificationCode(Request $request)
     {
 
@@ -203,5 +527,4 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'code' => $code], 200);
     }
-
 }
