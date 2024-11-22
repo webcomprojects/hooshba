@@ -94,4 +94,25 @@ class CategoryController extends Controller
     {
         return Str::slug($name, '-');
     }
+
+
+    public function frontAllCategories()
+    {
+        try {
+            $categories = Category::all();
+            return response()->json($categories);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'دریافت دسته بندی ها با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function frontSingleCategory(Request $request)
+    {
+        try {
+            $categories = Category::with('posts')->where('slug', $request->slug)->first();
+            return response()->json($categories);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'دریافت دسته بندی ها با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
+        }
+    }
 }
