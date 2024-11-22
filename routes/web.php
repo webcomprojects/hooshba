@@ -21,7 +21,7 @@ Route::get('/', function () {
 Route::get('/artisan', function () {
 
 
-   $data =  Artisan::call('route:lis');
+   $data =  Artisan::call('route:list');
 
     return response()->json(['message' => $data]);
 });
