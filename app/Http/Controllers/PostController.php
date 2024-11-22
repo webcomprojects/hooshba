@@ -174,4 +174,24 @@ class PostController extends Controller
             throw new \Exception('آپلود تصویر با شکست مواجه شد: ' . $e->getMessage());
         }
     }
+
+    public function frontAllPosts()
+    {
+        try {
+            $posts = Post::published()->with(['categories'])->paginate(10);
+            return response()->json($posts);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'دریافت پست‌های منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function frontSinglePost(Request $request)
+    {
+        try {
+            $post = Post::SinglePostPublished($request->slug)->with(['categories'])->first();
+            return response()->json($post);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'دریافت پست‌ منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
+        }
+    }
 }

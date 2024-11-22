@@ -35,13 +35,23 @@ class Post extends Model
     public function scopePublished($query)
     {
         return $query->where('is_published', true)
-                     ->whereNotNull('published_at')
-                     ->where('published_at', '<=', now());
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
     }
 
 
     public function scopeDraft($query)
     {
         return $query->where('is_published', false);
+    }
+
+
+    public function scopeSinglePostPublished($query, $slug)
+    {
+        return $query
+            ->where('slug', $slug)
+            ->where('is_published', true)
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
     }
 }

@@ -29,6 +29,10 @@ Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+// front side
+Route::get('posts/front-all-posts', [PostController::class, 'frontAllPosts']);
+Route::get('posts/front-single-post/{slug}', [PostController::class, 'frontSinglePost']);
+
 // admin panel
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/authentication', [AuthController::class, 'authentication']);
@@ -38,4 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('posts', PostController::class);
     Route::apiResource('categories', CategoryController::class);
 });
+
+
+
+
 
