@@ -18,10 +18,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/artisan', function () {
-
-
-   $data =  Artisan::call('route:list');
-
-    return response()->json(['message' => $data]);
-});
