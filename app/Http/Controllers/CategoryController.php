@@ -96,6 +96,7 @@ class CategoryController extends Controller
     }
 
 
+    
     public function frontAllCategories()
     {
         try {
