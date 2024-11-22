@@ -10,6 +10,40 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/categories",
+     *     summary="List all categories",
+     *     description="این متد لیست تمامی دسته‌بندی‌ها را بازمی‌گرداند.",
+     *     operationId="getCategories",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+     *         ),
+     *         description="توکن احراز هویت به صورت Bearer Token"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="لیست دسته‌بندی‌ها.",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="خطای داخلی سرور.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="دریافت دسته‌بندی‌ها با شکست مواجه شد.")
+     *         )
+     *     )
+     * )
+     */
     public function index()
     {
         try {
@@ -20,6 +54,54 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/categories/{id}",
+     *     summary="Get a specific category",
+     *     description="این متد اطلاعات یک دسته‌بندی خاص را بازمی‌گرداند.",
+     *     operationId="getCategory",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+     *         ),
+     *         description="توکن احراز هویت به صورت Bearer Token"
+     *     ),
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=1
+     *         ),
+     *         description="شناسه دسته‌بندی"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="اطلاعات دسته‌بندی.",
+     *         @OA\JsonContent(type="object")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="دسته‌بندی یافت نشد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="دسته‌بندی یافت نشد.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="خطای داخلی سرور.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="دریافت دسته‌بندی با شکست مواجه شد.")
+     *         )
+     *     )
+     * )
+     */
     public function show($id)
     {
         try {
@@ -32,6 +114,55 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/categories",
+     *     summary="Create a new category",
+     *     description="این متد یک دسته‌بندی جدید ایجاد می‌کند.",
+     *     operationId="storeCategory",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+     *         ),
+     *         description="توکن احراز هویت به صورت Bearer Token"
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="دسته‌بندی جدید"
+     *         ),
+     *         description="نام دسته‌بندی"
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="دسته‌بندی با موفقیت ایجاد شد.",
+     *         @OA\JsonContent(type="object")
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="اعتبارسنجی شکست خورد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="اعتبارسنجی شکست خورد."),
+     *             @OA\Property(property="details", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="ایجاد دسته‌بندی با شکست مواجه شد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="ایجاد دسته‌بندی با شکست مواجه شد.")
+     *         )
+     *     )
+     * )
+     */
     public function store(Request $request)
     {
         try {
@@ -51,6 +182,66 @@ class CategoryController extends Controller
         }
     }
 
+
+    /**
+     * @OA\Put(
+     *     path="/categories/{id}",
+     *     summary="Update an existing category",
+     *     description="این متد یک دسته‌بندی موجود را به‌روزرسانی می‌کند.",
+     *     operationId="updateCategory",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+     *         ),
+     *         description="توکن احراز هویت به صورت Bearer Token"
+     *     ),
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=1
+     *         ),
+     *         description="شناسه دسته‌بندی"
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="نام جدید دسته‌بندی"
+     *         ),
+     *         description="نام جدید دسته‌بندی"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="دسته‌بندی با موفقیت به‌روزرسانی شد.",
+     *         @OA\JsonContent(type="object")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="دسته‌بندی یافت نشد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="دسته‌بندی یافت نشد.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="اعتبارسنجی شکست خورد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="اعتبارسنجی شکست خورد."),
+     *             @OA\Property(property="details", type="object")
+     *         )
+     *     )
+     * )
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -76,6 +267,56 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/categories/{id}",
+     *     summary="Delete a category",
+     *     description="این متد یک دسته‌بندی را حذف می‌کند.",
+     *     operationId="deleteCategory",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+     *         ),
+     *         description="توکن احراز هویت به صورت Bearer Token"
+     *     ),
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=1
+     *         ),
+     *         description="شناسه دسته‌بندی"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="دسته‌بندی با موفقیت حذف شد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="دسته‌بندی با موفقیت حذف شد.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="دسته‌بندی یافت نشد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="دسته‌بندی یافت نشد.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="حذف دسته‌بندی با شکست مواجه شد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="حذف دسته‌بندی با شکست مواجه شد.")
+     *         )
+     *     )
+     * )
+     */
     public function destroy($id)
     {
         try {
@@ -96,7 +337,30 @@ class CategoryController extends Controller
     }
 
 
-    
+    /**
+     * @OA\Get(
+     *     path="/categories/front-all-categories",
+     *     summary="Get all categories for the front-end",
+     *     description="این متد تمامی دسته‌بندی‌ها را بازمی‌گرداند.",
+     *     operationId="frontAllCategories",
+     *     tags={"Categories"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="لیست دسته‌بندی‌ها.",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="خطای داخلی سرور.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="دریافت دسته بندی ها با شکست مواجه شد.")
+     *         )
+     *     )
+     * )
+     */
     public function frontAllCategories()
     {
         try {
@@ -107,6 +371,37 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/categories/front-single-category",
+     *     summary="Get a single category for the front-end",
+     *     description="این متد اطلاعات یک دسته‌بندی را با استفاده از slug بازمی‌گرداند.",
+     *     operationId="frontSingleCategory",
+     *     tags={"Categories"},
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="category-slug"
+     *         ),
+     *         description="اسلاگ دسته‌بندی"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="اطلاعات دسته‌بندی.",
+     *         @OA\JsonContent(type="object")
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="خطای داخلی سرور.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="دریافت دسته بندی ها با شکست مواجه شد.")
+     *         )
+     *     )
+     * )
+     */
     public function frontSingleCategory(Request $request)
     {
         try {

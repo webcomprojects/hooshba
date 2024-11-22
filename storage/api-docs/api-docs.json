@@ -527,12 +527,1228 @@
                     }
                 }
             }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "List all categories",
+                "description": "این متد لیست تمامی دسته‌بندی‌ها را بازمی‌گرداند.",
+                "operationId": "getCategories",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست دسته‌بندی‌ها.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت دسته‌بندی‌ها با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create a new category",
+                "description": "این متد یک دسته‌بندی جدید ایجاد می‌کند.",
+                "operationId": "storeCategory",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "نام دسته‌بندی",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "دسته‌بندی جدید"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "دسته‌بندی با موفقیت ایجاد شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "ایجاد دسته‌بندی با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "ایجاد دسته‌بندی با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get a specific category",
+                "description": "این متد اطلاعات یک دسته‌بندی خاص را بازمی‌گرداند.",
+                "operationId": "getCategory",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه دسته‌بندی",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "اطلاعات دسته‌بندی.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "دسته‌بندی یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دسته‌بندی یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت دسته‌بندی با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Update an existing category",
+                "description": "این متد یک دسته‌بندی موجود را به‌روزرسانی می‌کند.",
+                "operationId": "updateCategory",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه دسته‌بندی",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "نام جدید دسته‌بندی",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "نام جدید دسته‌بندی"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "دسته‌بندی با موفقیت به‌روزرسانی شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "دسته‌بندی یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دسته‌بندی یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Delete a category",
+                "description": "این متد یک دسته‌بندی را حذف می‌کند.",
+                "operationId": "deleteCategory",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه دسته‌بندی",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "دسته‌بندی با موفقیت حذف شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "دسته‌بندی با موفقیت حذف شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "دسته‌بندی یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دسته‌بندی یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "حذف دسته‌بندی با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "حذف دسته‌بندی با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/front-all-categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get all categories for the front-end",
+                "description": "این متد تمامی دسته‌بندی‌ها را بازمی‌گرداند.",
+                "operationId": "frontAllCategories",
+                "responses": {
+                    "200": {
+                        "description": "لیست دسته‌بندی‌ها.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت دسته بندی ها با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/front-single-category": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get a single category for the front-end",
+                "description": "این متد اطلاعات یک دسته‌بندی را با استفاده از slug بازمی‌گرداند.",
+                "operationId": "frontSingleCategory",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "query",
+                        "description": "اسلاگ دسته‌بندی",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "category-slug"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "اطلاعات دسته‌بندی.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت دسته بندی ها با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "List all posts",
+                "description": "این متد لیست تمامی پست‌ها را بازمی‌گرداند.",
+                "operationId": "getPosts",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published",
+                                "draft"
+                            ],
+                            "example": "published"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست پست‌ها.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت پست‌ها با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Create a new post",
+                "description": "این متد یک پست جدید ایجاد می‌کند.",
+                "operationId": "storePost",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "عنوان پست",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "عنوان پست"
+                        }
+                    },
+                    {
+                        "name": "content",
+                        "in": "query",
+                        "description": "محتوای اصلی پست",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "محتوای پست"
+                        }
+                    },
+                    {
+                        "name": "featured_image",
+                        "in": "query",
+                        "description": "تصویر اصلی پست (اختیاری)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "image.jpg"
+                        }
+                    },
+                    {
+                        "name": "is_published",
+                        "in": "query",
+                        "description": "آیا پست منتشر شده است؟",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": true
+                        }
+                    },
+                    {
+                        "name": "categories",
+                        "in": "query",
+                        "description": "لیست شناسه دسته‌بندی‌ها",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            },
+                            "example": [
+                                1,
+                                2,
+                                3
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "پست با موفقیت ایجاد شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "پست با موفقیت ایجاد شد."
+                                        },
+                                        "post": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "ایجاد پست با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "ایجاد پست با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get a specific post",
+                "description": "این متد یک پست خاص را بر اساس ID بازمی‌گرداند.",
+                "operationId": "getPost",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه پست",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "اطلاعات پست.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "پست یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "پست یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت پست با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Update an existing post",
+                "description": "این متد یک پست موجود را به‌روزرسانی می‌کند.",
+                "operationId": "updatePost",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه پست برای به‌روزرسانی",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "عنوان جدید پست",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "عنوان جدید پست"
+                        }
+                    },
+                    {
+                        "name": "content",
+                        "in": "query",
+                        "description": "محتوای به‌روزرسانی شده",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "محتوای جدید پست"
+                        }
+                    },
+                    {
+                        "name": "featured_image",
+                        "in": "query",
+                        "description": "تصویر جدید پست (اختیاری)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "image.jpg"
+                        }
+                    },
+                    {
+                        "name": "is_published",
+                        "in": "query",
+                        "description": "آیا پست منتشر شده است؟",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": true
+                        }
+                    },
+                    {
+                        "name": "categories",
+                        "in": "query",
+                        "description": "لیست شناسه دسته‌بندی‌ها",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            },
+                            "example": [
+                                1,
+                                2,
+                                3
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "پست با موفقیت به‌روزرسانی شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "پست با موفقیت به‌روزرسانی شد."
+                                        },
+                                        "post": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "پست یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "پست یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "به‌روزرسانی پست با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "به‌روزرسانی پست با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Delete a post",
+                "description": "این متد یک پست را حذف می‌کند.",
+                "operationId": "deletePost",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه پست برای حذف",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "پست با موفقیت حذف شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "پست با موفقیت حذف شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "پست یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "پست یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "حذف پست با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "حذف پست با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/published": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get all published posts",
+                "description": "این متد تمامی پست‌های منتشر شده را بازمی‌گرداند.",
+                "operationId": "publishedPosts",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست پست‌های منتشر شده.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت پست‌های منتشر شده با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/draft": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get all draft posts",
+                "description": "این متد تمامی پست‌های پیش‌نویس را بازمی‌گرداند.",
+                "operationId": "draftPosts",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست پست‌های پیش‌نویس.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت پست‌های پیش‌نویس با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/front-all-posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get all published posts for the front-end",
+                "description": "این متد تمامی پست‌های منتشر شده را برای بخش فرانت‌اند بازمی‌گرداند.",
+                "operationId": "frontAllPosts",
+                "responses": {
+                    "200": {
+                        "description": "لیست پست‌های منتشر شده.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت پست‌های منتشر شده با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/front-single-post": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get a single published post for the front-end",
+                "description": "این متد یک پست منتشر شده را با استفاده از شناسه بازمی‌گرداند.",
+                "operationId": "frontSinglePost",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "query",
+                        "description": "شناسه یا اسلاگ پست",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "my-post-title"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "اطلاعات پست منتشر شده.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت پست‌ منتشر شده با شکست مواجه شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "tags": [
         {
             "name": "Authentication",
             "description": "Authentication"
+        },
+        {
+            "name": "Categories",
+            "description": "Categories"
+        },
+        {
+            "name": "Posts",
+            "description": "Posts"
         }
     ]
 }
