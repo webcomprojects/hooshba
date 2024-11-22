@@ -31,7 +31,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // front side
 Route::get('posts/front-all-posts', [PostController::class, 'frontAllPosts']);
-Route::get('posts/front-single-post/{slug}', [PostController::class, 'frontSinglePost']);
+Route::get('posts/front-single-post', [PostController::class, 'frontSinglePost']);
 
 // admin panel
 Route::middleware('auth:sanctum')->group(function () {
