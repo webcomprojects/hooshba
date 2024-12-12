@@ -14,7 +14,7 @@ class CommitteeController extends Controller
     /**
      * @OA\Get(
      *     path="/committees",
-     *     summary="Get all committees",
+     *     summary="دریافت تمامی کمیته‌ها",
      *     description="این متد تمامی کمیته‌ها را بازمی‌گرداند.",
      *     operationId="getCommittees",
      *     tags={"Committees"},
@@ -134,7 +134,7 @@ class CommitteeController extends Controller
     /**
      * @OA\Post(
      *     path="/committees",
-     *     summary="Create a new committee",
+     *     summary="ایجاد یک کمیته جدید",
      *     description="این متد یک کمیته جدید ایجاد می‌کند.",
      *     operationId="createCommittee",
      *     tags={"Committees"},
@@ -233,14 +233,14 @@ class CommitteeController extends Controller
     /**
      * @OA\Put(
      *     path="/committees/{id}",
-     *     summary="Update an existing committee",
-     *     description="Update the details of an existing committee by its ID",
+     *     summary="به‌روزرسانی یک کمیته موجود",
+     *     description="به‌روزرسانی جزئیات یک کمیته موجود با استفاده از شناسه آن",
      *     operationId="updateCommittee",
      *     tags={"Committees"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID of the committee to update",
+     *         description="شناسه کمیته‌ای که باید به‌روزرسانی شود",
      *         required=true,
      *         @OA\Schema(type="integer")
      *     ),
@@ -261,7 +261,7 @@ class CommitteeController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Committee updated successfully",
+     *         description="کمیته با موفقیت به‌روزرسانی شد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="کمیته با موفقیت به‌روزرسانی شد."),
      *             @OA\Property(
@@ -282,14 +282,14 @@ class CommitteeController extends Controller
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Committee not found",
+     *         description="کمیته یافت نشد",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="کمیته یافت نشد.")
      *         )
      *     ),
      *     @OA\Response(
      *         response=422,
-     *         description="Validation failed",
+     *         description="اعتبارسنجی شکست خورد",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="اعتبارسنجی شکست خورد."),
      *             @OA\Property(property="details", type="object")
@@ -297,7 +297,7 @@ class CommitteeController extends Controller
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Internal server error",
+     *         description="خطای داخلی سرور",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="به‌روزرسانی کمیته با شکست مواجه شد."),
      *             @OA\Property(property="message", type="string")
@@ -305,6 +305,7 @@ class CommitteeController extends Controller
      *     )
      * )
      */
+
     public function update(Request $request, $id)
     {
         $slug = Str::slug($request->name, '-');
@@ -404,13 +405,13 @@ class CommitteeController extends Controller
     /**
      * @OA\Get(
      *     path="/committees/published",
-     *     summary="Get published committees",
-     *     description="Fetch a list of published committees with user and province information",
+     *     summary="دریافت کمیته‌های منتشرشده",
+     *     description="دریافت فهرستی از کمیته‌های منتشرشده به همراه اطلاعات کاربر و استان",
      *     operationId="getPublishedCommittees",
      *     tags={"Committees"},
      *     @OA\Response(
      *         response=200,
-     *         description="Successfully retrieved the list of published committees",
+     *         description="دریافت موفقیت‌آمیز فهرست کمیته‌های منتشرشده",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
@@ -439,7 +440,7 @@ class CommitteeController extends Controller
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Internal server error",
+     *         description="خطای داخلی سرور",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="دریافت کمیته‌های منتشرشده با شکست مواجه شد."),
      *             @OA\Property(property="message", type="string")
@@ -461,13 +462,13 @@ class CommitteeController extends Controller
     /**
      * @OA\Get(
      *     path="/committees/draft",
-     *     summary="Get draft committees",
-     *     description="Fetch a list of draft committees with user and province information",
+     *     summary="دریافت کمیته‌های پیش‌نویس",
+     *     description="دریافت فهرستی از کمیته‌های پیش‌نویس به همراه اطلاعات کاربر و استان",
      *     operationId="getDraftCommittees",
      *     tags={"Committees"},
      *     @OA\Response(
      *         response=200,
-     *         description="Successfully retrieved the list of draft committees",
+     *         description="دریافت موفقیت‌آمیز فهرست کمیته‌های پیش‌نویس",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
@@ -496,7 +497,7 @@ class CommitteeController extends Controller
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Internal server error",
+     *         description="خطای داخلی سرور",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="دریافت کمیته‌های پیش‌نویس با شکست مواجه شد."),
      *             @OA\Property(property="message", type="string")
@@ -542,20 +543,20 @@ class CommitteeController extends Controller
     /**
      * @OA\Get(
      *     path="/committees/front-all-committees",
-     *     summary="Get all published committees",
-     *     description="Fetch a list of all published committees, optionally filtered by province",
+     *     summary="دریافت همه کمیته‌های منتشر شده",
+     *     description="دریافت فهرست تمامی کمیته‌های منتشر شده، با امکان فیلتر بر اساس استان",
      *     operationId="getFrontAllCommittees",
      *     tags={"Committees"},
      *     @OA\Parameter(
      *         name="province",
      *         in="query",
-     *         description="Filter committees by province",
+     *         description="فیلتر کردن کمیته‌ها بر اساس استان",
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successfully retrieved the list of published committees",
+     *         description="دریافت موفقیت‌آمیز فهرست کمیته‌های منتشر شده",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
@@ -584,7 +585,7 @@ class CommitteeController extends Controller
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Internal server error",
+     *         description="خطای داخلی سرور",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="دریافت کمیته‌های منتشر شده با شکست مواجه شد."),
      *             @OA\Property(property="message", type="string")
@@ -608,24 +609,23 @@ class CommitteeController extends Controller
         }
     }
 
-
     /**
      * @OA\Get(
      *     path="/front-single-committee/{slug}",
-     *     summary="Get a single published committee",
-     *     description="Fetch a single published committee by its slug",
+     *     summary="دریافت کمیته منتشر شده با شناسه خاص",
+     *     description="دریافت اطلاعات یک کمیته منتشر شده با استفاده از شناسه (slug)",
      *     operationId="getFrontSingleCommittee",
      *     tags={"Committees"},
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
-     *         description="Slug of the committee to retrieve",
+     *         description="شناسه کمیته (slug) برای دریافت اطلاعات",
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successfully retrieved the single published committee",
+     *         description="دریافت موفقیت‌آمیز کمیته منتشر شده",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="id", type="integer"),
@@ -645,7 +645,7 @@ class CommitteeController extends Controller
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Internal server error",
+     *         description="خطای داخلی سرور",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="دریافت کمیته منتشر شده با شکست مواجه شد."),
      *             @OA\Property(property="message", type="string")
