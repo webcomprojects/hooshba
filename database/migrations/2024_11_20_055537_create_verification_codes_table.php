@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('verification_codes', function (Blueprint $table) {
-            $table->uuid()->unique()->primary();
+            $table->uuid('id')->unique()->primary();
             $table->string('mobile')->unique();
             $table->string('code');
             $table->unsignedTinyInteger('status')->default(0);

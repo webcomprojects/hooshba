@@ -2,38 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Province extends Model
 {
-    use HasFactory, HasUuids;
-
     protected $fillable = [
-        'title',
-        'content',
         'slug',
-        'user_id',
-        'province_id',
-        'featured_image',
+        'name',
+        'ordering',
         'is_published',
         'published_at',
     ];
 
-    public function user()
+    public function posts()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Post::class);
     }
 
-    public function province()
+    public function committees()
     {
-        return $this->belongsTo(Province::class);
+        return $this->hasMany(Committee::class);
     }
 
-    public function categories()
+    public function users()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->hasMany(User::class);
     }
 
 
@@ -51,7 +44,7 @@ class Post extends Model
     }
 
 
-    public function scopeSinglePostPublished($query, $slug)
+    public function scopeSingleProvincePublished($query, $slug)
     {
         return $query
             ->where('slug', $slug)

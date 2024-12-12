@@ -24,6 +24,10 @@ class Committee extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
 
 
     public function categories()
@@ -54,4 +58,6 @@ class Committee extends Model
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
     }
+
+
 }

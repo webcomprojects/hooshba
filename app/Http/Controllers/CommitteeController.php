@@ -191,7 +191,7 @@ class CommitteeController extends Controller
 
     public function store(Request $request)
     {
-        $slug = Str::slug($request->title, '-');
+        $slug = Str::slug($request->name, '-');
         $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
@@ -208,7 +208,7 @@ class CommitteeController extends Controller
             ])->validate();
 
             $validated['published_at'] = now();
-            $validated['user_id'] = $request->user()->uuid;
+            $validated['user_id'] = $request->user()->id;
 
             if ($request->hasFile('image')) {
                 $imagePath = $this->uploadImage($request);
@@ -307,7 +307,7 @@ class CommitteeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $slug = Str::slug($request->title, '-');
+        $slug = Str::slug($request->name, '-');
         $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {

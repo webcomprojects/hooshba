@@ -247,7 +247,7 @@ class PostController extends Controller
             ])->validate();
 
             $validated['published_at'] = now();
-            $validated['user_id'] = $request->user()->uuid;
+            $validated['user_id'] = $request->user()->id;
 
             if ($request->hasFile('featured_image')) {
                 $imagePath = $this->uploadImage($request);

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommitteeController;
+use App\Http\Controllers\ProvinceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,9 @@ Route::get('committees/front-single-committee', [CommitteeController::class, 'fr
 Route::get('categories/front-all-categories', [CategoryController::class, 'frontAllCategories']);
 Route::get('categories/front-single-category', [CategoryController::class, 'frontSingleCategory']);
 
+Route::get('province/front-all-provinces', [ProvinceController::class, 'frontAllProvinces']);
+Route::get('province/front-single-province', [ProvinceController::class, 'frontSingleProvince']);
+
 // admin panel
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/authentication', [AuthController::class, 'authentication']);
@@ -51,6 +55,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('committees/published', [CommitteeController::class, 'published']);
     Route::get('committees/draft', [CommitteeController::class, 'draft']);
     Route::apiResource('committees', CommitteeController::class);
+
+    Route::get('provinces/published', [ProvinceController::class, 'published']);
+    Route::get('provinces/draft', [ProvinceController::class, 'draft']);
+    Route::apiResource('provinces', ProvinceController::class);
 
     Route::apiResource('categories', CategoryController::class);
 

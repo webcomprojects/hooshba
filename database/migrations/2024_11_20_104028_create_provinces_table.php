@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('name');
             $table->integer('ordering')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->softDeletes();
         });
