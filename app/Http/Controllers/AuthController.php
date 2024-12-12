@@ -281,7 +281,7 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'uuid' => Str::uuid()->toString(),
+            'id' => Str::uuid()->toString(),
             'name' => $request->name,
             'email' => $request->email,
             'mobile' => $cachedMobile,
