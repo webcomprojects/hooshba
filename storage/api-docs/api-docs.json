@@ -188,6 +188,16 @@
                         }
                     },
                     {
+                        "name": "province_id",
+                        "in": "query",
+                        "description": "شهر کاربر",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": "21"
+                        }
+                    },
+                    {
                         "name": "password",
                         "in": "query",
                         "description": "رمز عبور کاربر",

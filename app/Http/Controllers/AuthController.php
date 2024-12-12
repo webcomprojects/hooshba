@@ -215,6 +215,16 @@ class AuthController extends Controller
      *         description="ایمیل کاربر"
      *     ),
      *     @OA\Parameter(
+     *         name="province_id",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="number",
+     *             example="21"
+     *         ),
+     *         description="شهر کاربر"
+     *     ),
+     *     @OA\Parameter(
      *         name="password",
      *         in="query",
      *         required=true,
@@ -274,6 +284,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
+            'province_id' => 'required|number|exists:provinces,id'
         ]);
 
         if ($validator->fails()) {
@@ -285,6 +296,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'mobile' => $cachedMobile,
+            'province_id' => $request->province_id,
             'password' => Hash::make($request->password),
         ]);
 
