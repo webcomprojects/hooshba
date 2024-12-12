@@ -137,58 +137,36 @@ class ProvinceController extends Controller
     /**
      * @OA\Post(
      *     path="/provinces",
-     *     summary="ایجاد یک استان جدید",
-     *     description="ایجاد یک استان جدید با اعتبارسنجی برای نام، اسلاگ، ترتیب و وضعیت انتشار",
+     *     summary="ایجاد استان جدید",
+     *     description="این متد یک استان جدید ایجاد می‌کند.",
      *     operationId="createProvince",
      *     tags={"Provinces"},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\Content(
-     *             mediaType="application/json",
-     *             @OA\Property(
-     *                 property="name",
-     *                 type="string",
-     *                 description="نام استان",
-     *                 example="Tehran"
-     *             ),
-     *             @OA\Property(
-     *                 property="slug",
-     *                 type="string",
-     *                 description="اسلاگ استان (اختیاری)",
-     *                 example="tehran"
-     *             ),
-     *             @OA\Property(
-     *                 property="ordering",
-     *                 type="integer",
-     *                 description="ترتیب استان (اختیاری)",
-     *                 example=1
-     *             ),
-     *             @OA\Property(
-     *                 property="is_published",
-     *                 type="boolean",
-     *                 description="وضعیت انتشار استان",
-     *                 example=true
-     *             )
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Tehran", description="نام استان"),
+     *             @OA\Property(property="ordering", type="integer", example=1, description="اولویت نمایش استان"),
+     *             @OA\Property(property="is_published", type="boolean", example=true, description="وضعیت انتشار استان"),
      *         )
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="استان با موفقیت ایجاد شد",
+     *         description="استان با موفقیت ایجاد شد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="استان با موفقیت ایجاد شد."),
      *             @OA\Property(property="province", type="object",
-     *                 @OA\Property(property="id", type="integer"),
-     *                 @OA\Property(property="name", type="string"),
-     *                 @OA\Property(property="slug", type="string"),
-     *                 @OA\Property(property="ordering", type="integer"),
-     *                 @OA\Property(property="is_published", type="boolean"),
-     *                 @OA\Property(property="published_at", type="string")
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="name", type="string", example="Tehran"),
+     *                 @OA\Property(property="slug", type="string", example="tehran"),
+     *                 @OA\Property(property="ordering", type="integer", example=1),
+     *                 @OA\Property(property="is_published", type="boolean", example=true),
+     *                 @OA\Property(property="published_at", type="string", example="2024-12-12T12:34:56"),
      *             )
      *         )
      *     ),
      *     @OA\Response(
      *         response=422,
-     *         description="اعتبارسنجی شکست خورد",
+     *         description="اعتبارسنجی شکست خورد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="اعتبارسنجی شکست خورد."),
      *             @OA\Property(property="details", type="object")
@@ -196,7 +174,7 @@ class ProvinceController extends Controller
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="خطای داخلی سرور",
+     *         description="ایجاد استان با شکست مواجه شد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="ایجاد استان با شکست مواجه شد."),
      *             @OA\Property(property="message", type="string")
@@ -219,13 +197,9 @@ class ProvinceController extends Controller
 
             $validated['published_at'] = now();
             if (empty($validated['ordering'])) {
-                $validated['ordering'] = Province::max('ordering') + 1; // گرفتن بیشترین مقدار ordering و افزودن 1
+                $validated['ordering'] = Province::max('ordering') + 1;
             }
             $province = Province::create($validated);
-
-            /* if (!empty($validated['categories'])) {
-                 $province->categories()->sync($validated['categories']);
-             }*/
 
             return response()->json(['message' => 'استان با موفقیت ایجاد شد.', 'province' => $province], 201);
         } catch (ValidationException $e) {
@@ -238,72 +212,50 @@ class ProvinceController extends Controller
     /**
      * @OA\Put(
      *     path="/provinces/{id}",
-     *     summary="به‌روزرسانی یک استان",
-     *     description="به‌روزرسانی اطلاعات یک استان با اعتبارسنجی برای نام، اسلاگ، ترتیب و وضعیت انتشار",
+     *     summary="به‌روزرسانی استان",
+     *     description="این متد برای به‌روزرسانی اطلاعات یک استان با شناسه مشخص استفاده می‌شود.",
      *     operationId="updateProvince",
      *     tags={"Provinces"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="شناسه استان",
      *         required=true,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="integer", example=1),
+     *         description="شناسه استان برای به‌روزرسانی"
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\Content(
-     *             mediaType="application/json",
-     *             @OA\Property(
-     *                 property="name",
-     *                 type="string",
-     *                 description="نام استان",
-     *                 example="Tehran"
-     *             ),
-     *             @OA\Property(
-     *                 property="slug",
-     *                 type="string",
-     *                 description="اسلاگ استان (اختیاری)",
-     *                 example="tehran"
-     *             ),
-     *             @OA\Property(
-     *                 property="ordering",
-     *                 type="integer",
-     *                 description="ترتیب استان (اختیاری)",
-     *                 example=2
-     *             ),
-     *             @OA\Property(
-     *                 property="is_published",
-     *                 type="boolean",
-     *                 description="وضعیت انتشار استان",
-     *                 example=false
-     *             )
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Tehran", description="نام استان"),
+     *             @OA\Property(property="ordering", type="integer", example=1, description="اولویت نمایش استان"),
+     *             @OA\Property(property="is_published", type="boolean", example=true, description="وضعیت انتشار استان"),
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="استان با موفقیت به‌روزرسانی شد",
+     *         description="استان با موفقیت به‌روزرسانی شد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="استان با موفقیت به‌روزرسانی شد."),
      *             @OA\Property(property="province", type="object",
-     *                 @OA\Property(property="id", type="integer"),
-     *                 @OA\Property(property="name", type="string"),
-     *                 @OA\Property(property="slug", type="string"),
-     *                 @OA\Property(property="ordering", type="integer"),
-     *                 @OA\Property(property="is_published", type="boolean"),
-     *                 @OA\Property(property="published_at", type="string")
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="name", type="string", example="Tehran"),
+     *                 @OA\Property(property="slug", type="string", example="tehran"),
+     *                 @OA\Property(property="ordering", type="integer", example=1),
+     *                 @OA\Property(property="is_published", type="boolean", example=true),
+     *                 @OA\Property(property="published_at", type="string", example="2024-12-12T12:34:56"),
      *             )
      *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="استان یافت نشد",
+     *         description="استان یافت نشد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="استان یافت نشد.")
      *         )
      *     ),
      *     @OA\Response(
      *         response=422,
-     *         description="اعتبارسنجی شکست خورد",
+     *         description="اعتبارسنجی شکست خورد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="اعتبارسنجی شکست خورد."),
      *             @OA\Property(property="details", type="object")
@@ -311,7 +263,7 @@ class ProvinceController extends Controller
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="خطای داخلی سرور",
+     *         description="به‌روزرسانی استان با شکست مواجه شد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="به‌روزرسانی استان با شکست مواجه شد."),
      *             @OA\Property(property="message", type="string")
@@ -335,10 +287,6 @@ class ProvinceController extends Controller
             $province = Province::findOrFail($id);
 
             $province->update($validated);
-
-            /*  if (isset($validated['categories'])) {
-                  $province->categories()->sync($validated['categories']);
-              }*/
 
             return response()->json(['message' => 'استان با موفقیت به‌روزرسانی شد.', 'province' => $province]);
         } catch (ModelNotFoundException $e) {
@@ -547,35 +495,42 @@ class ProvinceController extends Controller
     /**
      * @OA\Get(
      *     path="/province/front-single-province/{slug}",
-     *     summary="دریافت کمیته منتشر شده با شناسه خاص",
-     *     description="دریافت اطلاعات یک استان منتشر شده با استفاده از شناسه (slug)، همراه با پست‌ها، کمیته‌ها و کاربران مرتبط",
+     *     summary="دریافت اطلاعات یک استان منتشر شده",
+     *     description="این متد اطلاعات یک استان منتشر شده را بر اساس شناسه (slug) آن باز می‌گرداند.",
      *     operationId="getSingleProvince",
-     *     tags={"provinces"},
+     *     tags={"Provinces"},
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
-     *         description="شناسه استان (slug)",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="string", example="tehran"),
+     *         description="شناسه (slug) استان برای دریافت اطلاعات آن"
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="اطلاعات کمیته منتشر شده",
+     *         description="اطلاعات استان منتشر شده",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="id", type="integer"),
-     *             @OA\Property(property="name", type="string"),
-     *             @OA\Property(property="slug", type="string"),
-     *             @OA\Property(property="is_published", type="boolean"),
-     *             @OA\Property(property="published_at", type="string"),
+     *             @OA\Property(property="id", type="integer", example=1),
+     *             @OA\Property(property="name", type="string", example="Tehran"),
+     *             @OA\Property(property="slug", type="string", example="tehran"),
      *             @OA\Property(property="posts", type="array", @OA\Items(type="object")),
      *             @OA\Property(property="committees", type="array", @OA\Items(type="object")),
-     *             @OA\Property(property="users", type="array", @OA\Items(type="object"))
+     *             @OA\Property(property="users", type="array", @OA\Items(type="object")),
+     *             @OA\Property(property="is_published", type="boolean", example=true),
+     *             @OA\Property(property="published_at", type="string", example="2024-12-12T12:34:56")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="استان منتشر شده یافت نشد.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="استان منتشر شده یافت نشد.")
      *         )
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="خطای داخلی سرور",
+     *         description="خطای داخلی سرور.",
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string", example="دریافت استان منتشر شده با شکست مواجه شد."),
      *             @OA\Property(property="message", type="string")

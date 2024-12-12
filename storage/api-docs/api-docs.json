@@ -997,7 +997,7 @@
                 "tags": [
                     "Committees"
                 ],
-                "summary": "Get all committees",
+                "summary": "دریافت تمامی کمیته‌ها",
                 "description": "این متد تمامی کمیته‌ها را بازمی‌گرداند.",
                 "operationId": "getCommittees",
                 "parameters": [
@@ -1070,7 +1070,7 @@
                 "tags": [
                     "Committees"
                 ],
-                "summary": "Create a new committee",
+                "summary": "ایجاد یک کمیته جدید",
                 "description": "این متد یک کمیته جدید ایجاد می‌کند.",
                 "operationId": "createCommittee",
                 "parameters": [
@@ -1268,14 +1268,14 @@
                 "tags": [
                     "Committees"
                 ],
-                "summary": "Update an existing committee",
-                "description": "Update the details of an existing committee by its ID",
+                "summary": "به‌روزرسانی یک کمیته موجود",
+                "description": "به‌روزرسانی جزئیات یک کمیته موجود با استفاده از شناسه آن",
                 "operationId": "updateCommittee",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the committee to update",
+                        "description": "شناسه کمیته‌ای که باید به‌روزرسانی شود",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -1339,7 +1339,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Committee updated successfully",
+                        "description": "کمیته با موفقیت به‌روزرسانی شد.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1398,7 +1398,7 @@
                         }
                     },
                     "404": {
-                        "description": "Committee not found",
+                        "description": "کمیته یافت نشد",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1414,7 +1414,7 @@
                         }
                     },
                     "422": {
-                        "description": "Validation failed",
+                        "description": "اعتبارسنجی شکست خورد",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1433,7 +1433,7 @@
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "خطای داخلی سرور",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1531,12 +1531,12 @@
                 "tags": [
                     "Committees"
                 ],
-                "summary": "Get published committees",
-                "description": "Fetch a list of published committees with user and province information",
+                "summary": "دریافت کمیته‌های منتشرشده",
+                "description": "دریافت فهرستی از کمیته‌های منتشرشده به همراه اطلاعات کاربر و استان",
                 "operationId": "getPublishedCommittees",
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved the list of published committees",
+                        "description": "دریافت موفقیت‌آمیز فهرست کمیته‌های منتشرشده",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1601,7 +1601,7 @@
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "خطای داخلی سرور",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1627,12 +1627,12 @@
                 "tags": [
                     "Committees"
                 ],
-                "summary": "Get draft committees",
-                "description": "Fetch a list of draft committees with user and province information",
+                "summary": "دریافت کمیته‌های پیش‌نویس",
+                "description": "دریافت فهرستی از کمیته‌های پیش‌نویس به همراه اطلاعات کاربر و استان",
                 "operationId": "getDraftCommittees",
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved the list of draft committees",
+                        "description": "دریافت موفقیت‌آمیز فهرست کمیته‌های پیش‌نویس",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1697,7 +1697,7 @@
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "خطای داخلی سرور",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1723,14 +1723,14 @@
                 "tags": [
                     "Committees"
                 ],
-                "summary": "Get all published committees",
-                "description": "Fetch a list of all published committees, optionally filtered by province",
+                "summary": "دریافت همه کمیته‌های منتشر شده",
+                "description": "دریافت فهرست تمامی کمیته‌های منتشر شده، با امکان فیلتر بر اساس استان",
                 "operationId": "getFrontAllCommittees",
                 "parameters": [
                     {
                         "name": "province",
                         "in": "query",
-                        "description": "Filter committees by province",
+                        "description": "فیلتر کردن کمیته‌ها بر اساس استان",
                         "required": false,
                         "schema": {
                             "type": "integer"
@@ -1739,7 +1739,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved the list of published committees",
+                        "description": "دریافت موفقیت‌آمیز فهرست کمیته‌های منتشر شده",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1804,7 +1804,7 @@
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "خطای داخلی سرور",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1830,14 +1830,14 @@
                 "tags": [
                     "Committees"
                 ],
-                "summary": "Get a single published committee",
-                "description": "Fetch a single published committee by its slug",
+                "summary": "دریافت کمیته منتشر شده با شناسه خاص",
+                "description": "دریافت اطلاعات یک کمیته منتشر شده با استفاده از شناسه (slug)",
                 "operationId": "getFrontSingleCommittee",
                 "parameters": [
                     {
                         "name": "slug",
                         "in": "path",
-                        "description": "Slug of the committee to retrieve",
+                        "description": "شناسه کمیته (slug) برای دریافت اطلاعات",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -1846,7 +1846,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved the single published committee",
+                        "description": "دریافت موفقیت‌آمیز کمیته منتشر شده",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1897,7 +1897,7 @@
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "خطای داخلی سرور",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2661,6 +2661,894 @@
                     }
                 }
             }
+        },
+        "/provinces": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "دریافت لیست استان‌ها",
+                "description": "دریافت لیست استان‌ها با امکان فیلتر براساس وضعیت (منتشرشده یا پیش‌نویس)",
+                "operationId": "getProvinces",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "فیلتر براساس وضعیت استان‌ها (منتشرشده یا پیش‌نویس)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published",
+                                "draft"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست استان‌ها با موفقیت دریافت شد",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string"
+                                                    },
+                                                    "is_published": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "posts": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "committees": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "users": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت استان‌ها با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "ایجاد استان جدید",
+                "description": "این متد یک استان جدید ایجاد می‌کند.",
+                "operationId": "createProvince",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "نام استان",
+                                        "type": "string",
+                                        "example": "Tehran"
+                                    },
+                                    "ordering": {
+                                        "description": "اولویت نمایش استان",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "is_published": {
+                                        "description": "وضعیت انتشار استان",
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "استان با موفقیت ایجاد شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "استان با موفقیت ایجاد شد."
+                                        },
+                                        "province": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Tehran"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "tehran"
+                                                },
+                                                "ordering": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "is_published": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "published_at": {
+                                                    "type": "string",
+                                                    "example": "2024-12-12T12:34:56"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "ایجاد استان با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "ایجاد استان با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/provinces/{id}": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "دریافت اطلاعات یک استان",
+                "description": "دریافت اطلاعات یک استان خاص با تمامی پست‌ها، کمیته‌ها و کاربران مرتبط",
+                "operationId": "getProvinceById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه استان",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "اطلاعات استان با موفقیت دریافت شد",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "slug": {
+                                            "type": "string"
+                                        },
+                                        "is_published": {
+                                            "type": "boolean"
+                                        },
+                                        "posts": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "committees": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "استان یافت نشد",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "استان یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت استان با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "به‌روزرسانی استان",
+                "description": "این متد برای به‌روزرسانی اطلاعات یک استان با شناسه مشخص استفاده می‌شود.",
+                "operationId": "updateProvince",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه استان برای به‌روزرسانی",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "نام استان",
+                                        "type": "string",
+                                        "example": "Tehran"
+                                    },
+                                    "ordering": {
+                                        "description": "اولویت نمایش استان",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "is_published": {
+                                        "description": "وضعیت انتشار استان",
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "استان با موفقیت به‌روزرسانی شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "استان با موفقیت به‌روزرسانی شد."
+                                        },
+                                        "province": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Tehran"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "tehran"
+                                                },
+                                                "ordering": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "is_published": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "published_at": {
+                                                    "type": "string",
+                                                    "example": "2024-12-12T12:34:56"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "استان یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "استان یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "به‌روزرسانی استان با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "به‌روزرسانی استان با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "حذف یک استان",
+                "description": "حذف یک استان بر اساس شناسه، در صورت موفقیت پیام حذف ارسال می‌شود",
+                "operationId": "deleteProvince",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه استان",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "استان با موفقیت حذف شد",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "استان با موفقیت حذف شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "استان یافت نشد",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "استان یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "حذف استان با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/provinces/published": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "دریافت استان‌های منتشر شده",
+                "description": "دریافت لیستی از استان‌های منتشر شده همراه با پست‌ها، کمیته‌ها و کاربران مرتبط",
+                "operationId": "getPublishedProvinces",
+                "responses": {
+                    "200": {
+                        "description": "لیست استان‌های منتشر شده",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "slug": {
+                                                "type": "string"
+                                            },
+                                            "is_published": {
+                                                "type": "boolean"
+                                            },
+                                            "published_at": {
+                                                "type": "string"
+                                            },
+                                            "posts": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "committees": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "users": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت استان‌های منتشرشده با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/provinces/draft": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "دریافت استان‌های پیش‌نویس",
+                "description": "دریافت لیستی از استان‌های پیش‌نویس همراه با پست‌ها، کمیته‌ها و کاربران مرتبط",
+                "operationId": "getDraftProvinces",
+                "responses": {
+                    "200": {
+                        "description": "لیست استان‌های پیش‌نویس",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "slug": {
+                                                "type": "string"
+                                            },
+                                            "is_published": {
+                                                "type": "boolean"
+                                            },
+                                            "published_at": {
+                                                "type": "string"
+                                            },
+                                            "posts": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "committees": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "users": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت استان‌های پیش‌نویس با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/province/front-all-provinces": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "دریافت تمامی کمیته‌های منتشر شده",
+                "description": "دریافت لیستی از تمامی استان‌های منتشر شده همراه با پست‌ها، کمیته‌ها و کاربران مرتبط",
+                "operationId": "getAllProvinces",
+                "responses": {
+                    "200": {
+                        "description": "لیست کمیته‌ها منتشر شده",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "slug": {
+                                                "type": "string"
+                                            },
+                                            "is_published": {
+                                                "type": "boolean"
+                                            },
+                                            "published_at": {
+                                                "type": "string"
+                                            },
+                                            "posts": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "committees": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "users": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت استان‌های منتشر شده با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/province/front-single-province/{slug}": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "دریافت اطلاعات یک استان منتشر شده",
+                "description": "این متد اطلاعات یک استان منتشر شده را بر اساس شناسه (slug) آن باز می‌گرداند.",
+                "operationId": "getSingleProvince",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "شناسه (slug) استان برای دریافت اطلاعات آن",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "tehran"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "اطلاعات استان منتشر شده",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Tehran"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "tehran"
+                                        },
+                                        "posts": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "committees": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "is_published": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "published_at": {
+                                            "type": "string",
+                                            "example": "2024-12-12T12:34:56"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "استان منتشر شده یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "استان منتشر شده یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "خطای داخلی سرور.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت استان منتشر شده با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "tags": [
@@ -2679,6 +3567,10 @@
         {
             "name": "Posts",
             "description": "Posts"
+        },
+        {
+            "name": "Provinces",
+            "description": "Provinces"
         }
     ]
 }
