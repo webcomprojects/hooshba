@@ -88,7 +88,7 @@ class AuthController extends Controller
                     ]);
             } else {
                 DB::table('verification_codes')->insert([
-                    'uuid' => Str::uuid()->toString(),
+                    'id' => Str::uuid()->toString(),
                     'mobile' => $request->mobile,
                     'code' => $code,
                     'expires_at' => now()->addMinutes(6),
@@ -175,7 +175,7 @@ class AuthController extends Controller
                 ->first();
             if ($record) {
                 DB::table('verification_codes')
-                    ->where('uuid', $record->id)
+                    ->where('id', $record->id)
                     ->update([
                         'status' => 1,
                     ]);
