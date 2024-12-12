@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('ordering')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
+            $table->timestamps();
             $table->softDeletes();
         });
     }
