@@ -15,8 +15,13 @@ return new class extends Migration {
             $table->string('title');
             $table->text('content');
             $table->string('slug')->unique();
-            $table->uuid('user_uuid');
-            $table->foreign('user_uuid')->references('uuid')->on('users')->onDelete('restrict');
+
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces')->onDelete('restrict');
+
             $table->string('featured_image')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();

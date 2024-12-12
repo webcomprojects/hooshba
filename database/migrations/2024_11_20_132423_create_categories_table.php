@@ -12,8 +12,13 @@ return new class extends Migration {
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
+            $table->uuid('parent_id')->nullable();
+            $table->string('type')->nullable();
             $table->string('name')->unique();
-            $table->string('slug')->unique();
+
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces')->onDelete('restrict');
+
             $table->timestamps();
         });
     }

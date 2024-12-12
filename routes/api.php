@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommitteeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,10 @@ Route::post('/login', [AuthController::class, 'login']);
 // front side
 Route::get('posts/front-all-posts', [PostController::class, 'frontAllPosts']);
 Route::get('posts/front-single-post', [PostController::class, 'frontSinglePost']);
+
+Route::get('committees/front-all-committees', [CommitteeController::class, 'frontAllCommittees']);
+Route::get('committees/front-single-committee', [CommitteeController::class, 'frontSingleCommittee']);
+
 Route::get('categories/front-all-categories', [CategoryController::class, 'frontAllCategories']);
 Route::get('categories/front-single-category', [CategoryController::class, 'frontSingleCategory']);
 
@@ -42,7 +47,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('posts/published', [PostController::class, 'published']);
     Route::get('posts/draft', [PostController::class, 'draft']);
     Route::apiResource('posts', PostController::class);
+
+    Route::get('committees/published', [CommitteeController::class, 'published']);
+    Route::get('committees/draft', [CommitteeController::class, 'draft']);
+    Route::apiResource('committees', CommitteeController::class);
+
     Route::apiResource('categories', CategoryController::class);
+
+
 });
 
 

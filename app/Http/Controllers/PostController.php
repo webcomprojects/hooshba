@@ -243,10 +243,11 @@ class PostController extends Controller
                 'is_published' => 'boolean',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
+                'province_id' => 'nullable|exists:provinces,id'
             ])->validate();
 
             $validated['published_at'] = now();
-            $validated['user_uuid'] = $request->user()->uuid;
+            $validated['user_id'] = $request->user()->uuid;
 
             if ($request->hasFile('featured_image')) {
                 $imagePath = $this->uploadImage($request);
@@ -391,6 +392,7 @@ class PostController extends Controller
                 'is_published' => 'boolean',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
+                'province_id' => 'nullable|exists:provinces,id'
             ])->validate();
 
             $post = Post::findOrFail($id);
@@ -614,10 +616,14 @@ class PostController extends Controller
      *     )
      * )
      */
-    public function frontAllPosts()
+    public function frontAllPosts(Request $request)
     {
         try {
-            $posts = Post::published()->with(['categories'])->paginate(10);
+            $query = Post::published()->with(['categories']);
+            if ($request->filled('province')) {
+                $query->where('province_id', $request->province);
+            }
+            $posts = $query->paginate(10);
             return response()->json($posts);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت پست‌های منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);

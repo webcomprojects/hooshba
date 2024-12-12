@@ -44,10 +44,24 @@ class CategoryController extends Controller
      *     )
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $categories = Category::with('posts')->paginate(10);
+
+            $query = Category::query();
+
+            if ($request->filled('type')) {
+                if ($request->type === "committee") {
+                    $query->with('committees')->where('type', 'committees');
+                } elseif ($request->type === "post") {
+                    $query->with('posts')->where('type', 'post');
+                }
+            } else {
+                $query->with(['posts', 'committees']);
+            }
+
+            $categories = $query->paginate(10);
+
             return response()->json($categories);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت دسته‌بندی‌ها با شکست مواجه شد.'], 500);
@@ -105,7 +119,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         try {
-            $category = Category::with('posts')->findOrFail($id);
+            $category = Category::with('posts', 'committees')->findOrFail($id);
             return response()->json($category);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'دسته‌بندی یافت نشد.'], 404);
@@ -168,6 +182,8 @@ class CategoryController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255|unique:categories',
+                'type' => 'required|string|in:committee,post',
+                'parent_id' => 'nullable',
             ]);
 
             $validated['slug'] = $this->generateSlug($validated['name']);
@@ -247,6 +263,8 @@ class CategoryController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'sometimes|string|max:255|unique:categories,name,' . $id,
+                'type' => 'required|string|in:committee,post',
+                'parent_id' => 'nullable',
             ]);
 
             $category = Category::findOrFail($id);
@@ -361,10 +379,16 @@ class CategoryController extends Controller
      *     )
      * )
      */
-    public function frontAllCategories()
+    public function frontAllCategories(Request $request)
     {
         try {
-            $categories = Category::all();
+
+            $query = Category::query();
+            if ($request->filled('type')) {
+                $query->where('type', $request->type);
+            }
+            $categories = $query->get();
+
             return response()->json($categories);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت دسته بندی ها با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
@@ -405,7 +429,7 @@ class CategoryController extends Controller
     public function frontSingleCategory(Request $request)
     {
         try {
-            $categories = Category::with('posts')->where('slug', $request->slug)->first();
+            $categories = Category::with('posts', 'committees')->where('slug', $request->slug)->first();
             return response()->json($categories);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت دسته بندی ها با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
