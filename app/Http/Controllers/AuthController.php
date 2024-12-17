@@ -216,7 +216,7 @@ class AuthController extends Controller
                 ->first();
             if ($record) {
                 DB::table('verification_codes')
-                    ->where('id', $record->uuid)
+                    ->where('uuid', $record->uuid)
                     ->update([
                         'status' => 1,
                     ]);
@@ -226,6 +226,7 @@ class AuthController extends Controller
         } else {
             return response()->json(['message' => 'زمان شما به پایان رسید.'], 400);
         }
+
 
 
     }
