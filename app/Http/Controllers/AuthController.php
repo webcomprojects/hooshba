@@ -214,7 +214,7 @@ class AuthController extends Controller
                 ->first();
             if ($record) {
                 DB::table('verification_codes')
-                    ->where('uuid', $record->uuid)
+                    ->where('id', $record->id)
                     ->update([
                         'status' => 1,
                     ]);
