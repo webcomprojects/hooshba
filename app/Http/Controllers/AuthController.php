@@ -205,7 +205,7 @@ class AuthController extends Controller
         ]);
 
 
-
+        if (Cache::has($request->cache_key)) {
 
             $cachedMobile = Cache::get($request->cache_key);
 
@@ -223,11 +223,9 @@ class AuthController extends Controller
                 return response()->json(['message' => 'شماره موبایل با موفقیت تایید شد.']);
             }
             return response()->json(['message' => 'کد نامعتبر است یا منقضی شده است.'], 422);
-        /*
-          if (Cache::has($request->cache_key)) {
-      }/* ee {
-          return response()->json(['message' => 'زمان شما به پایان رسید.'], 400);
-      }*/
+        } else {
+            return response()->json(['message' => 'زمان شما به پایان رسید.'], 400);
+        }
 
 
 
