@@ -96,7 +96,7 @@ class AuthController extends Controller
 
         send_sms($request->mobile, $code);
 
-        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key, 'code' => $code], 200);
+        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key], 200);
     }
 /*    public function sendVerificationCode(Request $request)
     {
