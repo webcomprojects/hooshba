@@ -7,7 +7,7 @@ if (!function_exists('send_sms')) {
     {
         $user = 'webcomnaghilo';
         $pass = 'webcomco1403';
-        $fromNum = '+985000404223';
+        $fromNum = '+983000505';
         $input_data = array(
             'verification-code' =>$message,
         );
