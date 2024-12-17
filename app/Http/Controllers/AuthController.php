@@ -63,7 +63,6 @@ class AuthController extends Controller
      *     )
      * )
      */
-
     public function sendVerificationCode(Request $request)
     {
         $uniqid = uniqid();
@@ -86,7 +85,7 @@ class AuthController extends Controller
                 ]);
         } else {
             DB::table('verification_codes')->insert([
-                'id' => Str::uuid()->toString(),
+                'uuid' => Str::uuid()->toString(),
                 'mobile' => $request->mobile,
                 'code' => $code,
                 'expires_at' => now()->addMinutes(6),
@@ -97,9 +96,8 @@ class AuthController extends Controller
 
         send_sms($request->mobile, $code);
 
-        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key], 200);
+        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key, 'code' => $code], 200);
     }
-
 /*    public function sendVerificationCode(Request $request)
     {
         $uniqid = uniqid();
