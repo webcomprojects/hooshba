@@ -202,7 +202,7 @@ class AuthController extends Controller
             'code' => 'required|digits:6',
         ]);
 
-dd($request->cache_key);
+
         if (Cache::has($request->cache_key)) {
 
             $cachedMobile = Cache::get($request->cache_key);
