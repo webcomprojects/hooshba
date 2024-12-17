@@ -672,7 +672,7 @@ class AuthController extends Controller
 
         send_sms($cachedMobile, $code);
 
-        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'code' => $code], 200);
+        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.'], 200);
     }
 /*    public function resendVerificationCode(Request $request)
     {
