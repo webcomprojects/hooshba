@@ -137,17 +137,59 @@ class ProvinceController extends Controller
     /**
      * @OA\Post(
      *     path="/provinces",
-     *     summary="ایجاد استان جدید",
-     *     description="این متد یک استان جدید ایجاد می‌کند.",
-     *     operationId="createProvince",
+     *     summary="ایجاد یک استان جدید",
+     *     description="این متد یک استان جدید ایجاد می‌کند و به صورت خودکار slug را بر اساس نام استان تولید می‌کند.",
+     *     operationId="storeProvince",
      *     tags={"Provinces"},
-     *     @OA\RequestBody(
+     *     @OA\Parameter(
+     *         name="Authorization",
+     *         in="header",
      *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="Tehran", description="نام استان"),
-     *             @OA\Property(property="ordering", type="integer", example=1, description="اولویت نمایش استان"),
-     *             @OA\Property(property="is_published", type="boolean", example=true, description="وضعیت انتشار استان"),
-     *         )
+     *         @OA\Schema(
+     *             type="string",
+     *             example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+     *         ),
+     *         description="توکن احراز هویت به صورت Bearer Token"
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="تهران"
+     *         ),
+     *         description="نام استان"
+     *     ),
+     *     @OA\Parameter(
+     *         name="slug",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="tehran"
+     *         ),
+     *         description="شناسه یکتا برای استان (به صورت خودکار تولید می‌شود، ارسال این مقدار اختیاری است)."
+     *     ),
+     *     @OA\Parameter(
+     *         name="ordering",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=1
+     *         ),
+     *         description="ترتیب نمایش استان‌ها (اختیاری)"
+     *     ),
+     *     @OA\Parameter(
+     *         name="is_published",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="boolean",
+     *             example=true
+     *         ),
+     *         description="وضعیت انتشار استان (منتشر شده یا خیر)"
      *     ),
      *     @OA\Response(
      *         response=201,
@@ -156,11 +198,11 @@ class ProvinceController extends Controller
      *             @OA\Property(property="message", type="string", example="استان با موفقیت ایجاد شد."),
      *             @OA\Property(property="province", type="object",
      *                 @OA\Property(property="id", type="integer", example=1),
-     *                 @OA\Property(property="name", type="string", example="Tehran"),
+     *                 @OA\Property(property="name", type="string", example="تهران"),
      *                 @OA\Property(property="slug", type="string", example="tehran"),
      *                 @OA\Property(property="ordering", type="integer", example=1),
      *                 @OA\Property(property="is_published", type="boolean", example=true),
-     *                 @OA\Property(property="published_at", type="string", example="2024-12-12T12:34:56"),
+     *                 @OA\Property(property="published_at", type="string", format="date-time", example="2024-12-16T12:00:00")
      *             )
      *         )
      *     ),
@@ -182,6 +224,8 @@ class ProvinceController extends Controller
      *     )
      * )
      */
+
+
     public function store(Request $request)
     {
         $slug = Str::slug($request->name, '-');

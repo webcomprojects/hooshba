@@ -2777,36 +2777,61 @@
                 "tags": [
                     "Provinces"
                 ],
-                "summary": "ایجاد استان جدید",
-                "description": "این متد یک استان جدید ایجاد می‌کند.",
-                "operationId": "createProvince",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "description": "نام استان",
-                                        "type": "string",
-                                        "example": "Tehran"
-                                    },
-                                    "ordering": {
-                                        "description": "اولویت نمایش استان",
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "is_published": {
-                                        "description": "وضعیت انتشار استان",
-                                        "type": "boolean",
-                                        "example": true
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "summary": "ایجاد یک استان جدید",
+                "description": "این متد یک استان جدید ایجاد می‌کند و به صورت خودکار slug را بر اساس نام استان تولید می‌کند.",
+                "operationId": "storeProvince",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "نام استان",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "تهران"
+                        }
+                    },
+                    {
+                        "name": "slug",
+                        "in": "query",
+                        "description": "شناسه یکتا برای استان (به صورت خودکار تولید می‌شود، ارسال این مقدار اختیاری است).",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "tehran"
+                        }
+                    },
+                    {
+                        "name": "ordering",
+                        "in": "query",
+                        "description": "ترتیب نمایش استان‌ها (اختیاری)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "is_published",
+                        "in": "query",
+                        "description": "وضعیت انتشار استان (منتشر شده یا خیر)",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": true
                         }
                     }
-                },
+                ],
                 "responses": {
                     "201": {
                         "description": "استان با موفقیت ایجاد شد.",
@@ -2826,7 +2851,7 @@
                                                 },
                                                 "name": {
                                                     "type": "string",
-                                                    "example": "Tehran"
+                                                    "example": "تهران"
                                                 },
                                                 "slug": {
                                                     "type": "string",
@@ -2842,7 +2867,8 @@
                                                 },
                                                 "published_at": {
                                                     "type": "string",
-                                                    "example": "2024-12-12T12:34:56"
+                                                    "format": "date-time",
+                                                    "example": "2024-12-16T12:00:00"
                                                 }
                                             },
                                             "type": "object"
