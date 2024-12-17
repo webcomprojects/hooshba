@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use function App\Helpers\send_sms;
 
 /**
  * @OA\OpenApi(
@@ -96,7 +97,7 @@ class AuthController extends Controller
 
         send_sms($request->mobile, $code);
 
-        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key, 'code' => $code], 200);
+        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key], 200);
     }
 
 /*    public function sendVerificationCode(Request $request)
