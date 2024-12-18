@@ -358,7 +358,7 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
-                'province_id' => 'required|number|exists:provinces,id',
+                'province_id' => 'required|integer|exists:provinces,id',
                 'password' => 'required|min:8|confirmed',
             ]);
 
