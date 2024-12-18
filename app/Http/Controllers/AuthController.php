@@ -369,7 +369,7 @@ class AuthController extends Controller
             $user = User::create([
                 'id' => Str::uuid()->toString(),
                 'name' => $request->name,
-                'username' => $request->username,
+                'email' => 'required|email|unique:users,email',
                 'mobile' => $cachedMobile,
                 'province_id' => $request->province_id,
                 'password' => Hash::make($request->password),
