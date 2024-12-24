@@ -8,6 +8,6 @@ class Region extends Model
 {
     public function provinces()
     {
-        return $this->hasMany(Province::class);
+        return $this->hasMany(Province::class,'region_id');
     }
 }
