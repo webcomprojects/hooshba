@@ -191,7 +191,7 @@ class CommitteeController extends Controller
 
     public function store(Request $request)
     {
-        $slug = Str::slug($request->name, '-');
+        $slug = sluggable_helper_function($request->name);
         $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
@@ -308,7 +308,7 @@ class CommitteeController extends Controller
 
     public function update(Request $request, $id)
     {
-        $slug = Str::slug($request->name, '-');
+        $slug = sluggable_helper_function($request->name);
         $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {

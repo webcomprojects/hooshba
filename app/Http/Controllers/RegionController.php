@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use function App\Helpers\sluggable_helper_function;
 
 class RegionController extends Controller
 {
@@ -182,7 +183,7 @@ class RegionController extends Controller
 
     public function store(Request $request)
     {
-        $slug = Str::slug($request->name, '-');
+        $slug = sluggable_helper_function($request->name);
         $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
@@ -271,7 +272,7 @@ class RegionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $slug = Str::slug($request->name, '-');
+        $slug = sluggable_helper_function($request->name);
         $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
