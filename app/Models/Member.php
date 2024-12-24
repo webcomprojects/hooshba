@@ -26,7 +26,12 @@ class Member extends Model
         'published_at',
     ];
 
-
+    protected $casts = [
+        'educational_background' => 'array',  // تبدیل خودکار به آرایه
+        'executive_background' => 'array',    // تبدیل خودکار به آرایه
+        'links' => 'array',    // تبدیل خودکار به آرایه
+        'job_position' => 'array',    // تبدیل خودکار به آرایه
+    ];
 
     public function categories()
     {
