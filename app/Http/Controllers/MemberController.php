@@ -237,6 +237,10 @@ class MemberController extends Controller
                 $validated['image'] = $imagePath;
             }
 
+            $validatedData['educational_background'] = json_encode($request->educational_background);
+            $validatedData['executive_background'] = json_encode($request->executive_background);
+
+
 
             $item = Member::create($validated);
 
@@ -363,6 +367,10 @@ class MemberController extends Controller
                 $imagePath = $this->uploadImage($request);
                 $validated['image'] = $imagePath;
             }
+
+            $validatedData['educational_background'] = json_encode($request->educational_background);
+            $validatedData['executive_background'] = json_encode($request->executive_background);
+
 
             $item->update($validated);
 
