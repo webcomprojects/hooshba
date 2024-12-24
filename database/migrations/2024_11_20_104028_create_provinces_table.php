@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('provinces', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->unsignedBigInteger('region_id')->nullable();
+            $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
+
             $table->string('slug')->unique();
             $table->string('name');
             $table->integer('ordering')->nullable();

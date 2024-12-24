@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('categories', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->uuid('parent_id')->nullable();
-            $table->string('type')->nullable();
+            $table->enum('type',['post','committee','member'])->default('post')->nullable();
             $table->string('name')->unique();
 
             $table->unsignedBigInteger('province_id')->nullable();

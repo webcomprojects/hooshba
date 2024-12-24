@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\MemberController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,10 +45,13 @@ Route::get('categories/front-single-category', [CategoryController::class, 'fron
 Route::get('province/front-all-provinces', [ProvinceController::class, 'frontAllProvinces']);
 Route::get('province/front-single-province', [ProvinceController::class, 'frontSingleProvince']);
 
+Route::get('members/front-all-members', [MemberController::class, 'frontAllMembers']);
+Route::get('members/front-single-member', [MemberController::class, 'frontSingleMember']);
+
 // admin panel
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/authentication', [AuthController::class, 'authentication']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::get('posts/published', [PostController::class, 'published']);
     Route::get('posts/draft', [PostController::class, 'draft']);
     Route::apiResource('posts', PostController::class);
@@ -62,7 +66,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('categories', CategoryController::class);
 
+    Route::get('members/published', [MemberController::class, 'published']);
+    Route::apiResource('members', MemberController::class);
 
+
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 

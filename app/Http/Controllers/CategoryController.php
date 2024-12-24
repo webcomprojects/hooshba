@@ -52,12 +52,12 @@ class CategoryController extends Controller
 
             if ($request->filled('type')) {
                 if ($request->type === "committee") {
-                    $query->with('committees')->where('type', 'committees');
+                    $query->with('member')->where('type', 'member');
                 } elseif ($request->type === "post") {
                     $query->with('posts')->where('type', 'post');
                 }
             } else {
-                $query->with(['posts', 'committees']);
+                $query->with(['posts', 'member']);
             }
 
             $categories = $query->paginate(10);
@@ -119,7 +119,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         try {
-            $category = Category::with('posts', 'committees')->findOrFail($id);
+            $category = Category::with('posts', 'member')->findOrFail($id);
             return response()->json($category);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'دسته‌بندی یافت نشد.'], 404);
@@ -429,7 +429,7 @@ class CategoryController extends Controller
     public function frontSingleCategory(Request $request)
     {
         try {
-            $categories = Category::with('posts', 'committees')->where('slug', $request->slug)->first();
+            $categories = Category::with('posts','members')->where('slug', $request->slug)->first();
             return response()->json($categories);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت دسته بندی ها با شکست مواجه شد.', 'message' => $e->getMessage()], 500);

@@ -1928,6 +1928,862 @@
                 }
             }
         },
+        "/members": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "دریافت لیست اعضا",
+                "description": "این متد لیستی از اعضا را با امکان فیلتر کردن بر اساس نوع برمی‌گرداند.",
+                "operationId": "getMembers",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "نوع اعضا برای فیلتر کردن (مثلاً: student یا teacher)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "student"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست اعضا با موفقیت بازیابی شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت اعضا با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت اعضا با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "ایجاد عضو جدید",
+                "description": "این متد برای ایجاد یک عضو جدید در سیستم استفاده می‌شود.",
+                "operationId": "storeMember",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "نام عضو",
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "type": {
+                                        "description": "نوع عضو",
+                                        "type": "string",
+                                        "enum": [
+                                            "council",
+                                            "presidency"
+                                        ],
+                                        "example": "council"
+                                    },
+                                    "job_position": {
+                                        "description": "موقعیت شغلی عضو",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "Manager",
+                                            "Developer"
+                                        ]
+                                    },
+                                    "email": {
+                                        "description": "ایمیل عضو",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "mobile": {
+                                        "description": "شماره تلفن همراه عضو",
+                                        "type": "string",
+                                        "example": "09123456789"
+                                    },
+                                    "links": {
+                                        "description": "لینک‌های مرتبط با عضو",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "https://linkedin.com/johndoe"
+                                        ]
+                                    },
+                                    "description": {
+                                        "description": "توضیحات",
+                                        "type": "string",
+                                        "example": "توضیحات در مورد عضو"
+                                    },
+                                    "image": {
+                                        "description": "تصویر عضو",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "educational_background": {
+                                        "description": "سوابق تحصیلی",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "Bachelor in CS",
+                                            "Master in IT"
+                                        ]
+                                    },
+                                    "executive_background": {
+                                        "description": "سوابق اجرایی",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "5 years at XYZ",
+                                            "3 years at ABC"
+                                        ]
+                                    },
+                                    "is_published": {
+                                        "description": "وضعیت انتشار",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "categories": {
+                                        "description": "شناسه دسته‌بندی‌ها",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "عضو با موفقیت ایجاد شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "اعضا با موفقیت ایجاد شد."
+                                        },
+                                        "province": {
+                                            "description": "اطلاعات عضو ایجاد شده",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "description": "جزئیات خطا",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "ایجاد عضو با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "ایجاد عضو با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/members/{id}": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "دریافت اطلاعات یک عضو خاص",
+                "description": "این متد اطلاعات مربوط به یک عضو خاص را بر اساس شناسه برمی‌گرداند.",
+                "operationId": "getMemberById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه عضو",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "عضو با موفقیت پیدا شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "عضو یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعضا یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت اطلاعات عضو با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعضا با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "به‌روزرسانی اطلاعات عضو",
+                "description": "این متد اطلاعات یک عضو موجود را به‌روزرسانی می‌کند.",
+                "operationId": "updateMember",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه عضو برای به‌روزرسانی",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "نام عضو",
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "type": {
+                                        "description": "نوع عضو",
+                                        "type": "string",
+                                        "enum": [
+                                            "council",
+                                            "presidency"
+                                        ],
+                                        "example": "council"
+                                    },
+                                    "categories": {
+                                        "description": "شناسه دسته‌بندی‌ها",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    },
+                                    "job_position": {
+                                        "description": "موقعیت شغلی عضو",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "Manager",
+                                            "Developer"
+                                        ]
+                                    },
+                                    "email": {
+                                        "description": "ایمیل عضو",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "mobile": {
+                                        "description": "شماره تلفن همراه عضو",
+                                        "type": "string",
+                                        "example": "09123456789"
+                                    },
+                                    "links": {
+                                        "description": "لینک‌های مرتبط با عضو",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "https://linkedin.com/johndoe"
+                                        ]
+                                    },
+                                    "description": {
+                                        "description": "توضیحات",
+                                        "type": "string",
+                                        "example": "توضیحات در مورد عضو"
+                                    },
+                                    "image": {
+                                        "description": "تصویر عضو",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "educational_background": {
+                                        "description": "سوابق تحصیلی",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "Bachelor in CS",
+                                            "Master in IT"
+                                        ]
+                                    },
+                                    "executive_background": {
+                                        "description": "سوابق اجرایی",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "5 years at XYZ",
+                                            "3 years at ABC"
+                                        ]
+                                    },
+                                    "is_published": {
+                                        "description": "وضعیت انتشار",
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "عضو با موفقیت به‌روزرسانی شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "اعضا با موفقیت به‌روزرسانی شد."
+                                        },
+                                        "province": {
+                                            "description": "اطلاعات عضو به‌روزرسانی شده",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "عضو یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعضا یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "description": "جزئیات خطا",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "به‌روزرسانی عضو با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "به‌روزرسانی عضو با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "حذف عضو",
+                "description": "این متد یک عضو مشخص را حذف می‌کند.",
+                "operationId": "deleteMember",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه عضو برای حذف",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "عضو با موفقیت حذف شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "اعضا با موفقیت حذف شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "عضو یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعضا یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "حذف عضو با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "حذف اعضا با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/members/published": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "دریافت اعضا منتشرشده",
+                "description": "این متد اعضا منتشرشده را به صورت صفحه‌بندی‌شده باز می‌گرداند.",
+                "operationId": "getPublishedMembers",
+                "responses": {
+                    "200": {
+                        "description": "لیست اعضا منتشرشده با موفقیت دریافت شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "لیست اعضا",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "description": "لینک‌های صفحه‌بندی",
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "description": "اطلاعات صفحه‌بندی",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت اعضا منتشرشده با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت اعضا منتشرشده با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/members/front/all": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "دریافت لیست اعضا منتشرشده",
+                "description": "این متد لیست اعضا منتشرشده را با قابلیت فیلتر نوع بازمی‌گرداند.",
+                "operationId": "getFrontAllMembers",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "نوع عضو برای فیلتر کردن لیست",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "council",
+                                "presidency"
+                            ],
+                            "example": "council"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست اعضا منتشرشده با موفقیت دریافت شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "لیست اعضا",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "description": "لینک‌های صفحه‌بندی",
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "description": "اطلاعات صفحه‌بندی",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت لیست اعضا منتشرشده با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت اعضاهای منتشر شده با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/members/front/{slug}": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "دریافت اطلاعات یک عضو منتشرشده",
+                "description": "این متد اطلاعات یک عضو منتشرشده را بر اساس اسلاگ بازمی‌گرداند.",
+                "operationId": "getFrontSingleMember",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "اسلاگ عضو برای دریافت اطلاعات",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "john-doe"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "اطلاعات عضو با موفقیت دریافت شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "اطلاعات عضو",
+                                    "properties": {
+                                        "id": {
+                                            "description": "شناسه عضو",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "description": "نام عضو",
+                                            "type": "string",
+                                            "example": "John Doe"
+                                        },
+                                        "type": {
+                                            "description": "نوع عضو",
+                                            "type": "string",
+                                            "example": "council"
+                                        },
+                                        "description": {
+                                            "description": "توضیحات",
+                                            "type": "string",
+                                            "example": "توضیحات درباره عضو"
+                                        },
+                                        "image": {
+                                            "description": "تصویر عضو",
+                                            "type": "string",
+                                            "example": "image.jpg"
+                                        },
+                                        "links": {
+                                            "description": "لینک‌های مرتبط با عضو",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت اطلاعات عضو با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت اعضا‌ منتشر شده با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
         "/posts": {
             "get": {
                 "tags": [
@@ -3599,6 +4455,10 @@
         {
             "name": "Committees",
             "description": "Committees"
+        },
+        {
+            "name": "Members",
+            "description": "Members"
         },
         {
             "name": "Posts",
