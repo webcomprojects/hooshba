@@ -237,8 +237,8 @@ class MemberController extends Controller
                 $validated['image'] = $imagePath;
             }
 
-            $validatedData['educational_background'] = json_encode($request->educational_background);
-            $validatedData['executive_background'] = json_encode($request->executive_background);
+            $validated['educational_background'] = json_encode($request->educational_background);
+            $validated['executive_background'] = json_encode($request->executive_background);
 
 
 
@@ -368,8 +368,8 @@ class MemberController extends Controller
                 $validated['image'] = $imagePath;
             }
 
-            $validatedData['educational_background'] = json_encode($request->educational_background);
-            $validatedData['executive_background'] = json_encode($request->executive_background);
+            $validated['educational_background'] = json_encode($request->educational_background);
+            $validated['executive_background'] = json_encode($request->executive_background);
 
 
             $item->update($validated);
