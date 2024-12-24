@@ -237,6 +237,7 @@ class MemberController extends Controller
                 $validated['image'] = $imagePath;
             }
 
+            $validated['job_position'] = json_encode($request->job_position);
             $validated['educational_background'] = json_encode($request->educational_background);
             $validated['executive_background'] = json_encode($request->executive_background);
 
@@ -368,7 +369,8 @@ class MemberController extends Controller
                 $validated['image'] = $imagePath;
             }
 
-            $validated['educational_background'] = json_encode($request->educational_background);
+            $validated['job_position'] = json_encode($request->job_position);
+            $validated['executive_background'] = json_encode($request->executive_background);
             $validated['executive_background'] = json_encode($request->executive_background);
 
 
