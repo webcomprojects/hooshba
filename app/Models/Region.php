@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Region extends Model
 {
+    protected $fillable = ['slug', 'name', 'ordering', 'is_published', 'published_at'];
     public function provinces()
     {
         return $this->hasMany(Province::class,'region_id');
