@@ -238,7 +238,7 @@ class MemberController extends Controller
             }
 
 
-            $item = Province::create($validated);
+            $item = Member::create($validated);
 
             if (!empty($validated['categories'])) {
                 $item->categories()->sync($validated['categories']);
@@ -302,7 +302,7 @@ class MemberController extends Controller
      *         description="عضو با موفقیت به‌روزرسانی شد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="اعضا با موفقیت به‌روزرسانی شد."),
-     *             @OA\Property(property="province", type="object", description="اطلاعات عضو به‌روزرسانی شده")
+     *             @OA\Property(property="Member", type="object", description="اطلاعات عضو به‌روزرسانی شده")
      *         )
      *     ),
      *     @OA\Response(

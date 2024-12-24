@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->unique()->primary();
             $table->enum('type', ['council', 'presidency'])->default('council')->nullable();
             $table->string('name');
+            $table->string('slug');
             $table->text('job_position')->nullable();
             $table->string('email')->nullable();
             $table->string('mobile')->nullable();
