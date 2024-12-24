@@ -61,7 +61,7 @@ class ProvinceController extends Controller
     {
         try {
             $type = $request->query('type');
-            $query = Province::with(['posts','committees','users']);
+            $query = Province::with(['posts','committees','users','member']);
 
             if ($type === 'published') {
                 $query->published();
@@ -125,7 +125,7 @@ class ProvinceController extends Controller
     public function show($id)
     {
         try {
-            $province = Province::with(['posts','committees','users'])->findOrFail($id);
+            $province = Province::with(['posts','committees','users','member'])->findOrFail($id);
             return response()->json($province);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'استان یافت نشد.'], 404);
@@ -479,7 +479,7 @@ class ProvinceController extends Controller
     public function draft()
     {
         try {
-            $provinces = Province::draft()->with(['posts','committees','users'])->paginate(10);
+            $provinces = Province::draft()->with(['posts','committees','users','member'])->paginate(10);
             return response()->json($provinces);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت استان‌های پیش‌نویس با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
@@ -526,7 +526,7 @@ class ProvinceController extends Controller
     {
 
         try {
-            $query = Province::published()->with(['posts','committees','users']);
+            $query = Province::published()->with(['posts','committees','users','member']);
 
             $provinces = $query->paginate(10);
             return response()->json($provinces);
@@ -585,7 +585,7 @@ class ProvinceController extends Controller
     public function frontSingleProvince(Request $request)
     {
         try {
-            $province = Province::SingleProvincePublished($request->slug)->with(['posts','committees','users'])->first();
+            $province = Province::SingleProvincePublished($request->slug)->with(['posts','committees','users','member'])->first();
             return response()->json($province);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت استان‌ منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);

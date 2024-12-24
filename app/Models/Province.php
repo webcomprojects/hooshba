@@ -28,6 +28,10 @@ class Province extends Model
     {
         return $this->hasMany(User::class);
     }
+    public function member()
+    {
+        return $this->hasMany(User::class);
+    }
 
 
     public function scopePublished($query)

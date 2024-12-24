@@ -225,6 +225,7 @@ class MemberController extends Controller
                 'image' => 'nullable',
                 'educational_background' => 'nullable|array',
                 'executive_background' => 'nullable|array',
+                'province_id' => 'nullable|exists:provinces,id',
                 'is_published' => 'boolean',
             ])->validate();
 
@@ -356,6 +357,7 @@ class MemberController extends Controller
                 'image' => 'nullable',
                 'educational_background' => 'nullable|array',
                 'executive_background' => 'nullable|array',
+                'province_id' => 'nullable|exists:provinces,id',
                 'is_published' => 'boolean',
             ])->validate();
 

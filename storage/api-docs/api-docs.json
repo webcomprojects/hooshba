@@ -4505,6 +4505,791 @@
                     }
                 }
             }
+        },
+        "/regions": {
+            "get": {
+                "tags": [
+                    "Regions"
+                ],
+                "summary": "دریافت لیست محله‌ها",
+                "description": "این متد لیست محله‌ها را با قابلیت فیلتر بر اساس وضعیت انتشار بازمی‌گرداند.",
+                "operationId": "getRegions",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "فیلتر وضعیت انتشار محله‌ها",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published"
+                            ],
+                            "example": "published"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست محله‌ها با موفقیت دریافت شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "لیست محله‌ها",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "description": "لینک‌های صفحه‌بندی",
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "description": "اطلاعات صفحه‌بندی",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت لیست محله‌ها با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت محله ها با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Regions"
+                ],
+                "summary": "ایجاد محله جدید",
+                "description": "این متد برای ایجاد یک محله جدید استفاده می‌شود.",
+                "operationId": "createRegion",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "نام محله",
+                                        "type": "string",
+                                        "example": "منطقه 1"
+                                    },
+                                    "slug": {
+                                        "description": "نامک محله (اختیاری)",
+                                        "type": "string",
+                                        "example": "manategh-1"
+                                    },
+                                    "ordering": {
+                                        "description": "ترتیب نمایش (اختیاری)",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "is_published": {
+                                        "description": "وضعیت انتشار محله (اختیاری)",
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "محله با موفقیت ایجاد شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "محله ها با موفقیت ایجاد شد."
+                                        },
+                                        "province": {
+                                            "description": "اطلاعات محله ایجاد شده",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "description": "جزئیات خطاهای اعتبارسنجی",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "ایجاد محله با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "ایجاد محله ها با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/regions/{id}": {
+            "get": {
+                "tags": [
+                    "Regions"
+                ],
+                "summary": "دریافت اطلاعات یک محله",
+                "description": "این متد اطلاعات یک محله خاص را بر اساس شناسه بازمی‌گرداند.",
+                "operationId": "getRegionById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه محله برای دریافت اطلاعات",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "اطلاعات محله با موفقیت دریافت شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "اطلاعات محله",
+                                    "properties": {
+                                        "id": {
+                                            "description": "شناسه محله",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "description": "نام محله",
+                                            "type": "string",
+                                            "example": "منطقه ۱"
+                                        },
+                                        "provinces": {
+                                            "description": "لیست استان‌های مرتبط",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "محله یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "محله ها یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت اطلاعات محله با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت محله ها با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Regions"
+                ],
+                "summary": "ویرایش اطلاعات محله",
+                "description": "این متد برای به‌روزرسانی اطلاعات یک محله مشخص استفاده می‌شود.",
+                "operationId": "updateRegion",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه محله برای ویرایش",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "نام محله",
+                                        "type": "string",
+                                        "example": "منطقه 1 ویرایش شده"
+                                    },
+                                    "slug": {
+                                        "description": "نامک محله (اختیاری)",
+                                        "type": "string",
+                                        "example": "manategh-1-edited"
+                                    },
+                                    "ordering": {
+                                        "description": "ترتیب نمایش (اختیاری)",
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "is_published": {
+                                        "description": "وضعیت انتشار محله (اختیاری)",
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "محله با موفقیت به‌روزرسانی شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "محله ها با موفقیت به‌روزرسانی شد."
+                                        },
+                                        "province": {
+                                            "description": "اطلاعات محله به‌روزرسانی شده",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "محله یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "محله ها یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "اعتبارسنجی شکست خورد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "اعتبارسنجی شکست خورد."
+                                        },
+                                        "details": {
+                                            "description": "جزئیات خطاهای اعتبارسنجی",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "به‌روزرسانی محله با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "به‌روزرسانی محله ها با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Regions"
+                ],
+                "summary": "حذف یک محله",
+                "description": "این متد برای حذف یک محله مشخص استفاده می‌شود.",
+                "operationId": "deleteRegion",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "شناسه محله‌ای که باید حذف شود",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "محله با موفقیت حذف شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "محله با موفقیت حذف شد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "محله یافت نشد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "محله یافت نشد."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "حذف محله با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "حذف محله با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/regions/published": {
+            "get": {
+                "tags": [
+                    "Regions"
+                ],
+                "summary": "دریافت محله‌های منتشر شده",
+                "description": "این متد لیست محله‌های منتشر شده را به همراه استان‌های مربوطه برمی‌گرداند.",
+                "operationId": "getPublishedRegions",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "شماره صفحه برای نمایش محله‌های منتشرشده",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست محله‌های منتشرشده با موفقیت دریافت شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "منطقه 1"
+                                                    },
+                                                    "provinces": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 101
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "استان تهران"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 10
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت محله‌های منتشرشده با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت محله‌های منتشرشده با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/regions/front-all-regions": {
+            "get": {
+                "tags": [
+                    "Front Regions"
+                ],
+                "summary": "دریافت تمامی محله‌های منتشر شده",
+                "description": "این متد لیست تمامی محله‌های منتشر شده را به همراه استان‌های مرتبط نمایش می‌دهد.",
+                "operationId": "frontAllRegions",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "شماره صفحه برای نمایش محله‌های منتشرشده",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "لیست محله‌های منتشرشده با موفقیت دریافت شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "منطقه 1"
+                                                    },
+                                                    "provinces": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 101
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "استان تهران"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 10
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت محله‌های منتشرشده با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت محله‌های منتشرشده با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/regions/front-single-region": {
+            "get": {
+                "tags": [
+                    "Front Regions"
+                ],
+                "summary": "دریافت اطلاعات یک محله منتشر شده",
+                "description": "این متد جزئیات مربوط به یک محله منتشر شده را به همراه استان‌های مرتبط نمایش می‌دهد.",
+                "operationId": "frontSingleRegion",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "query",
+                        "description": "اسلاگ محله‌ای که باید دریافت شود",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "اطلاعات محله با موفقیت دریافت شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "منطقه 1"
+                                        },
+                                        "provinces": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 101
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "استان تهران"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "دریافت محله منتشر شده با شکست مواجه شد.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "دریافت محله منتشر شده با شکست مواجه شد."
+                                        },
+                                        "message": {
+                                            "description": "پیام خطا",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
         }
     },
     "tags": [
@@ -4531,6 +5316,14 @@
         {
             "name": "Provinces",
             "description": "Provinces"
+        },
+        {
+            "name": "Regions",
+            "description": "Regions"
+        },
+        {
+            "name": "Front Regions",
+            "description": "Front Regions"
         }
     ]
 }

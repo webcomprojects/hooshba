@@ -28,6 +28,9 @@ return new class extends Migration
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
 
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces')->onDelete('restrict');
+
 
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
