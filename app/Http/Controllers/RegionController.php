@@ -57,7 +57,7 @@ class RegionController extends Controller
     {
         try {
             $type = $request->query('type');
-            $query = Region::query();
+            $query = Region::with('provinces');
 
             if ($type === 'published') {
                 $query->published();
@@ -519,7 +519,7 @@ class RegionController extends Controller
     public function frontSingleRegion(Request $request)
     {
         try {
-            $item = Region::SingleProvincePublished($request->slug)->with(['provinces'])->first();
+            $item = Region::SingleRegionPublished($request->slug)->with(['provinces'])->first();
             return response()->json($item);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت محله منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
