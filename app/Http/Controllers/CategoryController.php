@@ -51,7 +51,7 @@ class CategoryController extends Controller
             $query = Category::query();
 
             if ($request->filled('type')) {
-                if ($request->type === "committee") {
+                if ($request->type === "member") {
                     $query->with('member')->where('type', 'member');
                 } elseif ($request->type === "post") {
                     $query->with('posts')->where('type', 'post');
@@ -182,7 +182,7 @@ class CategoryController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255|unique:categories',
-                'type' => 'required|string|in:committee,post',
+                'type' => 'required|string|in:member,post',
                 'parent_id' => 'nullable',
             ]);
 
@@ -263,7 +263,7 @@ class CategoryController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'sometimes|string|max:255|unique:categories,name,' . $id,
-                'type' => 'required|string|in:committee,post',
+                'type' => 'required|string|in:member,post',
                 'parent_id' => 'nullable',
             ]);
 
