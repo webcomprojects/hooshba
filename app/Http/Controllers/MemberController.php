@@ -63,7 +63,7 @@ class MemberController extends Controller
     {
         try {
 
-            $query = Member::all();
+            $query = Member::query();
 
             if ($request->has('type')){
                 $query->where('type',$request->type);
