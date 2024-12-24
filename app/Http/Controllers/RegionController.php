@@ -57,7 +57,7 @@ class RegionController extends Controller
     {
         try {
             $type = $request->query('type');
-            $query = Region::with(['provinces']);
+            $query = Region::with('provinces');
 
             if ($type === 'published') {
                 $query->published();
