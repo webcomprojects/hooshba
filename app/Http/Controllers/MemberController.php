@@ -506,7 +506,7 @@ class MemberController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/members/front/all",
+     *     path="/members/front-all-members",
      *     summary="دریافت لیست اعضا منتشرشده",
      *     description="این متد لیست اعضا منتشرشده را با قابلیت فیلتر نوع بازمی‌گرداند.",
      *     operationId="getFrontAllMembers",
@@ -573,7 +573,7 @@ class MemberController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/members/front/{slug}",
+     *     path="/members/front-single-member/{slug}",
      *     summary="دریافت اطلاعات یک عضو منتشرشده",
      *     description="این متد اطلاعات یک عضو منتشرشده را بر اساس اسلاگ بازمی‌گرداند.",
      *     operationId="getFrontSingleMember",
