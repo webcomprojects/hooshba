@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Region extends Model
 {
+    use HasFactory;
     protected $fillable = ['slug', 'name', 'ordering', 'is_published', 'published_at'];
     public function provinces()
     {
