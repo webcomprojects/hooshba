@@ -43,7 +43,7 @@
                                             "type": "string",
                                             "example": "کد تایید با موفقیت ارسال شد."
                                         },
-                                        "cach_key": {
+                                        "cache_key": {
                                             "type": "string",
                                             "example": "mobile_12345"
                                         },
@@ -86,7 +86,7 @@
                 "operationId": "verifyCode",
                 "parameters": [
                     {
-                        "name": "cach_key",
+                        "name": "cache_key",
                         "in": "query",
                         "description": "کلید ذخیره شده برای موبایل",
                         "required": true,
@@ -218,7 +218,7 @@
                         }
                     },
                     {
-                        "name": "cach_key",
+                        "name": "cache_key",
                         "in": "query",
                         "description": "کلید ذخیره شده برای موبایل",
                         "required": true,
@@ -472,7 +472,7 @@
                 "operationId": "resendVerificationCode",
                 "parameters": [
                     {
-                        "name": "cach_key",
+                        "name": "cache_key",
                         "in": "query",
                         "description": "کلید ذخیره شده برای موبایل",
                         "required": true,
