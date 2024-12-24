@@ -70,7 +70,7 @@ class MemberController extends Controller
             }
 
 
-            $provinces = $query->paginate(10);
+            $provinces = $query->orderBy('created_at','desc')->paginate(10);
 
             return response()->json($provinces);
         } catch (\Exception $e) {
