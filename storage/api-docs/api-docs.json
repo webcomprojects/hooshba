@@ -1938,17 +1938,13 @@
                 "operationId": "getMembers",
                 "parameters": [
                     {
-                        "name": "type",
-                        "in": "query",
-                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
-                        "required": false,
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
                         "schema": {
                             "type": "string",
-                            "enum": [
-                                "published",
-                                "draft"
-                            ],
-                            "example": "published"
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                         }
                     },
                     {
@@ -2017,17 +2013,13 @@
                 "operationId": "storeMember",
                 "parameters": [
                     {
-                        "name": "type",
-                        "in": "query",
-                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
-                        "required": false,
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
                         "schema": {
                             "type": "string",
-                            "enum": [
-                                "published",
-                                "draft"
-                            ],
-                            "example": "published"
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                         }
                     }
                 ],
@@ -2217,17 +2209,13 @@
                 "operationId": "getMemberById",
                 "parameters": [
                     {
-                        "name": "type",
-                        "in": "query",
-                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
-                        "required": false,
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
                         "schema": {
                             "type": "string",
-                            "enum": [
-                                "published",
-                                "draft"
-                            ],
-                            "example": "published"
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                         }
                     },
                     {
@@ -2309,17 +2297,13 @@
                 "operationId": "updateMember",
                 "parameters": [
                     {
-                        "name": "type",
-                        "in": "query",
-                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
-                        "required": false,
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
                         "schema": {
                             "type": "string",
-                            "enum": [
-                                "published",
-                                "draft"
-                            ],
-                            "example": "published"
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                         }
                     },
                     {
@@ -2533,17 +2517,13 @@
                 "operationId": "deleteMember",
                 "parameters": [
                     {
-                        "name": "type",
-                        "in": "query",
-                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
-                        "required": false,
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
                         "schema": {
                             "type": "string",
-                            "enum": [
-                                "published",
-                                "draft"
-                            ],
-                            "example": "published"
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                         }
                     },
                     {
@@ -2628,17 +2608,13 @@
                 "operationId": "getPublishedMembers",
                 "parameters": [
                     {
-                        "name": "type",
-                        "in": "query",
-                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
-                        "required": false,
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "توکن احراز هویت به صورت Bearer Token",
+                        "required": true,
                         "schema": {
                             "type": "string",
-                            "enum": [
-                                "published",
-                                "draft"
-                            ],
-                            "example": "published"
+                            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
                         }
                     }
                 ],

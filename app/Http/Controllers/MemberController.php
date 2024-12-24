@@ -19,15 +19,14 @@ class MemberController extends Controller
      *     operationId="getMembers",
      *     tags={"Members"},
      *          @OA\Parameter(
-     *          name="type",
-     *          in="query",
-     *          required=false,
+     *          name="Authorization",
+     *          in="header",
+     *          required=true,
      *          @OA\Schema(
      *              type="string",
-     *              enum={"published", "draft"},
-     *              example="published"
+     *              example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
      *          ),
-     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *          description="توکن احراز هویت به صورت Bearer Token"
      *      ),
      *     @OA\Parameter(
      *         name="type",
@@ -87,15 +86,14 @@ class MemberController extends Controller
      *     operationId="getMemberById",
      *     tags={"Members"},
      *          @OA\Parameter(
-     *          name="type",
-     *          in="query",
-     *          required=false,
+     *          name="Authorization",
+     *          in="header",
+     *          required=true,
      *          @OA\Schema(
      *              type="string",
-     *              enum={"published", "draft"},
-     *              example="published"
+     *              example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
      *          ),
-     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *          description="توکن احراز هویت به صورت Bearer Token"
      *      ),
      *     @OA\Parameter(
      *         name="id",
@@ -154,15 +152,14 @@ class MemberController extends Controller
      *     operationId="storeMember",
      *     tags={"Members"},
      *          @OA\Parameter(
-     *          name="type",
-     *          in="query",
-     *          required=false,
+     *          name="Authorization",
+     *          in="header",
+     *          required=true,
      *          @OA\Schema(
      *              type="string",
-     *              enum={"published", "draft"},
-     *              example="published"
+     *              example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
      *          ),
-     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *          description="توکن احراز هویت به صورت Bearer Token"
      *      ),
      *     @OA\RequestBody(
      *         required=true,
@@ -264,15 +261,14 @@ class MemberController extends Controller
      *     operationId="updateMember",
      *     tags={"Members"},
      *          @OA\Parameter(
-     *          name="type",
-     *          in="query",
-     *          required=false,
+     *          name="Authorization",
+     *          in="header",
+     *          required=true,
      *          @OA\Schema(
      *              type="string",
-     *              enum={"published", "draft"},
-     *              example="published"
+     *              example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
      *          ),
-     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *          description="توکن احراز هویت به صورت Bearer Token"
      *      ),
      *     @OA\Parameter(
      *         name="id",
@@ -394,15 +390,14 @@ class MemberController extends Controller
      *     operationId="deleteMember",
      *     tags={"Members"},
      *          @OA\Parameter(
-     *          name="type",
-     *          in="query",
-     *          required=false,
+     *          name="Authorization",
+     *          in="header",
+     *          required=true,
      *          @OA\Schema(
      *              type="string",
-     *              enum={"published", "draft"},
-     *              example="published"
+     *              example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
      *          ),
-     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *          description="توکن احراز هویت به صورت Bearer Token"
      *      ),
      *     @OA\Parameter(
      *         name="id",
@@ -463,17 +458,16 @@ class MemberController extends Controller
      *     description="این متد اعضا منتشرشده را به صورت صفحه‌بندی‌شده باز می‌گرداند.",
      *     operationId="getPublishedMembers",
      *     tags={"Members"},
-     *          @OA\Parameter(
-     *          name="type",
-     *          in="query",
-     *          required=false,
-     *          @OA\Schema(
-     *              type="string",
-     *              enum={"published", "draft"},
-     *              example="published"
-     *          ),
-     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
-     *      ),
+     *     @OA\Parameter(
+     *         name="Authorization",
+     *         in="header",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+     *         ),
+     *         description="توکن احراز هویت به صورت Bearer Token"
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="لیست اعضا منتشرشده با موفقیت دریافت شد.",
