@@ -1940,6 +1940,20 @@
                     {
                         "name": "type",
                         "in": "query",
+                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published",
+                                "draft"
+                            ],
+                            "example": "published"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
                         "description": "نوع اعضا برای فیلتر کردن (مثلاً: student یا teacher)",
                         "required": false,
                         "schema": {
@@ -2001,6 +2015,22 @@
                 "summary": "ایجاد عضو جدید",
                 "description": "این متد برای ایجاد یک عضو جدید در سیستم استفاده می‌شود.",
                 "operationId": "storeMember",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published",
+                                "draft"
+                            ],
+                            "example": "published"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2187,6 +2217,20 @@
                 "operationId": "getMemberById",
                 "parameters": [
                     {
+                        "name": "type",
+                        "in": "query",
+                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published",
+                                "draft"
+                            ],
+                            "example": "published"
+                        }
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "شناسه عضو",
@@ -2264,6 +2308,20 @@
                 "description": "این متد اطلاعات یک عضو موجود را به‌روزرسانی می‌کند.",
                 "operationId": "updateMember",
                 "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published",
+                                "draft"
+                            ],
+                            "example": "published"
+                        }
+                    },
                     {
                         "name": "id",
                         "in": "path",
@@ -2475,6 +2533,20 @@
                 "operationId": "deleteMember",
                 "parameters": [
                     {
+                        "name": "type",
+                        "in": "query",
+                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published",
+                                "draft"
+                            ],
+                            "example": "published"
+                        }
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "شناسه عضو برای حذف",
@@ -2554,6 +2626,22 @@
                 "summary": "دریافت اعضا منتشرشده",
                 "description": "این متد اعضا منتشرشده را به صورت صفحه‌بندی‌شده باز می‌گرداند.",
                 "operationId": "getPublishedMembers",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published",
+                                "draft"
+                            ],
+                            "example": "published"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "لیست اعضا منتشرشده با موفقیت دریافت شد.",
@@ -2619,6 +2707,20 @@
                 "description": "این متد لیست اعضا منتشرشده را با قابلیت فیلتر نوع بازمی‌گرداند.",
                 "operationId": "getFrontAllMembers",
                 "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "نوع پست‌ها (منتشر شده یا پیش‌نویس)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "published",
+                                "draft"
+                            ],
+                            "example": "published"
+                        }
+                    },
                     {
                         "name": "type",
                         "in": "query",

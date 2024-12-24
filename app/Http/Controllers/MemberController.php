@@ -18,6 +18,17 @@ class MemberController extends Controller
      *     description="این متد لیستی از اعضا را با امکان فیلتر کردن بر اساس نوع برمی‌گرداند.",
      *     operationId="getMembers",
      *     tags={"Members"},
+     *          @OA\Parameter(
+     *          name="type",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="string",
+     *              enum={"published", "draft"},
+     *              example="published"
+     *          ),
+     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *      ),
      *     @OA\Parameter(
      *         name="type",
      *         in="query",
@@ -75,6 +86,17 @@ class MemberController extends Controller
      *     description="این متد اطلاعات مربوط به یک عضو خاص را بر اساس شناسه برمی‌گرداند.",
      *     operationId="getMemberById",
      *     tags={"Members"},
+     *          @OA\Parameter(
+     *          name="type",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="string",
+     *              enum={"published", "draft"},
+     *              example="published"
+     *          ),
+     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *      ),
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -131,6 +153,17 @@ class MemberController extends Controller
      *     description="این متد برای ایجاد یک عضو جدید در سیستم استفاده می‌شود.",
      *     operationId="storeMember",
      *     tags={"Members"},
+     *          @OA\Parameter(
+     *          name="type",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="string",
+     *              enum={"published", "draft"},
+     *              example="published"
+     *          ),
+     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *      ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -230,6 +263,17 @@ class MemberController extends Controller
      *     description="این متد اطلاعات یک عضو موجود را به‌روزرسانی می‌کند.",
      *     operationId="updateMember",
      *     tags={"Members"},
+     *          @OA\Parameter(
+     *          name="type",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="string",
+     *              enum={"published", "draft"},
+     *              example="published"
+     *          ),
+     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *      ),
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -349,6 +393,17 @@ class MemberController extends Controller
      *     description="این متد یک عضو مشخص را حذف می‌کند.",
      *     operationId="deleteMember",
      *     tags={"Members"},
+     *          @OA\Parameter(
+     *          name="type",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="string",
+     *              enum={"published", "draft"},
+     *              example="published"
+     *          ),
+     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *      ),
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -408,6 +463,17 @@ class MemberController extends Controller
      *     description="این متد اعضا منتشرشده را به صورت صفحه‌بندی‌شده باز می‌گرداند.",
      *     operationId="getPublishedMembers",
      *     tags={"Members"},
+     *          @OA\Parameter(
+     *          name="type",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="string",
+     *              enum={"published", "draft"},
+     *              example="published"
+     *          ),
+     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *      ),
      *     @OA\Response(
      *         response=200,
      *         description="لیست اعضا منتشرشده با موفقیت دریافت شد.",
@@ -448,6 +514,17 @@ class MemberController extends Controller
      *     description="این متد لیست اعضا منتشرشده را با قابلیت فیلتر نوع بازمی‌گرداند.",
      *     operationId="getFrontAllMembers",
      *     tags={"Members"},
+     *          @OA\Parameter(
+     *          name="type",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="string",
+     *              enum={"published", "draft"},
+     *              example="published"
+     *          ),
+     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
+     *      ),
      *     @OA\Parameter(
      *         name="type",
      *         in="query",
