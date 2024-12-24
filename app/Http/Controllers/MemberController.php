@@ -511,17 +511,6 @@ class MemberController extends Controller
      *     description="این متد لیست اعضا منتشرشده را با قابلیت فیلتر نوع بازمی‌گرداند.",
      *     operationId="getFrontAllMembers",
      *     tags={"Members"},
-     *          @OA\Parameter(
-     *          name="type",
-     *          in="query",
-     *          required=false,
-     *          @OA\Schema(
-     *              type="string",
-     *              enum={"published", "draft"},
-     *              example="published"
-     *          ),
-     *          description="نوع پست‌ها (منتشر شده یا پیش‌نویس)"
-     *      ),
      *     @OA\Parameter(
      *         name="type",
      *         in="query",
