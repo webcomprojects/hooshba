@@ -50,7 +50,7 @@ class AuthController extends Controller
      *         description="کد تایید با موفقیت ارسال شد.",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="کد تایید با موفقیت ارسال شد."),
-     *             @OA\Property(property="cach_key", type="string", example="mobile_12345"),
+     *             @OA\Property(property="cache_key", type="string", example="mobile_12345"),
      *             @OA\Property(property="code", type="integer", example=123456)
      *         )
      *     ),
@@ -101,7 +101,7 @@ class AuthController extends Controller
 /*    public function sendVerificationCode(Request $request)
     {
         $uniqid = uniqid();
-        $cach_key = 'mobile_' . $uniqid;
+        $cache_key = 'mobile_' . $uniqid;
 
         $code = rand(100000, 999999);
 
@@ -135,13 +135,13 @@ class AuthController extends Controller
 
 
 
-        Cache::put($cach_key, $request->mobile, now()->addMinutes(6));
+        Cache::put($cache_key, $request->mobile, now()->addMinutes(6));
 
         // اینجا می‌توانید کد ارسال پیامک را اضافه کنید
         // مثلا:
         // SmsService::send($request->mobile, "Your verification code is: $code");
 
-        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cach_key' => $cach_key, 'code' => $code], 200);
+        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key, 'code' => $code], 200);
     }*/
 
     /**
@@ -152,7 +152,7 @@ class AuthController extends Controller
      *     operationId="verifyCode",
      *     tags={"Authentication"},
      *     @OA\Parameter(
-     *         name="cach_key",
+     *         name="cache_key",
      *         in="query",
      *         required=true,
      *         @OA\Schema(
@@ -235,9 +235,9 @@ class AuthController extends Controller
             'code' => 'required|digits:6',
         ]);
 
-        $cachedMobile = Cache::get($request->cach_key);
+        $cachedMobile = Cache::get($request->cache_key);
 
-        if (Cache::has($request->cach_key)) {
+        if (Cache::has($request->cache_key)) {
             $record = DB::table('verification_codes')
                 ->where('mobile', $cachedMobile)
                 ->where('code', $request->code)
@@ -316,7 +316,7 @@ class AuthController extends Controller
      *         description="تایید رمز عبور"
      *     ),
      *     @OA\Parameter(
-     *         name="cach_key",
+     *         name="cache_key",
      *         in="query",
      *         required=true,
      *         @OA\Schema(
@@ -390,7 +390,7 @@ class AuthController extends Controller
 
 /*    public function register(Request $request)
     {
-        $cachedMobile = Cache::get($request->cach_key);
+        $cachedMobile = Cache::get($request->cache_key);
 
         $existingUser = User::where('mobile', isset($request->mobile) ? $request->mobile : $cachedMobile)->first();
         if ($existingUser) {
@@ -419,7 +419,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        Cache::forget($request->cach_key);
+        Cache::forget($request->cache_key);
 
         return response()->json([
             'message' => 'کاربر با موفقیت ثبت نام کرد.',
@@ -615,7 +615,7 @@ class AuthController extends Controller
      *     operationId="resendVerificationCode",
      *     tags={"Authentication"},
      *     @OA\Parameter(
-     *         name="cach_key",
+     *         name="cache_key",
      *         in="query",
      *         required=true,
      *         @OA\Schema(
@@ -677,8 +677,8 @@ class AuthController extends Controller
 /*    public function resendVerificationCode(Request $request)
     {
 
-        if (Cache::has($request->cach_key)) {
-            $cachedMobile = Cache::get($request->cach_key);
+        if (Cache::has($request->cache_key)) {
+            $cachedMobile = Cache::get($request->cache_key);
             $existingUser = verification_code::where(['mobile' => $cachedMobile, 'status' => 1])->first();
 
             if ($existingUser) {
