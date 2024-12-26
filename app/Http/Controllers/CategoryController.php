@@ -122,7 +122,11 @@ class CategoryController extends Controller
         try {
             $category = Category::with('posts', 'members')->findOrFail($id);
             if ($request->has('type')) {
-                $category = Category::with(".$request->input('type').")->findOrFail($id);
+                if ($request->type === "member") {
+                    $category = Category::with( 'members')->findOrFail($id);
+                } elseif ($request->type === "post") {
+                    $category = Category::with('posts')->findOrFail($id);
+                }
             }
 
             return response()->json($category);
