@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use function App\Helpers\sluggable_helper_function;
 
 class CategoryController extends Controller
 {
@@ -351,7 +352,7 @@ class CategoryController extends Controller
 
     private function generateSlug($name)
     {
-        return Str::slug($name, '-');
+        return  sluggable_helper_function($name);
     }
 
 
