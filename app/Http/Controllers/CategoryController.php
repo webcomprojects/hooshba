@@ -117,10 +117,14 @@ class CategoryController extends Controller
      *     )
      * )
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
         try {
             $category = Category::with('posts', 'members')->findOrFail($id);
+            if ($request->has('type')) {
+                $category = Category::with($request->input('type'))->findOrFail($id);
+            }
+         
             return response()->json($category);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'دسته‌بندی یافت نشد.'], 404);
