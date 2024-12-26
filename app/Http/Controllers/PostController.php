@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use function App\Helpers\sluggable_helper_function;
 
 class PostController extends Controller
 {
@@ -231,7 +232,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $slug = Str::slug($request->title, '-');
+        $slug = sluggable_helper_function($request->title);
         $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
@@ -380,7 +381,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $slug = Str::slug($request->title, '-');
+        $slug = sluggable_helper_function($request->title);
         $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
