@@ -51,14 +51,14 @@ class CategoryController extends Controller
 
             $query = Category::query();
 
-            if ($request->filled('type')) {
+            if ($request->has('type')) {
                 if ($request->type === "member") {
                     $query->where('type', $request->type)->with('members');
                 } elseif ($request->type === "post") {
                     $query->where('type', 'post')->with('posts');
                 }
             } else {
-                $query->with(['posts', 'member']);
+                $query->with(['posts', 'members']);
             }
 
             $categories = $query->paginate(10);
