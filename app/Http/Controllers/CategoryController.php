@@ -53,9 +53,9 @@ class CategoryController extends Controller
 
             if ($request->filled('type')) {
                 if ($request->type === "member") {
-                    $query->with('member')->where('type', 'member');
+                    $query->where('type', $request->type)->with('members');
                 } elseif ($request->type === "post") {
-                    $query->with('posts')->where('type', 'post');
+                    $query->where('type', 'post')->with('posts');
                 }
             } else {
                 $query->with(['posts', 'member']);
