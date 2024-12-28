@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use function App\Helpers\sluggable_helper_function;
@@ -473,6 +474,9 @@ class PostController extends Controller
     {
         try {
             $post = Post::findOrFail($id);
+            if ($post->featured_image && Storage::disk('public')->exists($post->featured_image)) {
+                Storage::disk('public')->delete($post->featured_image);
+            }
             $post->delete();
 
             return response()->json(['message' => 'پست با موفقیت حذف شد.']);
@@ -591,11 +595,11 @@ class PostController extends Controller
             $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
             // ذخیره فایل در مسیر public/uploads/images
-            $filePath = 'uploads/images/' . $fileName;
-            $file->move(public_path('uploads/images'), $fileName);
+            $filePath = 'storage/uploads/images/' . $fileName;
+            $file->move(public_path('storage/uploads/images'), $fileName);
 
             // بازگشت مسیر فایل ذخیره شده
-            return '/uploads/images/' . $fileName;
+            return '/storage/uploads/images/' . $fileName;
 
         } catch (\Exception $e) {
             throw new \Exception('آپلود تصویر با شکست مواجه شد: ' . $e->getMessage());
