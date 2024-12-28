@@ -60,7 +60,6 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        Artisan::call('storage:link');
         try {
             $type = $request->query('type');
             $query = Post::with(['user', 'categories']);
@@ -621,6 +620,7 @@ class PostController extends Controller
      */
     public function frontAllPosts(Request $request)
     {
+        Artisan::call('storage:link');
         try {
             $query = Post::published()->with(['categories']);
             if ($request->filled('province')) {
