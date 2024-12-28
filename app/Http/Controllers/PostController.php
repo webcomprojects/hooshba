@@ -239,7 +239,7 @@ class PostController extends Controller
             $validated = validator($data, [
                 'title' => 'required|string|max:255',
                 'content' => 'required|string',
-                'slug' => 'required|string|unique:posts,slug',
+                'slug' => 'nullable|string|unique:posts,slug',
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'is_published' => 'boolean',
                 'categories' => 'nullable|array',
@@ -584,10 +584,19 @@ class PostController extends Controller
                 $inputName => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
-            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            /*$fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $filePath = $file->storeAs('uploads/images', $fileName, 'public');
+            return '/storage/' . $filePath;*/
 
-            return '/storage/' . $filePath;
+            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            // ذخیره فایل در مسیر public/uploads/images
+            $filePath = 'uploads/images/' . $fileName;
+            $file->move(public_path('uploads/images'), $fileName);
+
+            // بازگشت مسیر فایل ذخیره شده
+            return '/uploads/images/' . $fileName;
+
         } catch (\Exception $e) {
             throw new \Exception('آپلود تصویر با شکست مواجه شد: ' . $e->getMessage());
         }
