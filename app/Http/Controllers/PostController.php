@@ -474,7 +474,7 @@ class PostController extends Controller
     {
         try {
             $post = Post::findOrFail($id);
-            if ($post->featured_image && public_path($post->featured_image)) {
+            if ($post->featured_image) {
                 Storage::disk('public')->delete($post->featured_image);;
             }
             $post->delete();
