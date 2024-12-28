@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use function App\Helpers\sluggable_helper_function;
@@ -620,7 +619,6 @@ class PostController extends Controller
      */
     public function frontAllPosts(Request $request)
     {
-        Artisan::call('storage:link');
         try {
             $query = Post::published()->with(['categories']);
             if ($request->filled('province')) {
