@@ -223,7 +223,7 @@ class MemberController extends Controller
                 'mobile' => 'nullable|digits:11|regex:/^[0][9][0-9]{9,9}$/',
                 'links' => 'nullable|array',
                 'description' => 'nullable|string',
-                'image' => 'nullable',
+                'image' =>  'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'educational_background' => 'nullable|array',
                 'executive_background' => 'nullable|array',
                 'province_id' => 'nullable|exists:provinces,id',
@@ -355,7 +355,7 @@ class MemberController extends Controller
                 'mobile' => 'nullable|digits:11|regex:/^[0][9][0-9]{9,9}$/',
                 'links' => 'nullable|array',
                 'description' => 'nullable|string',
-                'image' => 'nullable',
+                'image' =>  'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'educational_background' => 'nullable|array',
                 'executive_background' => 'nullable|array',
                 'province_id' => 'nullable|exists:provinces,id',
@@ -446,6 +446,9 @@ class MemberController extends Controller
     {
         try {
             $province = Member::findOrFail($id);
+            if(file_exists(public_path($province->image))){
+                unlink(public_path($province->image));
+            }
             $province->delete();
 
             return response()->json(['message' => 'اعضا با موفقیت حذف شد.']);
@@ -456,6 +459,36 @@ class MemberController extends Controller
         }
     }
 
+    private function uploadImage(Request $request, $inputName = 'image')
+    {
+        try {
+            if (!$request->hasFile($inputName)) {
+                return null;
+            }
+
+            $file = $request->file($inputName);
+
+            $validated = $request->validate([
+                $inputName => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            /*$fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('uploads/images', $fileName, 'public');
+            return '/storage/' . $filePath;*/
+
+            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            // ذخیره فایل در مسیر public/uploads/images
+            $filePath = 'storage/uploads/images/' . $fileName;
+            $file->move(public_path('storage/uploads/images'), $fileName);
+
+            // بازگشت مسیر فایل ذخیره شده
+            return '/storage/uploads/images/' . $fileName;
+
+        } catch (\Exception $e) {
+            throw new \Exception('آپلود تصویر با شکست مواجه شد: ' . $e->getMessage());
+        }
+    }
 
     /**
      * @OA\Get(
