@@ -242,6 +242,7 @@ class PostController extends Controller
                 'content' => 'required|string',
                 'slug' => 'nullable|string|unique:posts,slug',
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+                'video' => 'nullable|file|mimes:mp4,avi,mov|max:51200',
                 'is_published' => 'required|boolean|in:0,1',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
@@ -254,6 +255,10 @@ class PostController extends Controller
             if ($request->hasFile('featured_image')) {
                 $imagePath = $this->uploadImage($request);
                 $validated['featured_image'] = $imagePath;
+            }
+            if ($request->hasFile('video')) {
+                $videoPath = $this->uploadVideo($request);
+                $validated['video'] = $videoPath;
             }
 
             $post = Post::create($validated);
@@ -404,6 +409,11 @@ class PostController extends Controller
                 $validated['featured_image'] = $imagePath;
             }
 
+            if ($request->hasFile('video')) {
+                $videoPath = $this->uploadVideo($request);
+                $validated['video'] = $videoPath;
+            }
+
             $post->update($validated);
 
             if (isset($validated['categories'])) {
@@ -476,6 +486,9 @@ class PostController extends Controller
             $post = Post::findOrFail($id);
             if(file_exists(public_path($post->featured_image))){
                 unlink(public_path($post->featured_image));
+            }
+            if(file_exists(public_path($post->video))){
+                unlink(public_path($post->video));
             }
             $post->delete();
 
@@ -603,6 +616,36 @@ class PostController extends Controller
 
         } catch (\Exception $e) {
             throw new \Exception('آپلود تصویر با شکست مواجه شد: ' . $e->getMessage());
+        }
+    }
+
+    private function uploadVideo(Request $request, $inputName = 'video')
+    {
+        try {
+            if (!$request->hasFile($inputName)) {
+                return null;
+            }
+
+            $file = $request->file($inputName);
+
+            $validated = $request->validate([
+                $inputName =>'file|mimes:mp4,avi,mov|max:51200',
+            ]);
+
+            /*$fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('uploads/images', $fileName, 'public');
+            return '/storage/' . $filePath;*/
+
+            $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            // ذخیره فایل در مسیر public/uploads/images
+            $filePath = 'storage/uploads/videos/' . $fileName;
+            $file->move(public_path('storage/uploads/videos'), $fileName);
+
+            // بازگشت مسیر فایل ذخیره شده
+            return '/storage/uploads/videos/' . $fileName;
+
+        } catch (\Exception $e) {
+            throw new \Exception('آپلود ویدیو با شکست مواجه شد: ' . $e->getMessage());
         }
     }
 

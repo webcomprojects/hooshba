@@ -17,6 +17,7 @@ class Post extends Model
         'user_id',
         'province_id',
         'featured_image',
+        'video',
         'is_published',
         'published_at',
     ];

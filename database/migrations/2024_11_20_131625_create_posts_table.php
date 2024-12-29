@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('posts', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->string('title');
-            $table->text('content');
+            $table->longText('content');
             $table->string('slug')->unique();
 
             $table->uuid('user_id');
@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->foreign('province_id')->references('id')->on('provinces')->onDelete('restrict');
 
             $table->string('featured_image')->nullable();
+            $table->string('video')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
