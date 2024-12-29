@@ -396,6 +396,7 @@ class PostController extends Controller
                 'content' => 'sometimes|string',
                 'slug' => 'sometimes|string|unique:posts,slug,' . $id,
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+                'video' => 'nullable|file|mimes:mp4,avi,mov|max:51200',
                 'is_published' => 'required|boolean|in:0,1',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
