@@ -242,7 +242,7 @@ class PostController extends Controller
                 'content' => 'required|string',
                 'slug' => 'nullable|string|unique:posts,slug',
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                'is_published' => 'boolean',
+                'is_published' => 'required|boolean|in:0,1',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
                 'province_id' => 'nullable|exists:provinces,id'
@@ -391,7 +391,7 @@ class PostController extends Controller
                 'content' => 'sometimes|string',
                 'slug' => 'sometimes|string|unique:posts,slug,' . $id,
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                'is_published' => 'boolean',
+                'is_published' => 'required|boolean|in:0,1',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
                 'province_id' => 'nullable|exists:provinces,id'

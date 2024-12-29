@@ -191,7 +191,7 @@ class RegionController extends Controller
                 'slug' => 'nullable|string|unique:regions,slug',
                 'name' => 'required|string|max:255',
                 'ordering' => 'nullable|integer',
-                'is_published' => 'boolean',
+                'is_published' => 'required|boolean|in:0,1',
             ])->validate();
 
             $validated['published_at'] = now();
@@ -280,7 +280,7 @@ class RegionController extends Controller
                 'slug' => 'sometimes|string|unique:regions,slug,' . $id,
                 'name' => 'required|string|max:255',
                 'ordering' => 'nullable|integer',
-                'is_published' => 'boolean',
+                'is_published' => 'required|boolean|in:0,1',
             ])->validate();
 
             $item = Region::findOrFail($id);

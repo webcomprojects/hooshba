@@ -227,7 +227,7 @@ class MemberController extends Controller
                 'educational_background' => 'nullable|array',
                 'executive_background' => 'nullable|array',
                 'province_id' => 'nullable|exists:provinces,id',
-                'is_published' => 'boolean',
+                'is_published' => 'required|boolean|in:0,1',
             ])->validate();
 
             $validated['published_at'] = now();
@@ -359,7 +359,7 @@ class MemberController extends Controller
                 'educational_background' => 'nullable|array',
                 'executive_background' => 'nullable|array',
                 'province_id' => 'nullable|exists:provinces,id',
-                'is_published' => 'boolean',
+                'is_published' => 'required|boolean|in:0,1',
             ])->validate();
 
             $item = Member::findOrFail($id);

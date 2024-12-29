@@ -204,7 +204,7 @@ class CommitteeController extends Controller
                 'content' => 'nullable|string',
                 'slug' => 'nullable|string|unique:committees,slug',
                 'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                'is_published' => 'boolean',
+                'is_published' => 'required|boolean|in:0,1',
                 'province_id' => 'nullable|exists:provinces,id'
             ])->validate();
 
@@ -321,7 +321,7 @@ class CommitteeController extends Controller
                 'content' => 'nullable|string',
                 'slug' => 'sometimes|string|unique:committees,slug,' . $id,
                 'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                'is_published' => 'boolean',
+                'is_published' => 'required|boolean|in:0,1',
                 'province_id' => 'nullable|exists:provinces,id'
             ])->validate();
 
