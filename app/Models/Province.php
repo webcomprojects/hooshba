@@ -10,6 +10,7 @@ class Province extends Model
         'slug',
         'name',
         'ordering',
+        'region_id',
         'is_published',
         'published_at',
     ];

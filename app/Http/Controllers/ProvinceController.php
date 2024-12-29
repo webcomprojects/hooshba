@@ -237,6 +237,7 @@ class ProvinceController extends Controller
                 'slug' => 'nullable|string|unique:provinces,slug',
                 'name' => 'required|string|max:255',
                 'ordering' => 'nullable|integer',
+                'region_id ' => 'required|exists:regions,id',
                 'is_published' => 'required|boolean|in:0,1',
             ])->validate();
 
@@ -326,7 +327,8 @@ class ProvinceController extends Controller
                 'slug' => 'sometimes|string|unique:provinces,slug,' . $id,
                 'name' => 'required|string|max:255',
                 'ordering' => 'nullable|integer',
-                'is_published' => 'boolean',
+                'region_id ' => 'required|exists:regions,id',
+                'is_published' => 'nullable|boolean|in:0,1',
             ])->validate();
 
             $province = Province::findOrFail($id);
