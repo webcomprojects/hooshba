@@ -193,8 +193,8 @@ class RegionController extends Controller
 
         try {
             $validated = validator($data, [
-                'slug' => 'nullable|string|unique:regions,slug',
                 'name' => 'required|string|max:255',
+                'slug' => 'nullable|string|unique:regions,slug',
                 'ordering' => 'nullable|integer',
                 'is_published' => 'required|boolean|in:0,1',
             ])->validate();
@@ -285,8 +285,8 @@ class RegionController extends Controller
         }
         try {
             $validated = validator($data, [
-                'slug' => 'sometimes|string|unique:regions,slug,' . $id,
                 'name' => 'required|string|max:255',
+                'slug' => 'sometimes|string|unique:regions,slug,' . $id,
                 'ordering' => 'nullable|integer',
                 'is_published' => 'required|boolean|in:0,1',
             ])->validate();
