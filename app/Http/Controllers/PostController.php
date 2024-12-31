@@ -495,12 +495,22 @@ class PostController extends Controller
     {
         try {
             $post = Post::findOrFail($id);
-            if(file_exists(public_path($post->featured_image))){
-                unlink(public_path($post->featured_image));
+
+            // بررسی و حذف تصویر ویژه
+            if (!empty($post->featured_image) && file_exists(public_path($post->featured_image))) {
+                if (is_file(public_path($post->featured_image))) {
+                    unlink(public_path($post->featured_image));
+                }
             }
-            if(file_exists(public_path($post->video))){
-                unlink(public_path($post->video));
+
+            // بررسی و حذف ویدیو
+            if (!empty($post->video) && file_exists(public_path($post->video))) {
+                if (is_file(public_path($post->video))) {
+                    unlink(public_path($post->video));
+                }
             }
+
+            // حذف پست
             $post->delete();
 
             return response()->json(['message' => 'پست با موفقیت حذف شد.']);
@@ -510,6 +520,7 @@ class PostController extends Controller
             return response()->json(['error' => 'حذف پست با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
     }
+
 
     /**
      * @OA\Get(
