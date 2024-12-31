@@ -183,8 +183,13 @@ class RegionController extends Controller
 
     public function store(Request $request)
     {
-        $slug = sluggable_helper_function($request->name);
-        $data = array_merge($request->all(), ['slug' => $slug]);
+        if ($request->has('slug')){
+            $data=$request->all();
+        }else{
+            $slug = sluggable_helper_function($request->name);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+        }
+
 
         try {
             $validated = validator($data, [
@@ -272,9 +277,12 @@ class RegionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $slug = sluggable_helper_function($request->name);
-        $data = array_merge($request->all(), ['slug' => $slug]);
-
+        if ($request->has('slug')){
+            $data=$request->all();
+        }else{
+            $slug = sluggable_helper_function($request->name);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+        }
         try {
             $validated = validator($data, [
                 'slug' => 'sometimes|string|unique:regions,slug,' . $id,

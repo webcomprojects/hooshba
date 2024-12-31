@@ -233,8 +233,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $slug = sluggable_helper_function($request->title);
-        $data = array_merge($request->all(), ['slug' => $slug]);
+        if ($request->has('slug')){
+            $data=$request->all();
+        }else{
+            $slug = sluggable_helper_function($request->title);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+        }
+
 
         try {
             $validated = validator($data, [
@@ -387,8 +392,13 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $slug = sluggable_helper_function($request->title);
-        $data = array_merge($request->all(), ['slug' => $slug]);
+        if ($request->has('slug')){
+            $data=$request->all();
+        }else{
+            $slug = sluggable_helper_function($request->title);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+        }
+
 
         try {
             $validated = validator($data, [
@@ -397,7 +407,7 @@ class PostController extends Controller
                 'slug' => 'sometimes|string|unique:posts,slug,' . $id,
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'video' => 'nullable|file|mimes:mp4,avi,mov|max:51200',
-                'is_published' => 'required|boolean|in:0,1',
+                'is_published' => 'nullable|boolean|in:0,1',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
                 'province_id' => 'nullable|exists:provinces,id'
