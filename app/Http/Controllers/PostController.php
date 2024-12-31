@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
@@ -402,7 +402,7 @@ class PostController extends Controller
 
         try {
             $validated = validator($data, [
-                'title' => 'sometimes|string|max:255',
+                'title' => 'required|string|max:255',
                 'content' => 'sometimes|string',
                 'slug' => 'sometimes|string|unique:posts,slug,' . $id,
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
