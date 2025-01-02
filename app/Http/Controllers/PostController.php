@@ -392,14 +392,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // بررسی داده‌های دریافتی
         if ($request->filled('slug')) {
             $data = $request->all();
         } else {
             $slug = sluggable_helper_function($request->title);
             $data = array_merge($request->all(), ['slug' => $slug]);
         }
-dd($request);
+
         try {
+            // اعتبارسنجی
             $validated = validator($data, [
                 'title' => 'required|string|max:255',
                 'content' => 'nullable|string',
@@ -414,18 +416,22 @@ dd($request);
 
             $post = Post::findOrFail($id);
 
+            // آپلود تصویر
             if ($request->hasFile('featured_image')) {
                 $imagePath = $this->uploadImage($request);
                 $validated['featured_image'] = $imagePath;
             }
 
+            // آپلود ویدیو
             if ($request->hasFile('video')) {
                 $videoPath = $this->uploadVideo($request);
                 $validated['video'] = $videoPath;
             }
 
+            // به‌روزرسانی پست
             $post->update($validated);
 
+            // به‌روزرسانی دسته‌بندی‌ها
             if (isset($validated['categories'])) {
                 $post->categories()->sync($validated['categories']);
             }
