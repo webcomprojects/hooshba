@@ -402,7 +402,7 @@ class PostController extends Controller
 
         try {
             $validated = validator($data, [
-                'title' => 'nullable|string|max:255',
+                'title' => 'required|string|max:255',
                 'content' => 'nullable|string',
                 'slug' => 'nullable|string|unique:posts,slug,' . $id,
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
