@@ -392,13 +392,12 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->has('slug')){
-            $data=$request->all();
-        }else{
+        if ($request->filled('slug')) {
+            $data = $request->all();
+        } else {
             $slug = sluggable_helper_function($request->title);
             $data = array_merge($request->all(), ['slug' => $slug]);
         }
-
 
         try {
             $validated = validator($data, [
