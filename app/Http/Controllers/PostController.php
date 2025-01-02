@@ -390,6 +390,7 @@ class PostController extends Controller
      *     )
      * )
      */
+
     public function update(Request $request, $id)
     {
         // بررسی داده‌های دریافتی
@@ -399,7 +400,7 @@ class PostController extends Controller
             $slug = sluggable_helper_function($request->title);
             $data = array_merge($request->all(), ['slug' => $slug]);
         }
-
+dd($request->all());
         try {
             // اعتبارسنجی
             $validated = validator($data, [
