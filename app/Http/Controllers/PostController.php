@@ -247,7 +247,7 @@ class PostController extends Controller
                 'content' => 'required|string',
                 'slug' => 'nullable|string|unique:posts,slug',
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                'video' => 'nullable|file|mimes:mp4,avi,mov|max:51200',
+                'video' => 'nullable|string',
                 'is_published' => 'required|boolean|in:0,1',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
@@ -261,10 +261,7 @@ class PostController extends Controller
                 $imagePath = $this->uploadImage($request);
                 $validated['featured_image'] = $imagePath;
             }
-            if ($request->hasFile('video')) {
-                $videoPath = $this->uploadVideo($request);
-                $validated['video'] = $videoPath;
-            }
+
 
             $post = Post::create($validated);
 
@@ -408,7 +405,7 @@ class PostController extends Controller
                 'content' => 'nullable|string',
                 'slug' => 'nullable|string|unique:posts,slug,' . $id,
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                'video' => 'nullable|file|mimes:mp4,avi,mov|max:51200',
+                'video' => 'nullable|string',
                 'is_published' => 'nullable|boolean|in:0,1',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
@@ -421,12 +418,6 @@ class PostController extends Controller
             if ($request->hasFile('featured_image')) {
                 $imagePath = $this->uploadImage($request);
                 $validated['featured_image'] = $imagePath;
-            }
-
-            // آپلود ویدیو
-            if ($request->hasFile('video')) {
-                $videoPath = $this->uploadVideo($request);
-                $validated['video'] = $videoPath;
             }
 
             // به‌روزرسانی پست
