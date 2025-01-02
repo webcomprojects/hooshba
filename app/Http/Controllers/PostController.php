@@ -402,9 +402,9 @@ class PostController extends Controller
 
         try {
             $validated = validator($data, [
-                'title' => 'required|string|max:255',
-                'content' => 'sometimes|string',
-                'slug' => 'sometimes|string|unique:posts,slug,' . $id,
+                'title' => 'nullable|string|max:255',
+                'content' => 'nullable|string',
+                'slug' => 'nullable|string|unique:posts,slug,' . $id,
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'video' => 'nullable|file|mimes:mp4,avi,mov|max:51200',
                 'is_published' => 'nullable|boolean|in:0,1',
