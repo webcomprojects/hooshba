@@ -398,7 +398,7 @@ class PostController extends Controller
             $slug = sluggable_helper_function($request->title);
             $data = array_merge($request->all(), ['slug' => $slug]);
         }
-dd($request->all());
+dd($request);
         try {
             $validated = validator($data, [
                 'title' => 'required|string|max:255',
