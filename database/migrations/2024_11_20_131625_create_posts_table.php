@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->foreign('province_id')->references('id')->on('provinces')->onDelete('restrict');
 
             $table->string('featured_image')->nullable();
-            $table->string('video')->nullable();
+            $table->longText('video')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
