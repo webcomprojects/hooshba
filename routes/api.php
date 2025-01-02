@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('posts/published', [PostController::class, 'published']);
     Route::get('posts/draft', [PostController::class, 'draft']);
-    Route::get('posts/{id}/edit', [PostController::class, 'update']);
+    Route::post('posts/{id}/edit', [PostController::class, 'update']);
     Route::apiResource('posts', PostController::class);
 
     Route::get('committees/published', [CommitteeController::class, 'published']);
