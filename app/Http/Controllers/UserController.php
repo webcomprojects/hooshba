@@ -154,6 +154,8 @@ class UserController extends Controller
             }
 
             $item = User::findOrFail($id);
+            $item->roles()->detach();
+
             $item->delete();
 
             return response()->json(['message' => 'کاربر با موفقیت حذف شد.']);
