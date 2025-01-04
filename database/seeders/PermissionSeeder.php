@@ -46,5 +46,33 @@ class PermissionSeeder extends Seeder
 // اختصاص تمام مجوزها به نقش admin
         $permissions = Permission::pluck('name')->toArray(); // دریافت تمام مجوزها
         $adminRole->syncPermissions($permissions);
+
+
+
+
+        // ایجاد یا یافتن نقش writer
+        $writerRole = Role::firstOrCreate(['name' => 'writer']);
+
+// لیست مجوزهای مربوط به posts و categories
+        $allowedPermissions = [
+            'view-posts',
+            'create-posts',
+            'update-posts',
+            'delete-posts',
+            'view-categories',
+            'create-categories',
+            'update-categories',
+            'delete-categories',
+        ];
+        foreach ($allowedPermissions as $permissionName) {
+            // ایجاد یا یافتن مجوز
+            $permission = Permission::firstOrCreate(['name' => $permissionName]);
+
+            // اختصاص مجوز به نقش writer
+            $writerRole->givePermissionTo($permission);
+        }
+
+
+
     }
 }

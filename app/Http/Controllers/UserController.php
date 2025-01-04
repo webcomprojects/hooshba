@@ -62,6 +62,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
+                'mobile' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/|unique:users,mobile',
                 'province_id' => 'required|integer|exists:provinces,id',
                 'level' => 'required|in:user,admin',
                 'roles'      => 'nullable|array',
@@ -107,6 +108,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email,' . $id,
+                'mobile' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/|unique:users,mobile,' . $id,
                 'level' => 'required|in:user,admin',
                 'province_id' => 'required|integer|exists:provinces,id',
                 'roles'      => 'nullable|array',
