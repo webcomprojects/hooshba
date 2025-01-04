@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,6 +20,7 @@ class PermissionSeeder extends Seeder
             'members',
             'permissions',
             'posts',
+            'categories',
             'provinces',
             'regions',
             'roles',
@@ -30,10 +32,8 @@ class PermissionSeeder extends Seeder
 
 // ایجاد مجوزها
         foreach ($modules as $module) {
-            // ایجاد مجوز اصلی برای ماژول (مانند "categories")
             Permission::firstOrCreate(['name' => $module]);
 
-            // ایجاد مجوزهای فرعی برای ماژول (مانند "view-categories")
             foreach ($actions as $action) {
                 $permissionName = "{$action}-{$module}";
                 Permission::firstOrCreate(['name' => $permissionName]);
@@ -47,18 +47,20 @@ class PermissionSeeder extends Seeder
         $permissions = Permission::pluck('name')->toArray(); // دریافت تمام مجوزها
         $adminRole->syncPermissions($permissions);
 
-
-
+       $user = User::where('email', 'almasi.fanweb@gmail.com')->first();
+        $user->assignRole($adminRole);
 
         // ایجاد یا یافتن نقش writer
         $writerRole = Role::firstOrCreate(['name' => 'writer']);
 
 // لیست مجوزهای مربوط به posts و categories
         $allowedPermissions = [
+            'posts',
             'view-posts',
             'create-posts',
             'update-posts',
             'delete-posts',
+            'categories',
             'view-categories',
             'create-categories',
             'update-categories',
