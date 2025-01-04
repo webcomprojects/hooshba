@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Province;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use function App\Helpers\sluggable_helper_function;
@@ -61,6 +62,10 @@ class ProvinceController extends Controller
     public function index(Request $request)
     {
         try {
+            if (Gate::denies('provinces')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $type = $request->query('type');
             $query = Province::with(['posts','committees','users','members']);
 
@@ -126,6 +131,10 @@ class ProvinceController extends Controller
     public function show($id)
     {
         try {
+            if (Gate::denies('view-provinces')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $province = Province::with(['posts','committees','users','members'])->findOrFail($id);
             return response()->json($province);
         } catch (ModelNotFoundException $e) {
@@ -229,10 +238,15 @@ class ProvinceController extends Controller
 
     public function store(Request $request)
     {
-        $slug = sluggable_helper_function($request->name);
-        $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
+            if (Gate::denies('create-provinces')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+            $slug = sluggable_helper_function($request->name);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+
+
             $validated = validator($data, [
                 'slug' => 'nullable|string|unique:provinces,slug',
                 'name' => 'required|string|max:255',
@@ -319,10 +333,15 @@ class ProvinceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $slug = sluggable_helper_function($request->name);
-        $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
+
+            if (Gate::denies('update-provinces')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+            $slug = sluggable_helper_function($request->name);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+
             $validated = validator($data, [
                 'slug' => 'sometimes|string|unique:provinces,slug,' . $id,
                 'name' => 'required|string|max:255',
@@ -386,6 +405,9 @@ class ProvinceController extends Controller
     public function destroy($id)
     {
         try {
+            if (Gate::denies('delete-provinces')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $province = Province::findOrFail($id);
             $province->delete();
 
@@ -437,6 +459,10 @@ class ProvinceController extends Controller
     public function published()
     {
         try {
+            if (Gate::denies('provinces')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $provinces = Province::published()->with(['posts','committees','users'])->paginate(10);
             return response()->json($provinces);
         } catch (\Exception $e) {

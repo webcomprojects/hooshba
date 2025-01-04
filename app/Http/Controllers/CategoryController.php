@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use function App\Helpers\sluggable_helper_function;
@@ -48,7 +49,9 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         try {
-
+            if (Gate::denies('categories')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $query = Category::query();
 
             if ($request->has('type')) {
@@ -120,6 +123,10 @@ class CategoryController extends Controller
     public function show(Request $request,$id)
     {
         try {
+            if (Gate::denies('view-categories')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $category = Category::with('posts', 'members')->findOrFail($id);
             if ($request->has('type')) {
                 if ($request->type === "member") {
@@ -189,6 +196,10 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         try {
+            if (Gate::denies('create-categories')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $validated = $request->validate([
                 'name' => 'required|string|max:255|unique:categories',
                 'type' => 'required|string|in:member,post',
@@ -270,6 +281,10 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if (Gate::denies('update-categories')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $validated = $request->validate([
                 'name' => 'sometimes|string|max:255|unique:categories,name,' . $id,
                 'type' => 'required|string|in:member,post',
@@ -347,6 +362,10 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         try {
+            if (Gate::denies('delete-categories')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $category = Category::findOrFail($id);
             $category->delete();
 

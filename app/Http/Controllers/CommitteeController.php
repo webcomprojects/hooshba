@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Committee;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use function App\Helpers\sluggable_helper_function;
@@ -61,6 +62,9 @@ class CommitteeController extends Controller
     public function index(Request $request)
     {
         try {
+            if (Gate::denies('committees')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $type = $request->query('type');
             $query = Committee::with(['user', 'province']);
 
@@ -122,6 +126,9 @@ class CommitteeController extends Controller
     public function show($id)
     {
         try {
+            if (Gate::denies('view-committees')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $committee = Committee::with(['user', 'province'])->findOrFail($id);
             return response()->json($committee);
         } catch (ModelNotFoundException $e) {
@@ -192,10 +199,14 @@ class CommitteeController extends Controller
 
     public function store(Request $request)
     {
-        $slug = sluggable_helper_function($request->name);
-        $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
+            if (Gate::denies('create-committees')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+            $slug = sluggable_helper_function($request->name);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+
             $validated = validator($data, [
                 'name' => 'required|string|max:255',
                 'phone' => 'nullable|digits:11|regex:/(09)[0-9]{9}/',
@@ -309,10 +320,14 @@ class CommitteeController extends Controller
 
     public function update(Request $request, $id)
     {
-        $slug = sluggable_helper_function($request->name);
-        $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
+            if (Gate::denies('update-committees')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+            $slug = sluggable_helper_function($request->name);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+
             $validated = validator($data, [
                 'name' => 'required|string|max:255',
                 'phone' => 'nullable|digits:11|regex:/(09)[0-9]{9}/',
@@ -391,6 +406,10 @@ class CommitteeController extends Controller
     public function destroy($id)
     {
         try {
+            if (Gate::denies('delete-committees')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $committee = Committee::findOrFail($id);
             $committee->delete();
 
@@ -452,6 +471,9 @@ class CommitteeController extends Controller
     public function published()
     {
         try {
+            if (Gate::denies('committees')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $committees = Committee::published()->with(['user', 'province'])->paginate(10);
             return response()->json($committees);
         } catch (\Exception $e) {
@@ -510,6 +532,9 @@ class CommitteeController extends Controller
     public function draft()
     {
         try {
+            if (Gate::denies('committees')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $committees = Committee::draft()->with(['user', 'province'])->paginate(10);
             return response()->json($committees);
         } catch (\Exception $e) {

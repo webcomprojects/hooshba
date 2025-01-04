@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Region extends Model
 {
-    use HasFactory;
+    use HasFactory,HasRoles;
     protected $fillable = ['slug', 'name', 'ordering', 'is_published', 'published_at'];
     public function provinces()
     {

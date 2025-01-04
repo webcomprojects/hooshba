@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Member extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids,HasRoles;
     protected $fillable = [
         'slug',
         'name',

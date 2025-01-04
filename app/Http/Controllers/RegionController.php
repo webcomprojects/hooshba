@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Province;
 use App\Models\Region;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use function App\Helpers\sluggable_helper_function;
 
 class RegionController extends Controller
 {
+
     /**
      * @OA\Get(
      *     path="/regions",
@@ -56,7 +60,35 @@ class RegionController extends Controller
 
     public function index(Request $request)
     {
+        /*     $user = auth()->user();
+              $user->givePermissionTo('regions');
+              $user->givePermissionTo('update-regions');
+              $user->givePermissionTo('delete-regions');
+              $user->givePermissionTo('create-regions');
+
+              $role = Role::where('name','admin')->first(); // نقش مورد نظر
+              $role->givePermissionTo('regions');
+              $role->givePermissionTo('update-regions');
+              $role->givePermissionTo('delete-regions');
+              $role->givePermissionTo('create-regions');
+              $role->givePermissionTo('show-regions');
+
+      /*
+              $user = auth()->user();
+              $user->assignRole('admin');
+
+              $user = auth()->user();
+              $permissionNames = $user->getPermissionNames();
+              */
+
+
+
         try {
+
+            if (Gate::denies('regions')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $type = $request->query('type');
             $query = Region::with('provinces');
 
@@ -124,6 +156,12 @@ class RegionController extends Controller
     public function show($id)
     {
         try {
+
+            if (Gate::denies('show-regions')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
+
             $item = Region::with(['provinces'])->findOrFail($id);
             return response()->json($item);
         } catch (ModelNotFoundException $e) {
@@ -183,6 +221,7 @@ class RegionController extends Controller
 
     public function store(Request $request)
     {
+
         if ($request->has('slug')){
             $data=$request->all();
         }else{
@@ -192,6 +231,10 @@ class RegionController extends Controller
 
 
         try {
+            if (Gate::denies('create-regions')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $validated = validator($data, [
                 'name' => 'required|string|max:255',
                 'slug' => 'nullable|string|unique:regions,slug',
@@ -277,13 +320,19 @@ class RegionController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($request->has('slug')){
-            $data=$request->all();
-        }else{
-            $slug = sluggable_helper_function($request->name);
-            $data = array_merge($request->all(), ['slug' => $slug]);
-        }
+
         try {
+            if (Gate::denies('update-regions')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
+            if ($request->has('slug')){
+                $data=$request->all();
+            }else{
+                $slug = sluggable_helper_function($request->name);
+                $data = array_merge($request->all(), ['slug' => $slug]);
+            }
+
             $validated = validator($data, [
                 'name' => 'required|string|max:255',
                 'slug' => 'sometimes|string|unique:regions,slug,' . $id,
@@ -349,7 +398,13 @@ class RegionController extends Controller
 
     public function destroy($id)
     {
+
+
         try {
+            if (Gate::denies('delete-regions')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $item = Region::findOrFail($id);
             $item->delete();
 
@@ -412,14 +467,16 @@ class RegionController extends Controller
     public function published()
     {
         try {
+            if (Gate::denies('regions')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $items = Region::published()->with(['provinces'])->paginate(10);
             return response()->json($items);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت محله‌های منتشرشده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
     }
-
-
 
 
     /**

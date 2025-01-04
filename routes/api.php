@@ -7,6 +7,9 @@ use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RegionController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -76,7 +79,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('members/published', [MemberController::class, 'published']);
     Route::apiResource('members', MemberController::class);
 
+    Route::get('all-roles', [MemberController::class, 'getAllRoles']);
+    Route::apiResource('roles', RoleController::class);
 
+    Route::get('all-permissions', [PermissionController::class, 'getAllPermissions']);
+    Route::apiResource('permissions', PermissionController::class)->only(['index', 'show']);
+
+    Route::apiResource('users', UserController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Models\Province;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use function App\Helpers\sluggable_helper_function;
@@ -63,7 +64,9 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         try {
-
+            if (Gate::denies('members')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $query = Member::query();
 
             if ($request->has('type')){
@@ -136,6 +139,10 @@ class MemberController extends Controller
     public function show($id)
     {
         try {
+            if (Gate::denies('view-members')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $item = Member::findOrFail($id);
             return response()->json($item);
         } catch (ModelNotFoundException $e) {
@@ -210,10 +217,15 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        $slug = sluggable_helper_function($request->name);
-        $data = array_merge($request->all(), ['slug' => $slug]);
 
         try {
+
+            if (Gate::denies('create-members')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+            $slug = sluggable_helper_function($request->name);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+
             $validated = validator($data, [
                 'slug' => 'nullable|string|unique:members,slug',
                 'type' => 'required|in:council,presidency',
@@ -339,11 +351,15 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $slug = sluggable_helper_function($request->name);
-        $data = array_merge($request->all(), ['slug' => $slug]);
 
 
         try {
+            if (Gate::denies('update-members')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+            $slug = sluggable_helper_function($request->name);
+            $data = array_merge($request->all(), ['slug' => $slug]);
+
             $validated = validator($data, [
                 'slug' => 'sometimes|string|unique:members,slug,' . $id,
                 'type' => 'required|in:council,presidency',
@@ -445,6 +461,9 @@ class MemberController extends Controller
     public function destroy($id)
     {
         try {
+            if (Gate::denies('delete-members')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $province = Member::findOrFail($id);
             if(file_exists(public_path($province->image))){
                 unlink(public_path($province->image));
@@ -533,6 +552,9 @@ class MemberController extends Controller
     public function published()
     {
         try {
+            if (Gate::denies('members')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $items = Member::published()->paginate(10);
             return response()->json($items);
         } catch (\Exception $e) {

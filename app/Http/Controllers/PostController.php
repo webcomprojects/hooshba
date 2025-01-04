@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
@@ -61,6 +62,9 @@ class PostController extends Controller
     public function index(Request $request)
     {
         try {
+            if (Gate::denies('posts')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $type = $request->query('type');
             $query = Post::with(['user', 'categories']);
 
@@ -129,6 +133,10 @@ class PostController extends Controller
     public function show($id)
     {
         try {
+            if (Gate::denies('view-posts')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $post = Post::with(['user', 'categories'])->findOrFail($id);
             return response()->json($post);
         } catch (ModelNotFoundException $e) {
@@ -233,15 +241,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->has('slug')){
-            $data=$request->all();
-        }else{
-            $slug = sluggable_helper_function($request->title);
-            $data = array_merge($request->all(), ['slug' => $slug]);
-        }
 
 
         try {
+            if (Gate::denies('create-posts')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+            if ($request->has('slug')){
+                $data=$request->all();
+            }else{
+                $slug = sluggable_helper_function($request->title);
+                $data = array_merge($request->all(), ['slug' => $slug]);
+            }
+
             $validated = validator($data, [
                 'title' => 'required|string|max:255',
                 'content' => 'required|string',
@@ -391,14 +403,19 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         // بررسی داده‌های دریافتی
-        if ($request->filled('slug')) {
-            $data = $request->all();
-        } else {
-            $slug = sluggable_helper_function($request->title);
-            $data = array_merge($request->all(), ['slug' => $slug]);
-        }
+
 
         try {
+            if (Gate::denies('update-posts')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+            if ($request->filled('slug')) {
+                $data = $request->all();
+            } else {
+                $slug = sluggable_helper_function($request->title);
+                $data = array_merge($request->all(), ['slug' => $slug]);
+            }
+
             // اعتبارسنجی
             $validated = validator($data, [
                 'title' => 'required|string|max:255',
@@ -491,6 +508,11 @@ class PostController extends Controller
     public function destroy($id)
     {
         try {
+
+            if (Gate::denies('delete-posts')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
+
             $post = Post::findOrFail($id);
 
             // بررسی و حذف تصویر ویژه
@@ -556,6 +578,10 @@ class PostController extends Controller
     public function published()
     {
         try {
+
+            if (Gate::denies('posts')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $posts = Post::published()->with(['user', 'categories'])->paginate(10);
             return response()->json($posts);
         } catch (\Exception $e) {
@@ -600,6 +626,9 @@ class PostController extends Controller
     public function draft()
     {
         try {
+            if (Gate::denies('posts')) {
+                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+            }
             $posts = Post::draft()->with(['user', 'categories'])->paginate(10);
             return response()->json($posts);
         } catch (\Exception $e) {
