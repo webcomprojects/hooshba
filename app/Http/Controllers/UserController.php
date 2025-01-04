@@ -63,7 +63,7 @@ class UserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'province_id' => 'required|integer|exists:provinces,id',
-                'level' => 'required|int|in:user,admin',
+                'level' => 'required|in:user,admin',
                 'roles'      => 'nullable|array',
                 'password' => 'required|min:8|confirmed',
             ]);
