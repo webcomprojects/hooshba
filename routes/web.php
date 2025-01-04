@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,17 +16,4 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/clear-cache', function () {
-    // پاک کردن کش‌های Laravel
-    Artisan::call('cache:clear');
-    Artisan::call('config:clear');
-    Artisan::call('route:clear');
-    Artisan::call('view:clear');
-    Artisan::call('permission:cache-reset');
-
-    return "تمام کش‌ها با موفقیت پاک شدند!";
-});
-
-
-
 
