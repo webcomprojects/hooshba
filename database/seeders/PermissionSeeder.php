@@ -47,8 +47,8 @@ class PermissionSeeder extends Seeder
         $permissions = Permission::pluck('name')->toArray(); // دریافت تمام مجوزها
         $adminRole->syncPermissions($permissions);
 
-       $user = User::where('email', 'almasi.fanweb@gmail.com')->first();
-        $user->assignRole($adminRole);
+      /* $user = User::where('email', 'almasi.fanweb@gmail.com')->first();
+        $user->assignRole($adminRole);*/
 
         // ایجاد یا یافتن نقش writer
         $writerRole = Role::firstOrCreate(['name' => 'writer']);
