@@ -213,12 +213,16 @@ class AuthController extends Controller
                 ->where('expires_at', '>=', now())
                 ->first();
             if ($record) {
-                DB::table('verification_codes')
-                    ->where('id', $record->id)
-                    ->update([
-                        'status' => 1,
-                    ]);
-                return response()->json(['message' => 'شماره موبایل با موفقیت تایید شد.']);
+                DB::table('verification_codes')->where('id', $record->id)->update(['status' => 1]);
+                if (User::where('mobile', $cachedMobile)->exists()){
+                    $registered=true;
+                }else{
+                    $registered=false;
+                }
+                return response()->json([
+                    'registered' => $registered,
+                    'message' => 'شماره موبایل با موفقیت تایید شد.'
+                ]);
             }
             return response()->json(['message' => 'کد نامعتبر است یا منقضی شده است.'], 422);
         } else {
