@@ -30,6 +30,7 @@ class User extends Authenticatable
         'mobile',
         'email',
         'user',
+        'level',
         'province_id',
         'password',
     ];
