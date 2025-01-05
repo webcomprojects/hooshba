@@ -12,7 +12,7 @@ if (!function_exists('send_sms')) {
             'verification-code' =>$message,
         );
         $rcpt_nm = array($mobile);
-        $pattern_code = 'iica8tcb9a3up27';
+        $pattern_code = 'iica8tcb9a3up27'; // pattern code
         $url = 'https://ippanel.com/patterns/pattern?username=' . $user . '&password=' . urlencode($pass) . '&from=' . $fromNum . '&to=' . json_encode($rcpt_nm) . '&input_data=' . urlencode(json_encode($input_data)) . '&pattern_code=' . $pattern_code;
         $handler = curl_init($url);
         curl_setopt($handler, CURLOPT_CUSTOMREQUEST, 'POST');
