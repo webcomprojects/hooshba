@@ -759,4 +759,15 @@ class AuthController extends Controller
             return response()->json(['message' => 'زمان شما به پایان رسید.'], 400);
         }
     }
+
+    public function experts_list(Request $request)
+    {
+        $user = $request->user();
+        if ($user->level == 'expert' or $user->level == 'admin') {
+            $users = User::with('usermetas')->where('level', 'expert')->get();
+            return response()->json($users);
+        }else{
+            return response()->json(['message' => 'دسترسی مجاز نیست.'], 503);
+        }
+    }
 }
