@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use function App\Helpers\insert_user_meta;
 use function App\Helpers\send_sms;
 
 /**
@@ -98,51 +99,51 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key], 200);
     }
-/*    public function sendVerificationCode(Request $request)
-    {
-        $uniqid = uniqid();
-        $cache_key = 'mobile_' . $uniqid;
+    /*    public function sendVerificationCode(Request $request)
+        {
+            $uniqid = uniqid();
+            $cache_key = 'mobile_' . $uniqid;
 
-        $code = rand(100000, 999999);
+            $code = rand(100000, 999999);
 
-        $request->validate([
-            'mobile' => 'required|regex:/^[0][9][0-9]{9,9}$/',
-        ]);
+            $request->validate([
+                'mobile' => 'required|regex:/^[0][9][0-9]{9,9}$/',
+            ]);
 
-        $existingUser = verification_code::where(['mobile' => $request->mobile, 'status' => 1])->first();
+            $existingUser = verification_code::where(['mobile' => $request->mobile, 'status' => 1])->first();
 
-        if ($existingUser) {
-            return response()->json(['message' => 'این شماره موبایل قبلاً تایید و ثبت شده است.'], 400);
-        } else {
-            $existingUser = verification_code::where(['mobile' => $request->mobile])->first();
             if ($existingUser) {
-                DB::table('verification_codes')
-                    ->where('mobile', $request->mobile)
-                    ->update([
+                return response()->json(['message' => 'این شماره موبایل قبلاً تایید و ثبت شده است.'], 400);
+            } else {
+                $existingUser = verification_code::where(['mobile' => $request->mobile])->first();
+                if ($existingUser) {
+                    DB::table('verification_codes')
+                        ->where('mobile', $request->mobile)
+                        ->update([
+                            'code' => $code,
+                            'expires_at' => now()->addMinutes(6),
+                        ]);
+                } else {
+                    DB::table('verification_codes')->insert([
+                        'id' => Str::uuid()->toString(),
+                        'mobile' => $request->mobile,
                         'code' => $code,
                         'expires_at' => now()->addMinutes(6),
                     ]);
-            } else {
-                DB::table('verification_codes')->insert([
-                    'id' => Str::uuid()->toString(),
-                    'mobile' => $request->mobile,
-                    'code' => $code,
-                    'expires_at' => now()->addMinutes(6),
-                ]);
+                }
             }
-        }
 
 
 
 
-        Cache::put($cache_key, $request->mobile, now()->addMinutes(6));
+            Cache::put($cache_key, $request->mobile, now()->addMinutes(6));
 
-        // اینجا می‌توانید کد ارسال پیامک را اضافه کنید
-        // مثلا:
-        // SmsService::send($request->mobile, "Your verification code is: $code");
+            // اینجا می‌توانید کد ارسال پیامک را اضافه کنید
+            // مثلا:
+            // SmsService::send($request->mobile, "Your verification code is: $code");
 
-        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key, 'code' => $code], 200);
-    }*/
+            return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'cache_key' => $cache_key, 'code' => $code], 200);
+        }*/
 
     /**
      * @OA\Post(
@@ -214,10 +215,10 @@ class AuthController extends Controller
                 ->first();
             if ($record) {
                 DB::table('verification_codes')->where('id', $record->id)->update(['status' => 1]);
-                if (User::where('mobile', $cachedMobile)->exists()){
-                    $registered=true;
-                }else{
-                    $registered=false;
+                if (User::where('mobile', $cachedMobile)->exists()) {
+                    $registered = true;
+                } else {
+                    $registered = false;
                 }
                 return response()->json([
                     'registered' => $registered,
@@ -233,34 +234,34 @@ class AuthController extends Controller
 
     }
 
-/*    public function verifyCode(Request $request)
-    {
-        $request->validate([
-            'code' => 'required|digits:6',
-        ]);
+    /*    public function verifyCode(Request $request)
+        {
+            $request->validate([
+                'code' => 'required|digits:6',
+            ]);
 
-        $cachedMobile = Cache::get($request->cache_key);
+            $cachedMobile = Cache::get($request->cache_key);
 
-        if (Cache::has($request->cache_key)) {
-            $record = DB::table('verification_codes')
-                ->where('mobile', $cachedMobile)
-                ->where('code', $request->code)
-                ->where('status', 0)
-                ->where('expires_at', '>=', now())
-                ->first();
-            if ($record) {
-                DB::table('verification_codes')
-                    ->where('id', $record->id)
-                    ->update([
-                        'status' => 1,
-                    ]);
-                return response()->json(['message' => 'شماره موبایل با موفقیت تایید شد.']);
+            if (Cache::has($request->cache_key)) {
+                $record = DB::table('verification_codes')
+                    ->where('mobile', $cachedMobile)
+                    ->where('code', $request->code)
+                    ->where('status', 0)
+                    ->where('expires_at', '>=', now())
+                    ->first();
+                if ($record) {
+                    DB::table('verification_codes')
+                        ->where('id', $record->id)
+                        ->update([
+                            'status' => 1,
+                        ]);
+                    return response()->json(['message' => 'شماره موبایل با موفقیت تایید شد.']);
+                }
+                return response()->json(['message' => 'کد نامعتبر است یا منقضی شده است.'], 422);
+            } else {
+                return response()->json(['message' => 'زمان شما به پایان رسید.'], 404);
             }
-            return response()->json(['message' => 'کد نامعتبر است یا منقضی شده است.'], 422);
-        } else {
-            return response()->json(['message' => 'زمان شما به پایان رسید.'], 404);
-        }
-    }*/
+        }*/
 
     /**
      * @OA\Post(
@@ -393,44 +394,44 @@ class AuthController extends Controller
         }
     }
 
-/*    public function register(Request $request)
-    {
-        $cachedMobile = Cache::get($request->cache_key);
+    /*    public function register(Request $request)
+        {
+            $cachedMobile = Cache::get($request->cache_key);
 
-        $existingUser = User::where('mobile', isset($request->mobile) ? $request->mobile : $cachedMobile)->first();
-        if ($existingUser) {
-            return response()->json(['message' => 'این شماره موبایل قبلاً تایید و ثبت شده است.'], 400);
-        }
+            $existingUser = User::where('mobile', isset($request->mobile) ? $request->mobile : $cachedMobile)->first();
+            if ($existingUser) {
+                return response()->json(['message' => 'این شماره موبایل قبلاً تایید و ثبت شده است.'], 400);
+            }
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
-            'province_id' => 'required|number|exists:provinces,id'
-        ]);
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:8|confirmed',
+                'province_id' => 'required|number|exists:provinces,id'
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
 
-        $user = User::create([
-            'id' => Str::uuid()->toString(),
-            'name' => $request->name,
-            'email' => $request->email,
-            'mobile' => $cachedMobile,
-            'province_id' => $request->province_id,
-            'password' => Hash::make($request->password),
-        ]);
+            $user = User::create([
+                'id' => Str::uuid()->toString(),
+                'name' => $request->name,
+                'email' => $request->email,
+                'mobile' => $cachedMobile,
+                'province_id' => $request->province_id,
+                'password' => Hash::make($request->password),
+            ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+            $token = $user->createToken('auth_token')->plainTextToken;
 
-        Cache::forget($request->cache_key);
+            Cache::forget($request->cache_key);
 
-        return response()->json([
-            'message' => 'کاربر با موفقیت ثبت نام کرد.',
-            'token' => $token,
-        ], 201);
-    }*/
+            return response()->json([
+                'message' => 'کاربر با موفقیت ثبت نام کرد.',
+                'token' => $token,
+            ], 201);
+        }*/
 
     /**
      * @OA\Post(
@@ -549,26 +550,26 @@ class AuthController extends Controller
         ]);
     }
 
-  /*  public function login(Request $request)
-    {
-        $request->validate([
-            'mobile' => 'required|regex:/^[0][9][0-9]{9,9}$/',
-            'password' => 'required',
-        ]);
+    /*  public function login(Request $request)
+      {
+          $request->validate([
+              'mobile' => 'required|regex:/^[0][9][0-9]{9,9}$/',
+              'password' => 'required',
+          ]);
 
-        $user = User::where('mobile', $request->mobile)->first();
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'اطلاعات ورود نامعتبر است.'], 401);
-        }
+          $user = User::where('mobile', $request->mobile)->first();
+          if (!$user || !Hash::check($request->password, $user->password)) {
+              return response()->json(['message' => 'اطلاعات ورود نامعتبر است.'], 401);
+          }
 
-        $user->tokens()->delete();
-        $token = $user->createToken('auth_token')->plainTextToken;
+          $user->tokens()->delete();
+          $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'ورود با موفقیت انجام شد.',
-            'token' => $token,
-        ]);
-    }*/
+          return response()->json([
+              'message' => 'ورود با موفقیت انجام شد.',
+              'token' => $token,
+          ]);
+      }*/
 
     /**
      * @OA\Post(
@@ -679,36 +680,83 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.'], 200);
     }
-/*    public function resendVerificationCode(Request $request)
+    /*    public function resendVerificationCode(Request $request)
+        {
+
+            if (Cache::has($request->cache_key)) {
+                $cachedMobile = Cache::get($request->cache_key);
+                $existingUser = verification_code::where(['mobile' => $cachedMobile, 'status' => 1])->first();
+
+                if ($existingUser) {
+                    return response()->json(['message' => 'این شماره موبایل قبلاً تایید و ثبت شده است.'], 400);
+                } else {
+                    $code = rand(100000, 999999);
+
+                    DB::table('verification_codes')
+                        ->where('mobile', $cachedMobile)
+                        ->update([
+                            'code' => $code,
+                            'expires_at' => now()->addMinutes(6),
+                        ]);
+
+                    Cache::put('mobile', $cachedMobile, now()->addMinutes(6));
+                }
+            } else {
+                return response()->json(['message' => 'زمان شما به پایان رسید.'], 404);
+            }
+
+
+
+            // اینجا می‌توانید کد ارسال پیامک را اضافه کنید
+            // SmsService::send($request->mobile, "Your verification code is: $code");
+
+            return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'code' => $code], 200);
+        }*/
+
+    public function register_expert(Request $request)
     {
-
         if (Cache::has($request->cache_key)) {
-            $cachedMobile = Cache::get($request->cache_key);
-            $existingUser = verification_code::where(['mobile' => $cachedMobile, 'status' => 1])->first();
 
+            $cachedMobile = Cache::get($request->cache_key);
+
+            $existingUser = User::where('mobile', isset($request->mobile) ? $request->mobile : $cachedMobile)->first();
             if ($existingUser) {
                 return response()->json(['message' => 'این شماره موبایل قبلاً تایید و ثبت شده است.'], 400);
-            } else {
-                $code = rand(100000, 999999);
-
-                DB::table('verification_codes')
-                    ->where('mobile', $cachedMobile)
-                    ->update([
-                        'code' => $code,
-                        'expires_at' => now()->addMinutes(6),
-                    ]);
-
-                Cache::put('mobile', $cachedMobile, now()->addMinutes(6));
             }
+
+            // $validator = Validator::make($request->all(), [
+            //     'name' => 'required|string|max:255',
+            //     'email' => 'required|email|unique:users,email',
+            //     'province_id' => 'required|integer|exists:provinces,id',
+            //     'password' => 'required|min:8|confirmed',
+            // ]);
+
+            // if ($validator->fails()) {
+            //     return response()->json(['errors' => $validator->errors()], 422);
+            // }
+
+            $user = User::create([
+                'id' => Str::uuid()->toString(),
+                'name' => $request->name,
+                'email' => $request->email,
+                'mobile' => $cachedMobile,
+                'level' => 'expert',
+                'province_id' => $request->province_id,
+                'password' => Hash::make($request->password),
+            ]);
+
+            insert_user_meta($user->id, 'register_info', $request->info);
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            Cache::forget($request->cache_key);
+
+            return response()->json([
+                'message' => 'کاربر با موفقیت ثبت نام کرد.',
+                'token' => $token,
+            ], 201);
         } else {
-            return response()->json(['message' => 'زمان شما به پایان رسید.'], 404);
+            return response()->json(['message' => 'زمان شما به پایان رسید.'], 400);
         }
-
-
-
-        // اینجا می‌توانید کد ارسال پیامک را اضافه کنید
-        // SmsService::send($request->mobile, "Your verification code is: $code");
-
-        return response()->json(['message' => 'کد تایید با موفقیت ارسال شد.', 'code' => $code], 200);
-    }*/
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Models\UserMeta;
+
 if (!function_exists('send_sms')) {
     function send_sms($mobile, $message)
     {
@@ -9,7 +11,7 @@ if (!function_exists('send_sms')) {
         $pass = 'Fanweb@2021#';
         $fromNum = '+983000505';
         $input_data = array(
-            'verification-code' =>$message,
+            'verification-code' => $message,
         );
         $rcpt_nm = array($mobile);
         $pattern_code = 'iica8tcb9a3up27'; // pattern code
@@ -84,4 +86,15 @@ function sluggable_helper_function($string, $separator = '-')
     $map = $_transliteration + $merge;
     unset($_transliteration);
     return preg_replace(array_keys($map), array_values($map), $string);
+}
+
+if (!function_exists('insert_user_meta')) {
+    function insert_user_meta($user_id, $key, $value)
+    {
+        $meta = new UserMeta();
+        $meta->user_id = $user_id;
+        $meta->key = $key;
+        $meta->value = $value;
+        $meta->save();
+    }
 }

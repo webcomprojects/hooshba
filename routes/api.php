@@ -88,6 +88,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    
 });
 
 
