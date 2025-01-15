@@ -765,7 +765,7 @@ class AuthController extends Controller
         $user = $request->user();
         if ($user->level == 'council' or $user->level == 'admin') {
             $users = User::with('usermetas')->where('level', 'expert')->get();
-            return response()->json(unserialize($users));
+            return $users;
         }else{
             return response()->json(['message' => 'دسترسی مجاز نیست.'], 503);
         }
