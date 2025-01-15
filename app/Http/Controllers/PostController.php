@@ -403,6 +403,8 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
 
+        dd($request->categories);
+
         // بررسی داده‌های دریافتی
         // try {
         if (Gate::denies('update-posts')) {
