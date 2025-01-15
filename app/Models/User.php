@@ -73,4 +73,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Province::class);
     }
+
+    public function usermetas()
+    {
+        return $this->hasMany(UserMeta::class);
+    }
 }
