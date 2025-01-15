@@ -402,6 +402,8 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        dd($request->all());
         // بررسی داده‌های دریافتی
         try {
             if (Gate::denies('update-posts')) {
@@ -411,12 +413,7 @@ class PostController extends Controller
                 $data = $request->all();
             } else {
                 $slug = sluggable_helper_function($request->title);
-                $data = $request->all();
-                if (!is_string($slug)) {
-                    throw new \Exception('Slug must be a string');
-                }
-                $data = array_merge($data, ['slug' => $slug]);
-                
+                $data = array_merge($request->all(), ['slug' => $slug]);
             }
 
             // اعتبارسنجی
