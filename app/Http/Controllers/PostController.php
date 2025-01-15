@@ -247,9 +247,9 @@ class PostController extends Controller
             if (Gate::denies('create-posts')) {
                 return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
             }
-            if ($request->has('slug')){
-                $data=$request->all();
-            }else{
+            if ($request->has('slug')) {
+                $data = $request->all();
+            } else {
                 $slug = sluggable_helper_function($request->title);
                 $data = array_merge($request->all(), ['slug' => $slug]);
             }
@@ -405,46 +405,46 @@ class PostController extends Controller
 
         // بررسی داده‌های دریافتی
         // try {
-            if (Gate::denies('update-posts')) {
-                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
-            }
-            if ($request->filled('slug')) {
-                $data = $request->all();
-            } else {
-                $slug = sluggable_helper_function($request->title);
-                $data = array_merge($request->all(), ['slug' => $slug]);
-            }
+        if (Gate::denies('update-posts')) {
+            return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
+        }
+        if ($request->filled('slug')) {
+            $data = $request->all();
+        } else {
+            $data = $request->all();
+            $data['slug'] = $request->filled('slug') ? $request->slug : sluggable_helper_function($request->title);
+        }
 
-            // اعتبارسنجی
-            $validated = validator($data, [
-                'title' => 'required|string|max:255',
-                'content' => 'nullable|string',
-                'slug' => 'nullable|string|unique:posts,slug,' . $id,
-                'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-                'video' => 'nullable|string',
-                'is_published' => 'nullable|boolean|in:0,1',
-                'categories' => 'nullable|array',
-                'categories.*' => 'exists:categories,id',
-                'province_id' => 'nullable|exists:provinces,id'
-            ])->validate();
+        // اعتبارسنجی
+        $validated = validator($data, [
+            'title' => 'required|string|max:255',
+            'content' => 'nullable|string',
+            'slug' => 'nullable|string|unique:posts,slug,' . $id,
+            'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'video' => 'nullable|string',
+            'is_published' => 'nullable|boolean|in:0,1',
+            'categories' => 'nullable|array',
+            'categories.*' => 'exists:categories,id',
+            'province_id' => 'nullable|exists:provinces,id'
+        ])->validate();
 
-            $post = Post::findOrFail($id);
+        $post = Post::findOrFail($id);
 
-            // آپلود تصویر
-            if ($request->hasFile('featured_image')) {
-                $imagePath = $this->uploadImage($request);
-                $validated['featured_image'] = $imagePath;
-            }
+        // آپلود تصویر
+        if ($request->hasFile('featured_image')) {
+            $imagePath = $this->uploadImage($request);
+            $validated['featured_image'] = $imagePath;
+        }
 
-            // به‌روزرسانی پست
-            $post->update($validated);
+        // به‌روزرسانی پست
+        $post->update($validated);
 
-            // به‌روزرسانی دسته‌بندی‌ها
-            if (isset($validated['categories'])) {
-                $post->categories()->sync($validated['categories']);
-            }
+        // به‌روزرسانی دسته‌بندی‌ها
+        if (isset($validated['categories'])) {
+            $post->categories()->sync($validated['categories']);
+        }
 
-            return response()->json(['message' => 'پست با موفقیت به‌روزرسانی شد.', 'post' => $post]);
+        return response()->json(['message' => 'پست با موفقیت به‌روزرسانی شد.', 'post' => $post]);
         // } catch (ModelNotFoundException $e) {
         //     return response()->json(['error' => 'پست یافت نشد.'], 404);
         // } catch (ValidationException $e) {
@@ -676,7 +676,7 @@ class PostController extends Controller
             $file = $request->file($inputName);
 
             $validated = $request->validate([
-                $inputName =>'file|mimes:mp4,avi,mov|max:51200',
+                $inputName => 'file|mimes:mp4,avi,mov|max:51200',
             ]);
 
             /*$fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
