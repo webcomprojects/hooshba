@@ -403,8 +403,6 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         // بررسی داده‌های دریافتی
-
-
         try {
             if (Gate::denies('update-posts')) {
                 return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
@@ -413,7 +411,12 @@ class PostController extends Controller
                 $data = $request->all();
             } else {
                 $slug = sluggable_helper_function($request->title);
-                $data = array_merge($request->all(), ['slug' => $slug]);
+                $data = $request->all();
+                if (!is_string($slug)) {
+                    throw new \Exception('Slug must be a string');
+                }
+                $data = array_merge($data, ['slug' => $slug]);
+                
             }
 
             // اعتبارسنجی
