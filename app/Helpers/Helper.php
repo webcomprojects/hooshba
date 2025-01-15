@@ -91,6 +91,8 @@ function sluggable_helper_function($string, $separator = '-')
 if (!function_exists('insert_user_meta')) {
     function insert_user_meta($user_id, $key, $value)
     {
+
+        dd(serialize($value));
         $meta = new UserMeta();
         $meta->user_id = $user_id;
         $meta->key = $key;
