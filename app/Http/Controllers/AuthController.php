@@ -763,7 +763,7 @@ class AuthController extends Controller
     public function experts_list(Request $request)
     {
         $user = $request->user();
-        if ($user->level == 'expert' or $user->level == 'admin') {
+        if ($user->level == 'council' or $user->level == 'admin') {
             $users = User::with('usermetas')->where('level', 'expert')->get();
             return response()->json($users);
         }else{
