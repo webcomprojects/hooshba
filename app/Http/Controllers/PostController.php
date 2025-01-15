@@ -403,9 +403,8 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
 
-        dd($request->all());
         // بررسی داده‌های دریافتی
-        try {
+        // try {
             if (Gate::denies('update-posts')) {
                 return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
             }
@@ -446,13 +445,13 @@ class PostController extends Controller
             }
 
             return response()->json(['message' => 'پست با موفقیت به‌روزرسانی شد.', 'post' => $post]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'پست یافت نشد.'], 404);
-        } catch (ValidationException $e) {
-            return response()->json(['error' => 'اعتبارسنجی شکست خورد.', 'details' => $e->errors()], 422);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'به‌روزرسانی پست با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
-        }
+        // } catch (ModelNotFoundException $e) {
+        //     return response()->json(['error' => 'پست یافت نشد.'], 404);
+        // } catch (ValidationException $e) {
+        //     return response()->json(['error' => 'اعتبارسنجی شکست خورد.', 'details' => $e->errors()], 422);
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => 'به‌روزرسانی پست با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
+        // }
     }
 
     /**
