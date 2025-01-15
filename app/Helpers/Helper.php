@@ -94,7 +94,7 @@ if (!function_exists('insert_user_meta')) {
         $meta = new UserMeta();
         $meta->user_id = $user_id;
         $meta->key = $key;
-        $meta->value = $value;
+        $meta->value = serialize($value);
         $meta->save();
     }
 }
