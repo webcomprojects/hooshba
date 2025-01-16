@@ -351,6 +351,10 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        if ($request->level == 'admin') {
+            return response()->json(['message' => 'عملیات غیر مجاز است!'], 503);
+        }
+
         if (Cache::has($request->cache_key)) {
 
             $cachedMobile = Cache::get($request->cache_key);
@@ -359,6 +363,8 @@ class AuthController extends Controller
             if ($existingUser) {
                 return response()->json(['message' => 'این شماره موبایل قبلاً تایید و ثبت شده است.'], 400);
             }
+
+
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
@@ -715,6 +721,10 @@ class AuthController extends Controller
 
     public function register_expert(Request $request)
     {
+        if ($request->level == 'admin') {
+            return response()->json(['message' => 'عملیات غیر مجاز است!'], 503);
+        }
+        
         if (Cache::has($request->cache_key)) {
 
             $cachedMobile = Cache::get($request->cache_key);
@@ -766,7 +776,7 @@ class AuthController extends Controller
         if ($user->level == 'council' or $user->level == 'admin') {
             $users = User::with('usermetas')->where('level', 'expert')->get();
             return $users;
-        }else{
+        } else {
             return response()->json(['message' => 'دسترسی مجاز نیست.'], 503);
         }
     }
