@@ -28,5 +28,4 @@ class Tag extends Model
             ],
         ];
     }
-    
 }
