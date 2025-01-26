@@ -284,6 +284,7 @@ class PostController extends Controller
             if (!empty($validated['categories'])) {
                 $post->categories()->sync($validated['categories']);
             }
+            
             if (!empty($validated['tags'])) {
                 $tags = [];
                 foreach ($validated['tags'] as $tagName) {
