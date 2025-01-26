@@ -25,7 +25,7 @@ class Post extends Model
         'published_at',
     ];
 
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -41,6 +41,19 @@ class Post extends Model
         return $this->belongsToMany(Category::class);
     }
 
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    protected $appends = ['post_tags'];
+      protected $hidden = ['tags'];
+
+    public function getPostTagsAttribute()
+    {
+        return $this->tags->pluck('name');
+    }
 
     public function scopePublished($query)
     {

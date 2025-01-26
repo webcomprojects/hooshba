@@ -67,7 +67,7 @@ class PostController extends Controller
                 return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
             }
             $type = $request->query('type');
-            $query = Post::with(['user', 'categories']);
+            $query = Post::with(['user', 'categories','tags']);
 
             if ($type === 'published') {
                 $query->published();
@@ -75,7 +75,7 @@ class PostController extends Controller
                 $query->draft();
             }
 
-            $posts = $query->paginate(10);
+            $posts = $query->orderBy('created_at','desc')->paginate(10);
 
             return response()->json($posts);
         } catch (\Exception $e) {
@@ -137,8 +137,7 @@ class PostController extends Controller
             if (Gate::denies('view-posts')) {
                 return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
             }
-
-            $post = Post::with(['user', 'categories'])->findOrFail($id);
+            $post = Post::with(['user', 'categories','tags'])->findOrFail($id);
             return response()->json($post);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'پست یافت نشد.'], 404);
@@ -284,7 +283,7 @@ class PostController extends Controller
             if (!empty($validated['categories'])) {
                 $post->categories()->sync($validated['categories']);
             }
-            
+
             if (!empty($validated['tags'])) {
                 $tags = [];
                 foreach ($validated['tags'] as $tagName) {
