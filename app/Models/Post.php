@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Taggable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids,Taggable;
 
     protected $fillable = [
         'title',
@@ -17,6 +18,8 @@ class Post extends Model
         'user_id',
         'province_id',
         'featured_image',
+        'meta_title',
+        'meta_description',
         'video',
         'is_published',
         'published_at',

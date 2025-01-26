@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -247,9 +248,9 @@ class PostController extends Controller
             if (Gate::denies('create-posts')) {
                 return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
             }
-            if ($request->has('slug')){
-                $data=$request->all();
-            }else{
+            if ($request->has('slug')) {
+                $data = $request->all();
+            } else {
                 $slug = sluggable_helper_function($request->title);
                 $data = array_merge($request->all(), ['slug' => $slug]);
             }
@@ -260,7 +261,10 @@ class PostController extends Controller
                 'slug' => 'nullable|string|unique:posts,slug',
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'video' => 'nullable|string',
+                'meta_title' => 'nullable||string|max:255',
+                'meta_description' => 'nullable||string|max:2048',
                 'is_published' => 'required|boolean|in:0,1',
+                'tags' => 'nullable|array',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
                 'province_id' => 'nullable|exists:provinces,id'
@@ -279,6 +283,17 @@ class PostController extends Controller
 
             if (!empty($validated['categories'])) {
                 $post->categories()->sync($validated['categories']);
+            }
+            if (!empty($validated['tags'])) {
+                $tags = [];
+                foreach ($validated['tags'] as $tagName) {
+                    $tag = Tag::firstOrCreate(
+                        ['name' => $tagName],
+                        ['slug' => sluggable_helper_function($tagName)]
+                    );
+                    $tags[] = $tag->id;
+                }
+                $post->tags()->sync($tags);
             }
 
             return response()->json(['message' => 'پست با موفقیت ایجاد شد.', 'post' => $post], 201);
@@ -661,7 +676,6 @@ class PostController extends Controller
 
             // بازگشت مسیر فایل ذخیره شده
             return '/storage/uploads/images/' . $fileName;
-
         } catch (\Exception $e) {
             throw new \Exception('آپلود تصویر با شکست مواجه شد: ' . $e->getMessage());
         }
@@ -677,7 +691,7 @@ class PostController extends Controller
             $file = $request->file($inputName);
 
             $validated = $request->validate([
-                $inputName =>'file|mimes:mp4,avi,mov|max:51200',
+                $inputName => 'file|mimes:mp4,avi,mov|max:51200',
             ]);
 
             /*$fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
@@ -691,7 +705,6 @@ class PostController extends Controller
 
             // بازگشت مسیر فایل ذخیره شده
             return '/storage/uploads/videos/' . $fileName;
-
         } catch (\Exception $e) {
             throw new \Exception('آپلود ویدیو با شکست مواجه شد: ' . $e->getMessage());
         }

@@ -22,6 +22,9 @@ return new class extends Migration {
             $table->unsignedBigInteger('province_id')->nullable();
             $table->foreign('province_id')->references('id')->on('provinces')->onDelete('restrict');
 
+            $table->text('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
+
             $table->string('featured_image')->nullable();
             $table->longText('video')->nullable();
             $table->boolean('is_published')->default(false);

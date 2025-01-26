@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '3b608626ab1a0c0536df23824ac8dfeee0c60070',
+        'reference' => 'fe5e69ca8c2d2e56619c0797b3a3b1a76f601433',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -28,11 +28,29 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'cocur/slugify' => array(
+            'pretty_version' => 'v4.6.0',
+            'version' => '4.6.0.0',
+            'reference' => '1d674022e9cbefa80b4f51aa3e2375b6e3c14fdb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../cocur/slugify',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'cordoval/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'cviebrock/eloquent-sluggable' => array(
+            'pretty_version' => '11.0.1',
+            'version' => '11.0.1.0',
+            'reference' => 'a4281cf0284a21efc1031a065b112ddd6c826eea',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../cviebrock/eloquent-sluggable',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'darkaonline/l5-swagger' => array(
             'pretty_version' => '8.6.3',
@@ -406,7 +424,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '3b608626ab1a0c0536df23824ac8dfeee0c60070',
+            'reference' => 'fe5e69ca8c2d2e56619c0797b3a3b1a76f601433',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
