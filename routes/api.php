@@ -34,6 +34,7 @@ Route::post('/resend-verification-code', [AuthController::class, 'resendVerifica
 Route::post('/send-verification-code', [AuthController::class, 'sendVerificationCode']);
 Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register/expert', [AuthController::class, 'register_expert']);
 Route::post('/login', [AuthController::class, 'login']);
 
 // front side
@@ -88,6 +89,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::post('/experts/list', [AuthController::class, 'experts_list']);
+
 });
 
 
