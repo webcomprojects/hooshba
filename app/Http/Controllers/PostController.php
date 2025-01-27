@@ -262,8 +262,8 @@ class PostController extends Controller
                 'video' => 'nullable|string',
                 'meta_title' => 'nullable||string|max:255',
                 'meta_description' => 'nullable||string|max:2048',
-                'is_published' => 'required|boolean|in:0,1',
                 'tags' => 'nullable|array',
+                'is_published' => 'required|boolean|in:0,1',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
                 'province_id' => 'nullable|exists:provinces,id'
@@ -438,6 +438,9 @@ class PostController extends Controller
                 'slug' => 'nullable|string|unique:posts,slug,' . $id,
                 'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
                 'video' => 'nullable|string',
+                'meta_title' => 'nullable||string|max:255',
+                'meta_description' => 'nullable||string|max:2048',
+                'tags' => 'nullable|array',
                 'is_published' => 'nullable|boolean|in:0,1',
                 'categories' => 'nullable|array',
                 'categories.*' => 'exists:categories,id',
@@ -458,6 +461,17 @@ class PostController extends Controller
             // به‌روزرسانی دسته‌بندی‌ها
             if (isset($validated['categories'])) {
                 $post->categories()->sync($validated['categories']);
+            }
+            if (!empty($validated['tags'])) {
+                $tags = [];
+                foreach ($validated['tags'] as $tagName) {
+                    $tag = Tag::firstOrCreate(
+                        ['name' => $tagName],
+                        ['slug' => sluggable_helper_function($tagName)]
+                    );
+                    $tags[] = $tag->id;
+                }
+                $post->tags()->sync($tags);
             }
 
             return response()->json(['message' => 'پست با موفقیت به‌روزرسانی شد.', 'post' => $post]);
