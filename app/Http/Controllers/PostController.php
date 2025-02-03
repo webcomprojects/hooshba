@@ -75,7 +75,8 @@ class PostController extends Controller
                 $query->draft();
             }
 
-            $posts = $query->orderBy('created_at','desc')->paginate(10);
+            $take = $request->input('take', 10);
+            $posts = $query->orderBy('created_at', 'desc')->paginate($take);
 
             return response()->json($posts);
         } catch (\Exception $e) {
