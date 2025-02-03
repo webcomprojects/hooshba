@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('memberships', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id')->unique()->primary();
 
               // نوع کاربر (حقیقی یا حقوقی)
               $table->enum('user_type', ['individual', 'corporate']);
@@ -40,12 +40,11 @@ return new class extends Migration
               $table->string('field_of_study')->nullable();
               $table->year('graduation_year')->nullable();
               $table->string('job_title')->nullable();
-              $table->string('company_name')->nullable();
               $table->year('start_year')->nullable();
               $table->year('end_year')->nullable();
 
               // اطلاعات حقوقی
-              $table->string('company_name_corporate')->nullable();
+              $table->string('company_name')->nullable();
               $table->string('company_name_en')->nullable();
               $table->string('company_national_id')->nullable()->unique();
               $table->string('company_phone')->nullable();
@@ -61,6 +60,11 @@ return new class extends Migration
               $table->string('national_card_path')->nullable();
               $table->string('company_logo_path')->nullable();
               $table->string('company_registration_doc')->nullable();
+
+
+              $table->boolean('final_approval')->default(false);
+
+
 
             $table->timestamps();
         });

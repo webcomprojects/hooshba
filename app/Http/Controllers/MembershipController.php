@@ -42,6 +42,19 @@ class MembershipController extends Controller
             'resume_path' => 'nullable|file|mimes:pdf|max:1024',
             'degree_certificate_path' => 'nullable|file|mimes:pdf|max:1024',
             'national_card_path' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+            'education_histories' => 'nullable|array',
+            'education_histories.*.degree' => 'required|string',
+            'education_histories.*.country' => 'required|string',
+            'education_histories.*.institution' => 'required|string',
+            'education_histories.*.field_of_study' => 'required|string',
+            'education_histories.*.specialization' => 'nullable|string',
+            'education_histories.*.graduation_year' => 'required|integer',
+            'job_histories' => 'nullable|array',
+            'job_histories.*.company' => 'required|string',
+            'job_histories.*.position' => 'required|string',
+            'job_histories.*.start_year' => 'required|integer',
+            'job_histories.*.end_year' => 'nullable|integer',
         ];
 
         // حقوقی
@@ -85,8 +98,23 @@ class MembershipController extends Controller
 
         $membership->save();
 
-        return response()->json(['message' => 'عضویت با موفقیت ثبت شد', 'data' => $membership], 201);
-    }
+        if ($request->has('education_histories')) {
+            foreach ($request->education_histories as $edu) {
+                $membership->educationHistories()->create($edu);
+            }
+        }
+
+        if ($request->has('job_histories')) {
+            foreach ($request->job_histories as $job) {
+                $membership->jobHistories()->create($job);
+            }
+        }
+
+        return response()->json([
+            'message' => 'عضویت با موفقیت ثبت شد',
+            'membership' => $membership->load(['educationHistories', 'jobHistories'])
+        ]);
+        }
 
     private function uploadFile(Request $request, $inputName, $folderPath)
     {
