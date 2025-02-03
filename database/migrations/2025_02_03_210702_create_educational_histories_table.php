@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('educational_histories', function (Blueprint $table) {
+        Schema::create('education_histories', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
 
             $table->uuid('membership_id')->nullable();
