@@ -11,7 +11,7 @@ class MembershipController extends Controller
     {
         // اعتبارسنجی عمومی
         $commonRules = [
-            'user_type' => ['required', Rule::in(['individual', 'corporate'])],
+            'user_type' => 'required|in:individual', 'corporate',
             'email' => 'required|email|unique:memberships,email',
             'phone' => 'required|string|max:20',
             'address' => 'required|string',
