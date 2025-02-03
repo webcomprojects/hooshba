@@ -9,7 +9,7 @@ class MembershipController extends Controller
 {
     public function store(Request $request)
     {
-        // اعتبارسنجی عمومی
+        //  عمومی
         $commonRules = [
             'user_type' => 'required|in:individual,corporate',
             'email' => 'required|email|unique:memberships,email',
@@ -24,6 +24,7 @@ class MembershipController extends Controller
             'ai_experience' => 'nullable|string',
         ];
 
+        // حقیقی
         $individualRules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -43,6 +44,7 @@ class MembershipController extends Controller
             'national_card_path' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
+        // حقوقی
         $corporateRules = [
             'company_name_corporate' => 'required|string|max:255',
             'company_name_en' => 'nullable|string|max:255',
@@ -57,31 +59,28 @@ class MembershipController extends Controller
             'company_registration_doc' => 'nullable|file|mimes:pdf|max:2048',
         ];
 
-        // انتخاب اعتبارسنجی متناسب با نوع کاربر
         $rules = $request->user_type === 'individual' ? array_merge($commonRules, $individualRules) : array_merge($commonRules, $corporateRules);
 
-        // اعتبارسنجی داده‌ها
         $validatedData = $request->validate($rules);
 
-        // ایجاد رکورد جدید
         $membership = new Membership();
         $membership->fill($validatedData);
 
         // آپلود فایل‌ها
         if ($request->hasFile('resume_path')) {
-            $membership->resume_path = $this->uploadFile($request, 'resume_path', 'uploads/resumes');
+            $membership->resume_path = $this->uploadFile($request, 'resume_path', 'uploads/memberships/resumes');
         }
         if ($request->hasFile('degree_certificate_path')) {
-            $membership->degree_certificate_path = $this->uploadFile($request, 'degree_certificate_path', 'uploads/certificates');
+            $membership->degree_certificate_path = $this->uploadFile($request, 'degree_certificate_path', 'uploads/memberships/certificates');
         }
         if ($request->hasFile('national_card_path')) {
-            $membership->national_card_path = $this->uploadFile($request, 'national_card_path', 'uploads/national_cards');
+            $membership->national_card_path = $this->uploadFile($request, 'national_card_path', 'uploads/memberships/national_cards');
         }
         if ($request->hasFile('company_logo_path')) {
-            $membership->company_logo_path = $this->uploadFile($request, 'company_logo_path', 'uploads/company_logos');
+            $membership->company_logo_path = $this->uploadFile($request, 'company_logo_path', 'uploads/memberships/company_logos');
         }
         if ($request->hasFile('company_registration_doc')) {
-            $membership->company_registration_doc = $this->uploadFile($request, 'company_registration_doc', 'uploads/registration_docs');
+            $membership->company_registration_doc = $this->uploadFile($request, 'company_registration_doc', 'uploads/memberships/registration_docs');
         }
 
         $membership->save();
