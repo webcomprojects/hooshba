@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
@@ -55,6 +56,8 @@ Route::get('province/front-single-province', [ProvinceController::class, 'frontS
 
 Route::get('members/front-all-members', [MemberController::class, 'frontAllMembers']);
 Route::get('members/front-single-member', [MemberController::class, 'frontSingleMember']);
+
+Route::post('/membership', [MembershipController::class, 'store']);
 
 // admin panel
 Route::middleware('auth:sanctum')->group(function () {
