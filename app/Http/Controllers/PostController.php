@@ -756,7 +756,8 @@ class PostController extends Controller
             if ($request->filled('province')) {
                 $query->where('province_id', $request->province);
             }
-            $posts = $query->paginate(10);
+            $take = $request->input('take', 10);
+            $posts = $query->paginate($take);
             return response()->json($posts);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت پست‌های منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);

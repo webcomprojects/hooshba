@@ -556,8 +556,8 @@ class ProvinceController extends Controller
 
         try {
             $query = Province::published()->with(['posts','committees','users','members']);
-
-            $provinces = $query->paginate(10);
+            $take = $request->input('take', 10);
+            $provinces = $query->paginate($take);
             return response()->json($provinces);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت استان‌های منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);

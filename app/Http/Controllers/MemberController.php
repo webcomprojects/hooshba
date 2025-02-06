@@ -611,7 +611,8 @@ class MemberController extends Controller
             if ($request->has('type')){
                 $query->where('type',$request->type);
             }
-            $items = $query->paginate(10);
+            $take = $request->input('take', 10);
+            $items = $query->paginate($take);
             return response()->json($items);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت اعضاهای منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);

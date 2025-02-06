@@ -628,7 +628,8 @@ class CommitteeController extends Controller
             if ($request->filled('province')) {
                 $query->where('province_id', $request->province);
             }
-            $committees = $query->paginate(10);
+            $take = $request->input('take', 10);
+            $committees = $query->paginate($take);
             return response()->json($committees);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت کمیته‌های منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);

@@ -532,8 +532,8 @@ class RegionController extends Controller
 
         try {
             $query = Region::published()->with(['provinces']);
-
-            $items = $query->paginate(10);
+            $take = $request->input('take', 10);
+            $items = $query->paginate($take);
             return response()->json($items);
         } catch (\Exception $e) {
             return response()->json(['error' => 'دریافت محله‌های منتشر شده با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
