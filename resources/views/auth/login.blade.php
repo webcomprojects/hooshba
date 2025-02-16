@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <input type="submit" class="btn btn-login" value="ورود">
                     </div>
-                    <p>حساب کاربری ندارید! <a class="link-bold" href="register.html">ثبت نام</a> کنید</p>
+                    <p>حساب کاربری ندارید! <a class="link-bold" href="/register">ثبت نام</a> کنید</p>
                 </div>
 
                 </form>
