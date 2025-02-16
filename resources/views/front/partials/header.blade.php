@@ -43,7 +43,7 @@
                             <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
                                 <ul class="navigation">
                                     <li class="active">
-                                        <a href="#">خانه</a>
+                                        <a href="/">خانه</a>
 
                                     </li>
                                     <li class="menu-item-has-children">
