@@ -57,12 +57,12 @@
                                 @include('front.membership.individual-form')
                             </div>
 
-                            <div id="corporateForm" class="d-none">
+                            {{-- <div id="corporateForm" class="d-none">
                                 @include('front.membership.corporate-form')
-                            </div>
+                            </div> --}}
 
 
-                          
+
                             <div class="form-group">
                                 <input type="submit" class="btn btn-login" value="ارسال ">
                             </div>
