@@ -29,7 +29,7 @@ class MembershipController extends Controller
             }
         }
 
-        
+
         //  عمومی
         $commonRules = [
             'user_type' => 'required|in:individual,corporate',
@@ -235,6 +235,10 @@ class MembershipController extends Controller
 
         $rules = $request->user_type === 'individual' ? array_merge($commonRules, $individualRules) : array_merge($commonRules, $corporateRules);
 
+        $request->merge([
+            'ai_experience' => json_encode($request->input('experience_ai', []))
+        ]);
+        
         $validatedData = $request->validate($rules, $messages);
 
         // ذخیره `membership`

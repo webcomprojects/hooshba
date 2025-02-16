@@ -74,7 +74,7 @@ $(document).ready(function () {
     });
 
 
-var indexHistoryItem = $('.career_history_item').length; // شمارش تعداد آیتم‌های موجود
+    var indexHistoryItem = $('.career_history_item').length; // شمارش تعداد آیتم‌های موجود
 
     $('#add_career_history_item').click(function () {
         var template = $('.career_history_item').first().clone(); // کپی اولین آیتم
@@ -152,5 +152,25 @@ var indexHistoryItem = $('.career_history_item').length; // شمارش تعدا�
         $(this).parent('.experiencesAi_item').remove(); // حذف آیتم
     });
 
+
+
+
+    function toggleForms() {
+        var selectedType = $('select[name="user_type"]').val();
+
+        if (selectedType === 'individual') {
+            $('#individualForm').removeClass('d-none').show();
+            $('#corporateForm').addClass('d-none').hide();
+        } else if (selectedType === 'corporate') {
+            $('#corporateForm').removeClass('d-none').show();
+            $('#individualForm').addClass('d-none').hide();
+        }
+    }
+
+    $('select[name="user_type"]').change(function () {
+        toggleForms();
+    });
+
+    toggleForms();
 
 });
