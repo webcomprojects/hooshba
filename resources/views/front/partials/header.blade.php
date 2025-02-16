@@ -48,13 +48,13 @@
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">اخبار</a>
-                                        <ul class="sub-menu">
+                                        {{-- <ul class="sub-menu">
                                             <li><a href='about.html'>درباره  ما (کسب و کار)</a></li>
                                             <li><a href='about-2.html'>درباره ما (سرمایه گذاری)</a></li>
                                             <li><a href='about-5.html'>درباره ما (مشاوره)</a></li>
                                             <li><a href='about-3.html'>درباره ما (بیمه)</a></li>
                                             <li><a href='about-4.html'>درباره ما (دیجیتال مارکتینگ)</a></li>
-                                        </ul>
+                                        </ul> --}}
                                     </li>
                                     <li class="">
                                         <a href="#">برج هوش مصنویی</a>
@@ -62,27 +62,27 @@
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">سامانه ها</a>
-                                        <ul class="sub-menu">
+                                        {{-- <ul class="sub-menu">
                                             <li><a href='about.html'>درباره  ما (کسب و کار)</a></li>
                                             <li><a href='about-2.html'>درباره ما (سرمایه گذاری)</a></li>
                                             <li><a href='about-5.html'>درباره ما (مشاوره)</a></li>
                                             <li><a href='about-3.html'>درباره ما (بیمه)</a></li>
                                             <li><a href='about-4.html'>درباره ما (دیجیتال مارکتینگ)</a></li>
-                                        </ul>
+                                        </ul> --}}
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">درباره ما</a>
-                                        <ul class="sub-menu">
+                                        {{-- <ul class="sub-menu">
                                             <li><a href='about.html'>درباره  ما (کسب و کار)</a></li>
                                             <li><a href='about-2.html'>درباره ما (سرمایه گذاری)</a></li>
                                             <li><a href='about-5.html'>درباره ما (مشاوره)</a></li>
                                             <li><a href='about-3.html'>درباره ما (بیمه)</a></li>
                                             <li><a href='about-4.html'>درباره ما (دیجیتال مارکتینگ)</a></li>
-                                        </ul>
+                                        </ul> --}}
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">ارتباط با ما</a>
-                                        <ul class="sub-menu">
+                                        {{-- <ul class="sub-menu">
                                             <li><a href='services.html'>خدمات ما (کسب و کار)</a></li>
                                             <li><a href='services-2.html'>خدمات ما (سرمایه گذاری)</a></li>
                                             <li><a href='services-3.html'>خدمات ما (مشاوره)</a></li>
@@ -93,7 +93,12 @@
                                             <li><a href='services-details-3.html'>خدمات تکی 3</a></li>
                                             <li><a href='services-details-4.html'>خدمات تکی 4</a></li>
                                             <li><a href='services-details-5.html'>خدمات تکی 5</a></li>
-                                        </ul>
+                                        </ul> --}}
+                                    </li>
+
+                                    <li class="">
+                                        <a href="/membership">عضویت در انجمن</a>
+
                                     </li>
 
 
