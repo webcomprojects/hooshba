@@ -1400,11 +1400,11 @@ describe("validationErrors", function() {
               "query.with.dot.hash": {
                 errors: [
                   {
-                    error: "Value must be an integer", 
+                    error: "Value must be an integer",
                     propKey: "id"
                   },
-                  { 
-                    error: "Value must be a string", 
+                  {
+                    error: "Value must be a string",
                     propKey: "name"
                   }
                 ]
@@ -1418,12 +1418,12 @@ describe("validationErrors", function() {
               "query.arrayWithObjects.hash": {
                 errors: [
                   {
-                    error: "Parameter string value must be valid JSON", 
+                    error: "Parameter string value must be valid JSON",
                     index: 0
                   },
-                  { 
+                  {
                     error: {
-                      error: "Value must be a string", 
+                      error: "Value must be a string",
                       propKey: "name"
                     },
                     index: 1

@@ -21,27 +21,33 @@ return new class extends Migration
               $table->string('email')->unique();
               $table->string('phone');
               $table->text('address');
+              $table->text('address2')->nullable();
               $table->string('city');
               $table->string('state');
               $table->string('country');
               $table->string('postal_code');
-              $table->string('membership_type');
-              $table->integer('membership_fee');
+              $table->string('membership_type')->nullable();
+              $table->integer('membership_fee')->nullable();
               $table->text('ai_experience')->nullable();
+              $table->text('experience_ai_description')->nullable();
 
               // اطلاعات حقیقی
               $table->string('first_name')->nullable();
               $table->string('last_name')->nullable();
-              $table->string('father_name')->nullable();
-              $table->string('national_id')->unique()->nullable();
+              $table->string('referral_code')->nullable();
+              $table->string('referral_name')->nullable();
+              $table->string('birth_certificate_number')->unique()->nullable();
               $table->date('birth_date')->nullable();
-              $table->string('degree')->nullable();
-              $table->string('university')->nullable();
-              $table->string('field_of_study')->nullable();
-              $table->year('graduation_year')->nullable();
-              $table->string('job_title')->nullable();
-              $table->year('start_year')->nullable();
-              $table->year('end_year')->nullable();
+
+            //   جدول جدا در نظر گرفته شده
+            //   $table->string('degree')->nullable();
+            //   $table->string('university')->nullable();
+            //   $table->string('field_of_study')->nullable();
+            //   $table->year('graduation_year')->nullable();
+
+            //   $table->string('job_title')->nullable();
+            //   $table->year('start_year')->nullable();
+            //   $table->year('end_year')->nullable();
 
               // اطلاعات حقوقی
               $table->string('company_name')->nullable();
@@ -55,8 +61,8 @@ return new class extends Migration
               $table->string('representative_phone')->nullable();
 
               // فایل‌ها
-              $table->string('resume_path')->nullable();
-              $table->string('degree_certificate_path')->nullable();
+              $table->string('resume_file')->nullable();
+              $table->string('degree_certificate_image')->nullable();
               $table->string('national_card_path')->nullable();
               $table->string('company_logo_path')->nullable();
               $table->string('company_registration_doc')->nullable();

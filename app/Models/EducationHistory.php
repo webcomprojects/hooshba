@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class EducationHistory extends Model
 {
     use HasUuids;
-    
-    protected $guarded = ['id'];
+
+    protected $fillable = ['id', 'membership_id', 'degree', 'country', 'institution', 'field_of_study', 'specialization', 'graduation_year'];
+
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    public function membership()
+    {
+        return $this->belongsTo(Membership::class, 'membership_id', 'id');
+    }
 }

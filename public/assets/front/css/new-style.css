@@ -1,0 +1,257 @@
+.transparent-header {
+    position: unset;
+    background: #2c2c3a;
+}
+
+.video-slider {
+    position: absolute;
+    right: 0;
+    width: 100%;
+}
+
+.video-slider video {
+    object-fit: cover;
+}
+
+.banner__bg-five {
+    min-height: 400px;
+    padding-top: 0;
+}
+
+#sticky-header .container {
+    max-width: 100%;
+}
+
+#new-news {
+    position: relative;
+    background: #2c2c3a;
+    padding-top: 35px;
+}
+
+.new-news-div {
+    /* position: absolute; */
+    top: -58px;
+    z-index: 1;
+    right: 4%;
+    left: 4%;
+}
+
+.new-news-div-title {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.new-news-div-title h3 {
+    color: #fff;
+    font-size: 1.25rem;
+}
+
+.box-yellow-sizing {
+    width: 20px;
+    height: 20px;
+    background-color: #f0651b;
+    border-radius: 3px;
+    margin-top: 7px;
+    margin-left: 20px;
+}
+
+#new-news .features__item-two {
+    padding: 30px 20px;
+}
+
+#new-news .features__icon-two {
+    width: 125px;
+    height: auto;
+}
+
+#new-news .features__content-two .title {
+    font-size: .875rem;
+    line-height: 1.25rem;
+}
+
+#new-news .features__content-two .list-wrap {
+    font-size: .74rem;
+    margin-top: 10px;
+}
+
+.blog-post-content .title {
+    height: 57px;
+}
+
+.btn-no-arrow::after {
+    content: unset;
+}
+
+.services-content .title {
+    font-size: 17px;
+    height: 61px;
+}
+
+.testimonial__area-two {
+    background: #2c2c3a;
+}
+
+.blog-post-content .title {
+    font-size: 17px;
+}
+
+.testimonial__area-two {
+    padding: 80px 0 90px;
+}
+
+.card-team-area-six .card-info .card-title a {
+    font-size: 19px;
+}
+
+.consulting-inner-wrap {
+    background: #fff;
+}
+
+.consulting-content .content-right .title {
+    color: rgb(115 117 248 / var(--tw-text-opacity, 1));
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+.consulting-content .content-right p {
+    color: rgb(156 163 175/var(--tw-text-opacity, 1));
+}
+
+.footer__area-four {
+    background: #fff;
+    box-shadow: -1px -2px 11px 0px #ccc;
+}
+
+.fw-logo img {
+    max-height: unset;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.color-white {
+    color: white;
+}
+
+.font-s-14p {
+    font-size: 14px;
+}
+.font-s-15p {
+    font-size: 15px;
+}
+
+/* .footer__bottom-four .copyright-text p{
+    color: #fff;
+} */
+body {
+    background-color: #eff3f7;
+}
+
+.footer__top-three .fw-title {
+    color: #3E4073;
+}
+
+.footer__top-three .footer-link-list .list-wrap li a {
+    color: #3E4073;
+}
+
+.project__area-two {
+    background: #eff3f7;
+}
+
+.Innovative-idea img {
+    height: unset;
+    width: 292px;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.project__thumb-two img {
+    height: 400px;
+}
+
+.exhibition {
+    padding: 30px 0 90px;
+}
+
+.blog__post-area-four {
+    padding: 30px 0 90px;
+}
+
+.mb-6rem {
+    margin-bottom: 6rem;
+}
+
+input[name=mobile],
+input[name=phone],
+input[name=national_id],
+input[name=birth_certificate_number],
+input[name=code],
+input[name=email],
+input[type=email],
+input[type=number],
+input[name=password],
+input[name=password_confirmation]
+{
+    direction: ltr;
+    padding-left: 60px !important;
+}
+
+input[name=mobile]::placeholder,
+input[name=phone]::placeholder,
+input[name=national_id]::placeholder,
+input[name=birth_certificate_number]::placeholder,
+input[name=code]::placeholder,
+input[name=email]::placeholder,
+input[type=email]::placeholder,
+input[type=number]::placeholder,
+input[name=password]::placeholder,
+input[name=password_confirmation]::placeholder
+ {
+    text-align: right;
+
+}
+.font-weight-700{
+    font-weight: 700;
+}
+
+.box-form-membership{
+    max-width: 70%;
+}
+.gfield_required{
+    color: #c02b0a;
+    display: inline-block;
+    font-size: 16px;
+    padding-right: 5px;
+}
+hr{
+    border-bottom: 1px solid #000000;
+}
+.register__area-one{
+    background: unset;
+}
+.Educational_background_item,.career_history_item,.experiencesAi_item{
+    position: relative;
+}
+.remove_btn_Educational_background_item,.remove_btn_career_history_item{
+    position: absolute;
+    left: -46px;
+    top: 11px;
+    background: #ff3939 none repeat scroll 0 0;
+    padding: 13px;
+}
+.remove_btn_experiencesAi_item{
+    position: absolute;
+    left: 0;
+    top: unset;
+    background: #ff3939 none repeat scroll 0 0;
+    padding: 13px;
+    bottom: 39px;
+}

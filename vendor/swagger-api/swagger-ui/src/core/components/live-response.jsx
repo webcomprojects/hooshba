@@ -73,7 +73,7 @@ export default class LiveResponse extends React.Component {
 
     return (
       <div>
-        { curlRequest && requestSnippetsEnabled 
+        { curlRequest && requestSnippetsEnabled
           ? <RequestSnippets request={ curlRequest }/>
           : <Curl request={ curlRequest } />
         }

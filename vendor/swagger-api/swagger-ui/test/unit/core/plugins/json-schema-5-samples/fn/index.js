@@ -1,8 +1,8 @@
 import { fromJS } from "immutable"
-import { 
-  createXMLExample, 
-  sampleFromSchema, 
-  memoizedCreateXMLExample, 
+import {
+  createXMLExample,
+  sampleFromSchema,
+  memoizedCreateXMLExample,
   memoizedSampleFromSchema,
   mergeJsonSchema,
 } from "core/plugins/json-schema-5-samples/fn/index"
@@ -2462,7 +2462,7 @@ describe("mergeJsonSchema", function () {
       },
       required: ["name"],
     }
-  
+
     const target = {
       type: "object",
       properties: {

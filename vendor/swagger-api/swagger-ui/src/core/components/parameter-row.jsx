@@ -234,7 +234,7 @@ export default class ParameterRow extends Component {
     if (isOAS3) {
       schema = this.composeJsonSchema(schema)
     }
-    
+
     let format = schema ? schema.get("format") : null
     let type = schema ? schema.get("type") : null
     let itemType = schema ? schema.getIn(["items", "type"]) : null

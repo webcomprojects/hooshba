@@ -17,12 +17,12 @@ return new class extends Migration
             $table->uuid('membership_id')->nullable();
             $table->foreign('membership_id')->references('id')->on('memberships')->onDelete('cascade');
 
-            $table->string('degree');
-            $table->string('country');
-            $table->string('institution');
-            $table->string('field_of_study');
+            $table->string('degree')->nullable();;
+            $table->string('country')->nullable();;
+            $table->string('institution')->nullable();;
+            $table->string('field_of_study')->nullable();;
             $table->string('specialization')->nullable();
-            $table->integer('graduation_year');
+            $table->integer('graduation_year')->nullable();;
             $table->timestamps();
         });
     }

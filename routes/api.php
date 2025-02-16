@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\CommitteeController;
-use App\Http\Controllers\ProvinceController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\MembershipController;
-use App\Http\Controllers\RegionController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\CommitteeController;
+use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\MemberController;
+use App\Http\Controllers\Api\MembershipController;
+use App\Http\Controllers\Api\RegionController;
+use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\PermissionController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

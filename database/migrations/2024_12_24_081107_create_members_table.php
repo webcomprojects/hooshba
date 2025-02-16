@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('job_position')->nullable();
             $table->string('email')->nullable();
             $table->string('mobile')->nullable();
+            $table->string('national_id')->nullable()->unique();
             $table->string('image')->nullable();
             $table->json('links')->nullable();
             $table->text('description')->nullable();

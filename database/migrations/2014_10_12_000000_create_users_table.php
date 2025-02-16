@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->string('name');
+            $table->string('fullName');
+            $table->string('jobTitle');
+            $table->string('education');
+            $table->string('nationalCode')->unique();
             $table->string('email')->unique();
             $table->string('mobile')->unique();
             $table->enum('level', ['admin', 'user'])->default('user')->nullable();
