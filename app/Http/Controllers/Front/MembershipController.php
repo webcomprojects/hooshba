@@ -29,6 +29,7 @@ class MembershipController extends Controller
             }
         }
 
+        
         //  عمومی
         $commonRules = [
             'user_type' => 'required|in:individual,corporate',
