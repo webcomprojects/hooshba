@@ -255,3 +255,29 @@ hr{
     padding: 13px;
     bottom: 39px;
 }
+
+.blog__post-content-two .title{
+    font-size: 18px;
+    min-height: 45px;
+    line-height: 1.4;
+}
+.blog__post-content-two{
+    padding-bottom: 0;
+}
+.sidebar__post-content .title
+{
+    font-size: 13px;
+}
+.blog__details-content > .title {
+    font-size: 30px;
+}
+.tgmenu__main-menu li.menu-item-has-children.menu-arrow-left > a::after{
+    content: "\f104";
+    float: left;
+}
+
+@media (max-width: 1000px) {
+    .box-form-membership {
+        max-width: unset;
+    }
+}

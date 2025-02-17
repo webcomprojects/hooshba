@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Front\MainController;
 use App\Http\Controllers\Front\MembershipController;
+use App\Http\Controllers\Front\PostController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,7 @@ Route::group(['as' => 'front.'], function () {
     Route::get('/get-new-captcha', [MainController::class, 'captcha']);
 
     Route::resource('/membership', MembershipController::class)->only('index','store');
+    Route::resource('/blog', PostController::class);
 
 
 });

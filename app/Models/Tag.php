@@ -20,6 +20,11 @@ class Tag extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function posts()
+    {
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
+
     public function sluggable() : array
     {
         return [

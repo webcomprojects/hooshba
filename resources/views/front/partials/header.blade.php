@@ -47,28 +47,31 @@
 
                                     </li>
                                     <li class="menu-item-has-children">
-                                        <a href="#">اخبار</a>
-                                        {{-- <ul class="sub-menu">
-                                            <li><a href='about.html'>درباره  ما (کسب و کار)</a></li>
-                                            <li><a href='about-2.html'>درباره ما (سرمایه گذاری)</a></li>
-                                            <li><a href='about-5.html'>درباره ما (مشاوره)</a></li>
-                                            <li><a href='about-3.html'>درباره ما (بیمه)</a></li>
-                                            <li><a href='about-4.html'>درباره ما (دیجیتال مارکتینگ)</a></li>
-                                        </ul> --}}
+                                        <a href="/blog">اخبار</a>
+                                         <ul class="sub-menu">
+                                            <li><a href='/blog'>اخبار</a></li>
+                                            <li><a href='/blog?c=رویداد'>رویدادها</a></li>
+                                            <li><a href='/blog?c=نمایشگاه'>نمایشگاه‌ها</a></li>
+                                        </ul>
                                     </li>
                                     <li class="">
-                                        <a href="#">برج هوش مصنویی</a>
+                                        <a href="/">برج هوش مصنویی</a>
 
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">سامانه ها</a>
-                                        {{-- <ul class="sub-menu">
-                                            <li><a href='about.html'>درباره  ما (کسب و کار)</a></li>
-                                            <li><a href='about-2.html'>درباره ما (سرمایه گذاری)</a></li>
-                                            <li><a href='about-5.html'>درباره ما (مشاوره)</a></li>
-                                            <li><a href='about-3.html'>درباره ما (بیمه)</a></li>
-                                            <li><a href='about-4.html'>درباره ما (دیجیتال مارکتینگ)</a></li>
-                                        </ul> --}}
+                                        <ul class="sub-menu">
+                                            <li class="menu-item-has-children menu-arrow-left">
+                                                <a href=''>سامانه آموزشی</a>
+                                                <ul class="sub-menu">
+                                                    <li><a href=''> آموزش عمومی</a></li>
+                                                    <li><a href='https://techwich.org/auth/register'> آموزش تخصصی</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href=''> سامانه خدمات هوش مصنوعی</a></li>
+                                            <li><a href=''> سامانه های متصل</a></li>
+
+                                        </ul>
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">درباره ما</a>

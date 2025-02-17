@@ -27,6 +27,7 @@ return new class extends Migration {
 
             $table->string('featured_image')->nullable();
             $table->longText('video')->nullable();
+            $table->bigInteger('view')->nullable()->default(0);
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();

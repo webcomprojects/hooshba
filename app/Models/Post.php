@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\Taggable;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory, HasUuids,Taggable;
+    use HasFactory, HasUuids,Taggable,Sluggable;
 
     protected $fillable = [
         'title',
@@ -25,7 +26,14 @@ class Post extends Model
         'published_at',
     ];
 
-
+    public function sluggable() : array
+    {
+        return [
+            'slug' => [
+                'source' => 'slug',
+            ],
+        ];
+    }
     public function user()
     {
         return $this->belongsTo(User::class);
