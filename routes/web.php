@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticationController;
+use App\Http\Controllers\Back\AdminDashboardController;
+use App\Http\Controllers\Back\AdminUserController;
+use App\Http\Controllers\Back\UserController;
+use App\Http\Controllers\Front\AdminPostController;
 use App\Http\Controllers\Front\MainController;
 use App\Http\Controllers\Front\MembershipController;
 use App\Http\Controllers\Front\PostController;
@@ -25,6 +29,20 @@ use Illuminate\Support\Facades\Auth;
 Route::group(['as' => 'front.'], function () {
     // ------------------ MainController
     Route::get('/', [MainController::class, 'index'])->name('index');
+    Route::get('/get-new-captcha', [MainController::class, 'captcha']);
+
+    Route::resource('/membership', MembershipController::class)->only('index','store');
+    Route::resource('/blog', PostController::class);
+
+
+});
+
+Route::group(['as' => 'back.','prefix' => 'admin/' ], function () {
+    // ------------------ MainController
+
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('users', AdminUserController::class);
+    Route::resource('posts', AdminPostController::class);
     Route::get('/get-new-captcha', [MainController::class, 'captcha']);
 
     Route::resource('/membership', MembershipController::class)->only('index','store');
