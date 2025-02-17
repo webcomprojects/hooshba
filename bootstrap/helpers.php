@@ -43,7 +43,7 @@ function active_class($route_name, $class = 'active')
     return Route::is($route_name) || Route::is(app()->getLocale() . '.' . $route_name) ? $class : '';
 }
 
-function open_class($route_list, $class = 'open')
+function open_class($route_list, $class = 'active')
 {
     $text = '';
 

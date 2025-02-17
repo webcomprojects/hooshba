@@ -212,7 +212,8 @@ class AuthenticationController extends Controller
         if (Auth::guard('web')->attempt(['mobile' => $request->mobile, 'password' => $request->password], $request->remember)) {
             // if successful, then redirect to their intended location
 
-            User::where('id', auth()->user->id)->update(['updated_at' => Carbon::now()->format('Y-m-d H:m:s')]);
+            $user = Auth::guard('web')->user();
+            User::where('id', $user->id)->update(['updated_at' => Carbon::now()->format('Y-m-d H:m:s')]);
             $request->session()->regenerate();
             $request->session()->put('auth.password_confirmed_at', time());
 
