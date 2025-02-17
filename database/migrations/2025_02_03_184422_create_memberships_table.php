@@ -18,8 +18,8 @@ return new class extends Migration
               $table->enum('user_type', ['individual', 'corporate']);
 
               // فیلدهای مشترک
-              $table->string('email')->unique();
-              $table->string('phone');
+              $table->string('email')->nullable()->unique();
+              $table->string('phone')->nullable();
               $table->text('address');
               $table->text('address2')->nullable();
               $table->string('city');
@@ -53,10 +53,13 @@ return new class extends Migration
               $table->string('company_name')->nullable();
               $table->string('company_name_en')->nullable();
               $table->string('company_national_id')->nullable()->unique();
+              $table->string('company_registration_number')->nullable()->unique();
               $table->string('company_phone')->nullable();
               $table->date('company_established_date')->nullable();
               $table->string('representative_name')->nullable();
               $table->string('representative_national_id')->nullable();
+              $table->string('email_company')->nullable();
+              $table->string('representative_email')->nullable();
               $table->string('website')->nullable();
               $table->string('representative_phone')->nullable();
 

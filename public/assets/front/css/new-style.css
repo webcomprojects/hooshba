@@ -237,7 +237,7 @@ hr{
 .register__area-one{
     background: unset;
 }
-.Educational_background_item,.career_history_item,.experiencesAi_item{
+.Educational_background_item,.career_history_item,.experiencesAi_item,.corporate_experiencesAi_item{
     position: relative;
 }
 .remove_btn_Educational_background_item,.remove_btn_career_history_item{
@@ -247,7 +247,7 @@ hr{
     background: #ff3939 none repeat scroll 0 0;
     padding: 13px;
 }
-.remove_btn_experiencesAi_item{
+.remove_btn_experiencesAi_item,.remove_btn_corporate_experiencesAi_item{
     position: absolute;
     left: 0;
     top: unset;

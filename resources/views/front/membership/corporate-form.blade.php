@@ -6,9 +6,10 @@
      <div class="col-md-6">
          <div class="form-group">
              <label class="text-16-semibold pb-2">نام شرکت </label>
-             <input type="text" class="form-control   @error('first_name') is-invalid @enderror" name="first_name"
-                 value="{{ old('first_name') }}" autofocus="" placeholder="نام شرکت  ">
-             @error('first_name')
+             <input type="text" class="form-control   @error('company_name') is-invalid @enderror"
+                 name="company_name" value="{{ old('company_name') }}" autofocus=""
+                 placeholder="نام شرکت  ">
+             @error('company_name')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -19,9 +20,10 @@
      <div class="col-md-6">
          <div class="form-group">
              <label class="text-16-semibold pb-2"> نام شرکت به انگلیسی </label>
-             <input type="text" name="last_name" class="form-control    @error('last_name') is-invalid @enderror"
-                 placeholder="نام شرکت به انگلیسی " value="{{ old('last_name') }}">
-             @error('last_name')
+             <input type="text" name="company_name_en"
+                 class="form-control    @error('company_name_en') is-invalid @enderror"
+                 placeholder="نام شرکت به انگلیسی " value="{{ old('company_name_en') }}">
+             @error('company_name_en')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -32,9 +34,10 @@
      <div class="col-md-6">
          <div class="form-group">
              <label class="text-16-semibold pb-2">شناسه ملی شرکت <span class="gfield_required">*</span></label>
-             <input type="text" class="form-control   @error('national_id') is-invalid @enderror" name="national_id"
-                 value="{{ old('national_id') }}" required="" autofocus="" placeholder="شناسه ملی شرکت  ">
-             @error('national_id')
+             <input type="text" class="form-control   @error('company_national_id') is-invalid @enderror"
+                 name="company_national_id" value="{{ old('company_national_id') }}" required="" autofocus=""
+                 placeholder="شناسه ملی شرکت  ">
+             @error('company_national_id')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -45,10 +48,10 @@
      <div class="col-md-6">
          <div class="form-group">
              <label class="text-16-semibold pb-2">شماره ثبت شرکت <span class="gfield_required">*</span></label>
-             <input type="text" name="referral_name"
-                 class="form-control  @error('referral_name') is-invalid @enderror" placeholder="شماره ثبت شرکت "
-                 required="" value="{{ old('referral_name') }}">
-             @error('referral_name')
+             <input type="text" name="company_registration_number"
+                 class="form-control  @error('company_registration_number') is-invalid @enderror"
+                 placeholder="شماره ثبت شرکت " required="" value="{{ old('company_registration_number') }}">
+             @error('company_registration_number')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -61,10 +64,10 @@
              <div class="col-md-6">
                  <div class="form-group">
                      <label class="text-16-semibold pb-2"> تاریخ ثبت شرکت <span class="gfield_required">*</span></label>
-                     <input type="text" id="publish_date_picker" name="birth_date"
-                         class="form-control    @error('birth_date') is-invalid @enderror" required=""
-                         placeholder="  تاریخ ثبت شرکت" value="{{ old('birth_date') }}">
-                     @error('birth_date')
+                     <input type="text" name="company_established_date"
+                         class="form-control  publish_date_picker  @error('company_established_date') is-invalid @enderror" required=""
+                         placeholder="  تاریخ ثبت شرکت" value="{{ old('company_established_date') }}">
+                     @error('company_established_date')
                          <span class="invalid-feedback" role="alert">
                              <strong>{{ $message }}</strong>
                          </span>
@@ -77,11 +80,11 @@
      <div class="col-md-6">
          <div class="form-group">
              <label class="text-16-semibold pb-2"> نام و سمت نماینده شرکت در ارتباط با انجمن </label>
-             <input type="text" class="form-control    @error('birth_certificate_number') is-invalid @enderror"
-                 name="birth_certificate_number" value="{{ old('birth_certificate_number') }}" autofocus=""
+             <input type="text" class="form-control    @error('representative_name') is-invalid @enderror"
+                 name="representative_name" value="{{ old('representative_name') }}" autofocus=""
                  placeholder="نام و سمت نماینده شرکت در ارتباط با انجمن">
 
-             @error('birth_certificate_number')
+             @error('representative_name')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -92,11 +95,11 @@
      <div class="col-md-6">
          <div class="form-group">
              <label class="text-16-semibold pb-2"> کد ملی نماینده شرکت</label>
-             <input type="text" class="form-control    @error('birth_certificate_number') is-invalid @enderror"
-                 name="birth_certificate_number" value="{{ old('birth_certificate_number') }}" autofocus=""
+             <input type="text" class="form-control    @error('representative_national_id') is-invalid @enderror"
+                 name="representative_national_id" value="{{ old('representative_national_id') }}" autofocus=""
                  placeholder=" کد ملی نماینده شرکت ">
 
-             @error('birth_certificate_number')
+             @error('representative_national_id')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -197,9 +200,10 @@
      <div class="col-md-6">
          <div class="form-group">
              <label class="text-16-semibold pb-2">پست الکترونیکی شرکت <span class="gfield_required">*</span></label>
-             <input type="email" class="form-control   @error('email') is-invalid @enderror" name="email"
-                 value="{{ old('email') }}" required="" autofocus="" placeholder="پست الکترونیکی شرکت  ">
-             @error('email')
+             <input type="email" class="form-control   @error('email_company') is-invalid @enderror"
+                 name="email_company" value="{{ old('email_company') }}" required="" autofocus=""
+                 placeholder="پست الکترونیکی شرکت  ">
+             @error('email_company')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -209,10 +213,12 @@
 
      <div class="col-md-6">
          <div class="form-group">
-             <label class="text-16-semibold pb-2">پست الکترونیکی نماینده <span class="gfield_required">*</span></label>
-             <input type="email" class="form-control   @error('email') is-invalid @enderror" name="email"
-                 value="{{ old('email') }}" required="" autofocus="" placeholder="پست الکترونیکی نماینده  ">
-             @error('email')
+             <label class="text-16-semibold pb-2">پست الکترونیکی نماینده <span
+                     class="gfield_required">*</span></label>
+             <input type="email" class="form-control   @error('representative_email') is-invalid @enderror"
+                 name="representative_email" value="{{ old('representative_email') }}" required=""
+                 autofocus="" placeholder="پست الکترونیکی نماینده  ">
+             @error('representative_email')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -221,10 +227,10 @@
      </div>
      <div class="col-md-6">
          <div class="form-group">
-             <label class="text-16-semibold pb-2">  وب سایت شرکت </label>
-             <input type="email" class="form-control   @error('email') is-invalid @enderror" name="email"
-                 value="{{ old('email') }}" autofocus="" placeholder="وب سایت شرکت">
-             @error('email')
+             <label class="text-16-semibold pb-2"> وب سایت شرکت </label>
+             <input type="text" class="form-control ltr @error('website') is-invalid @enderror" name="website"
+                 value="{{ old('website') }}" autofocus="" placeholder="وب سایت شرکت">
+             @error('website')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -235,9 +241,10 @@
      <div class="col-md-6">
          <div class="form-group">
              <label class="text-16-semibold pb-2"> شماره همراه نماینده <span class="gfield_required">*</span></label>
-             <input type="text" class="form-control   @error('phone') is-invalid @enderror" name="phone"
-                 value="{{ old('phone') }}" required="" autofocus="" placeholder=" شماره همراه نماینده  ">
-             @error('phone')
+             <input type="text" class="form-control   @error('representative_phone') is-invalid @enderror"
+                 name="representative_phone" value="{{ old('representative_phone') }}" required=""
+                 autofocus="" placeholder=" شماره همراه نماینده  ">
+             @error('representative_phone')
                  <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
                  </span>
@@ -254,7 +261,7 @@
 
      <div class="d-flex justify-content-sm-between">
          <h4 class="title ">تجارب مرتبط با هوش مصنوعی </h4>
-         <div id="add_experiencesAi_item" class="btn btn-no-arrow">افزودن تجربه جدید
+         <div id="add_corporate_experiencesAi_item" class="btn btn-no-arrow">افزودن تجربه جدید
              <i class="fa fa-solid fa-plus"></i>
          </div>
      </div>
@@ -262,17 +269,17 @@
 
 
 
-     <div id="experiencesAi">
+     <div id="corporateExperiencesAi">
          @php
-             $experience_ai = old('experience_ai', []);
+             $corporate_experience_ai = old('corporate_experience_ai', []);
          @endphp
-         @if (count($experience_ai))
-             @foreach ($experience_ai as $index => $exp)
-                 <div class="experiencesAi_item" data-index="{{ $index }}">
+         @if (count($corporate_experience_ai))
+             @foreach ($corporate_experience_ai as $index => $exp)
+                 <div class="corporate_experiencesAi_item" data-index="{{ $index }}">
 
                      @if ($index != 0)
                          <hr>
-                         <button class="remove_btn_experiencesAi_item btn btn-no-arrow"><i
+                         <button class="remove_btn_corporate_experiencesAi_item btn btn-no-arrow"><i
                                  class="fa fa-solid fa-trash"></i></button>
                      @endif
                      <div class="row">
@@ -280,10 +287,10 @@
                              <div class="form-group">
                                  <label class="text-16-semibold pb-2">شرح تجربیات</label>
                                  <input type="text"
-                                     class="form-control @error('experience_ai.' . $index) is-invalid @enderror"
-                                     name="experience_ai[{{ $index }}]" value="{{ $exp }}"
+                                     class="form-control @error('corporate_experience_ai.' . $index) is-invalid @enderror"
+                                     name="corporate_experience_ai[{{ $index }}]" value="{{ $exp }}"
                                      placeholder="شرح تجربیات">
-                                 @error('experience_ai.' . $index)
+                                 @error('corporate_experience_ai.' . $index)
                                      <span class="invalid-feedback" role="alert">
                                          <strong>{{ $message }}</strong>
                                      </span>
@@ -295,22 +302,21 @@
                  </div>
              @endforeach
          @else
-             <div class="experiencesAi_item">
+             <div class="corporate_experiencesAi_item" data-index="0">
+
                  <div class="row">
                      <div class="col-md-11">
                          <div class="form-group">
-                             <label class="text-16-semibold pb-2"> شرح تجربیات </label>
+                             <label class="text-16-semibold pb-2">شرح تجربیات</label>
                              <input type="text"
-                                 class="form-control   @error('experience_ai.*') is-invalid @enderror"
-                                 name="experience_ai[]" value="" autofocus="" placeholder="شرح تجربیات">
-                             @error('experience_ai.*')
-                                 <span class="invalid-feedback" role="alert">
-                                     <strong>{{ $message }}</strong>
-                                 </span>
-                             @enderror
+                                 class="form-control"
+                                 name="corporate_experience_ai[]" value="" placeholder="شرح تجربیات">
+
                          </div>
                      </div>
+
                  </div>
+
              </div>
          @endif
 
@@ -348,7 +354,8 @@
      <div class="row">
          <div class="col-md-6">
              <div class="form-group">
-                 <label class="text-16-semibold pb-2"> تصویر آگهی تاسیس شرکت <span class="gfield_required">*</span></label>
+                 <label class="text-16-semibold pb-2"> تصویر آگهی تاسیس شرکت <span
+                         class="gfield_required">*</span></label>
                  <input type="file" class="form-control   @error('resume_file') is-invalid @enderror"
                      name="resume_file" value="{{ old('resume_file') }}" required="" autofocus="">
                  @error('resume_file')
@@ -360,7 +367,7 @@
                  <p class="mt-2">حداکثر اندازه فایل: 1 MB.</p>
 
                  <p>
-                    لطفا تصویر آگهی تاسیس شرکت در روزنامه رسمی کشور را در قالب pdf بار‌گذاری کنید.
+                     لطفا تصویر آگهی تاسیس شرکت در روزنامه رسمی کشور را در قالب pdf بار‌گذاری کنید.
                  </p>
 
              </div>
@@ -404,7 +411,8 @@
      <label>
          <input type="checkbox" class="cb-remember" name="final_approval" value="1" required
              {{ old('final_approval') == 1 ? 'checked' : '' }}> <span>
-                اینجانب به عنوان نماینده شرکت صحت مشخصات و اطلاعات مندرج در فرم عضویت را تأیید نموده و درخواست عضویت حقوقی درانجمن هوش مصنوعی ایران را دارم.
+             اینجانب به عنوان نماینده شرکت صحت مشخصات و اطلاعات مندرج در فرم عضویت را تأیید نموده و درخواست عضویت حقوقی
+             درانجمن هوش مصنوعی ایران را دارم.
          </span>
      </label>
  </div>

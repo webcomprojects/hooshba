@@ -57,9 +57,9 @@
                                 @include('front.membership.individual-form')
                             </div>
 
-                            {{-- <div id="corporateForm" class="d-none">
+                            <div id="corporateForm" class="d-none">
                                 @include('front.membership.corporate-form')
-                            </div> --}}
+                            </div>
 
 
 

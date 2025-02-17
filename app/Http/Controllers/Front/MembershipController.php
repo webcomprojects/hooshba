@@ -29,12 +29,20 @@ class MembershipController extends Controller
             }
         }
 
+        $company_established_date = null;
+        if ($request->company_established_date) {
+            $company_established_date = explode('-', $request->company_established_date);
+            if (count($company_established_date) >= 2) {
+                $company_established_date = to_english_numbers($company_established_date[0]) . '-' . to_english_numbers($company_established_date[1]) . '-' . to_english_numbers($company_established_date[2]);
+                $request->merge(['company_established_date' => $company_established_date]);
+            }
+        }
+
 
         //  عمومی
         $commonRules = [
             'user_type' => 'required|in:individual,corporate',
-            'email' => 'required|email|unique:memberships,email',
-            'phone' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/',
+
             'address' => 'required|string',
             'address2' => 'nullable|string',
             'city' => 'required|string|max:100',
@@ -43,14 +51,16 @@ class MembershipController extends Controller
             'postal_code' => 'required|string|digits:10',
             'membership_type' => 'nullable|string',
             'membership_fee' => 'nullable|integer|min:0',
-            'ai_experience' => 'nullable|string',
             'final_approval' => 'required|in:1',
+            'ai_experience' => 'nullable|string',
         ];
 
         // حقیقی
         $individualRules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:memberships,email',
+            'phone' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'national_id' => 'required|string|digits:10|unique:memberships,national_id',
             'referral_code' => 'nullable|string|max:255',
             'birth_date' => 'nullable|date',
@@ -59,7 +69,6 @@ class MembershipController extends Controller
             'field_of_study' => 'nullable|string|max:255',
             'graduation_year' => 'nullable|digits:4|integer|min:1900|max:' . date('Y'),
             'job_title' => 'nullable|string|max:255',
-            'company_name' => 'nullable|string|max:255',
             'start_year' => 'nullable|digits:4|integer|min:1900|max:' . date('Y'),
             'end_year' => 'nullable|digits:4|integer|min:1900|max:' . date('Y'),
             'resume_file' => 'required|file|mimes:pdf|max:1024',
@@ -80,22 +89,27 @@ class MembershipController extends Controller
             'job_histories.*.end_year' => 'nullable|integer',
 
 
+
             'experience_ai_description' => 'nullable|max:550',
         ];
 
         // حقوقی
         $corporateRules = [
-            'company_name_corporate' => 'required|string|max:255',
+            'company_name' => 'nullable|string|max:255',
             'company_name_en' => 'nullable|string|max:255',
             'company_national_id' => 'required|string|unique:memberships,company_national_id',
-            'company_phone' => 'required|string|max:20',
+            'company_registration_number' => 'required|string|unique:memberships,company_registration_number',
+            //'company_phone' => 'required|string|max:20',
             'company_established_date' => 'nullable|date',
             'representative_name' => 'required|string|max:255',
             'representative_national_id' => 'required|string|max:20',
-            'website' => 'nullable|url',
+            'email_company' => 'required|string|email',
+            'representative_email' => 'required|string|email',
+           'website' => ['nullable', 'regex:/^(https?:\/\/)?(www\.)?[\w\-]+\.[a-z]{2,6}(\.[a-z]{2,6})?(\/.*)?$/i'],
             'representative_phone' => 'nullable|string|max:20',
             'company_logo_path' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'company_registration_doc' => 'nullable|file|mimes:pdf|max:2048',
+
             'experience_ai_description' => 'nullable|max:1650',
         ];
         $messages = [
@@ -215,6 +229,9 @@ class MembershipController extends Controller
             'company_national_id.required' => 'شناسه ملی شرکت الزامی است.',
             'company_national_id.unique' => 'شناسه ملی شرکت قبلاً ثبت شده است.',
 
+            'company_registration_number.required' => 'شماره ثبت شرکت الزامی است.',
+            'company_registration_number.unique' => 'شماره ثبت شرکت قبلاً ثبت شده است.',
+
             'company_phone.required' => 'شماره تلفن شرکت الزامی است.',
             'company_phone.string' => 'شماره تلفن شرکت باید شامل متن باشد.',
             'company_phone.max' => 'شماره تلفن شرکت نباید بیش از 20 کاراکتر باشد.',
@@ -235,10 +252,16 @@ class MembershipController extends Controller
 
         $rules = $request->user_type === 'individual' ? array_merge($commonRules, $individualRules) : array_merge($commonRules, $corporateRules);
 
-        $request->merge([
-            'ai_experience' => json_encode($request->input('experience_ai', []))
-        ]);
-        
+        if (isset($request->experience_ai)) {
+            $request->merge([
+                'ai_experience' => json_encode($request->input('experience_ai', []))
+            ]);
+        } elseif (isset($request->corporate_experience_ai)) {
+            $request->merge([
+                'ai_experience' => json_encode($request->input('corporate_experience_ai', []))
+            ]);
+        }
+
         $validatedData = $request->validate($rules, $messages);
 
         // ذخیره `membership`
@@ -248,36 +271,34 @@ class MembershipController extends Controller
         // ذخیره `education_histories`
         if (!empty($request->education_histories)) {
             foreach ($request->education_histories as $education) {
-                if($education['degree']){
-                     EducationHistory::create([
-                    'id' => Str::uuid(),
-                    'membership_id' => $membership->id,
-                    'degree' => $education['degree'] ?? null,
-                    'country' => $education['country'] ?? null,
-                    'institution' => $education['institution'] ?? null,
-                    'field_of_study' => $education['field_of_study'] ?? null,
-                    'specialization' => $education['specialization'] ?? null,
-                    'graduation_year' => $education['graduation_year'] ?? null,
-                ]);
+                if ($education['degree']) {
+                    EducationHistory::create([
+                        'id' => Str::uuid(),
+                        'membership_id' => $membership->id,
+                        'degree' => $education['degree'] ?? null,
+                        'country' => $education['country'] ?? null,
+                        'institution' => $education['institution'] ?? null,
+                        'field_of_study' => $education['field_of_study'] ?? null,
+                        'specialization' => $education['specialization'] ?? null,
+                        'graduation_year' => $education['graduation_year'] ?? null,
+                    ]);
                 }
-
             }
         }
 
         // ذخیره `job_histories`
         if (!empty($request->job_histories)) {
             foreach ($request->job_histories as $job) {
-                if($job['company']){
-                     JobHistory::create([
-                    'id' => Str::uuid(),
-                    'membership_id' => $membership->id,
-                    'company' => $job['company'],
-                    'position' => $job['position'],
-                    'start_year' => $job['start_year'],
-                    'end_year' => $job['end_year'] ?? null,
-                ]);
+                if ($job['company']) {
+                    JobHistory::create([
+                        'id' => Str::uuid(),
+                        'membership_id' => $membership->id,
+                        'company' => $job['company'],
+                        'position' => $job['position'],
+                        'start_year' => $job['start_year'],
+                        'end_year' => $job['end_year'] ?? null,
+                    ]);
                 }
-
             }
         }
 
@@ -304,7 +325,6 @@ class MembershipController extends Controller
 
         toastr()->success('عضویت با موفقیت انجام شد');
         return redirect('/');
-
     }
 
     private function uploadFile(Request $request, $inputName, $folderPath)
