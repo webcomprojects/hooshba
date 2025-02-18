@@ -216,7 +216,7 @@ class AuthenticationController extends Controller
             User::where('id', $user->id)->update(['updated_at' => Carbon::now()->format('Y-m-d H:m:s')]);
             $request->session()->regenerate();
             $request->session()->put('auth.password_confirmed_at', time());
-
+            toastr()->success('با موفقیت وارد شدید');
             return redirect('/');
         }
 
