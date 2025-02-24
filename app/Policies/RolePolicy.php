@@ -15,21 +15,21 @@ class RolePolicy
 
     public function view(User $user, Role $role)
     {
-        return $user->hasPermissionTo('view-roles');
+        return $user->hasPermissionTo('roles.view');
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create-roles');
+        return $user->hasPermissionTo('roles.create');
     }
 
     public function update(User $user, Role $role)
     {
-        return $user->hasPermissionTo('update-roles');
+        return $user->hasPermissionTo('roles.update');
     }
 
     public function delete(User $user, Role $role)
     {
-        return $user->hasPermissionTo('delete-roles');
+        return $user->hasPermissionTo('roles.delete');
     }
 }

@@ -15,21 +15,21 @@ class CategoryPolicy
 
     public function view(User $user, Category $category)
     {
-        return $user->hascategoryTo('view-categories');
+        return $user->hascategoryTo('categories.view');
     }
 
     public function create(User $user)
     {
-        return $user->hascategoryTo('create-categories');
+        return $user->hascategoryTo('categories.create');
     }
 
     public function update(User $user, Category $category)
     {
-        return $user->hascategoryTo('update-categories');
+        return $user->hascategoryTo('categories.update');
     }
 
     public function delete(User $user, Category $category)
     {
-        return $user->hascategoryTo('delete-categories');
+        return $user->hascategoryTo('categories.delete');
     }
 }

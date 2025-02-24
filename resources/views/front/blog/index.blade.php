@@ -58,7 +58,7 @@
                                                         @endif
 
                                                         <li><i
-                                                                class="fas fa-calendar-alt"></i>{{ jDate($post->created_at)->format('%B %d، %Y') }}
+                                                                class="fas fa-calendar-alt"></i>{{ jDate($post->created_at)->format('%d %B، %Y') }}
                                                         </li>
                                                     </ul>
                                                 </div>

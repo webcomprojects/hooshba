@@ -6,8 +6,8 @@
         <div class="col-md-12">
             <div class="breadcrumb-box shadow">
                 <ul class="breadcrumb">
-                    <li><a href="{{route('back.dashboard')}}">{{ __('container.dashboard') }}</a></li>
-                    <li><a>{{ __('container.usersList') }}</a></li>
+                    <li><a href="{{route('back.dashboard')}}">داشبورد</a></li>
+                    <li><a>لیست کاربران</a></li>
                 </ul>
             </div>
 
@@ -20,7 +20,7 @@
                     <div class="portlet-title">
                         <h3 class="title">
                             <i class="icon-frane"></i>
-                            {{ __('container.usersList') }}
+                            لیست کاربران
                         </h3>
                     </div><!-- /.portlet-title -->
                     <div class="buttons-box">
@@ -33,15 +33,14 @@
                     </div><!-- /.buttons-box -->
                 </div><!-- /.portlet-heading -->
 
-                @can('users.delete')
                 <div class="mb-2 datatable-actions collapse " style="">
                     <div class="d-flex align-items-center">
-                        <div class="font-weight-bold text-danger mr-3"><span id="datatable-selected-rows">0</span> {{__('container.Selected item')}}: </div>
+                        <div class="font-weight-bold text-danger mr-3"><span id="datatable-selected-rows">0</span> مورد انتخاب شده: </div>
 
-                        <button class="btn btn-danger multiple-delete-modal" data-action="{{route('back.users.multipleDestroy')}}" type="button" data-bs-toggle="modal" data-bs-target="#multiple-delete-modal">{{__('container.Remove all')}}</button>
+                        <button class="btn btn-danger multiple-delete-modal" data-action="{{route('back.users.multipleDestroy')}}" type="button" data-bs-toggle="modal" data-bs-target="#multiple-delete-modal">خذف همه</button>
                     </div>
                 </div>
-                @endcan
+
 
                 <div class="portlet-body">
                     <div class="table-responsive">
@@ -49,14 +48,13 @@
                             <thead>
                             <tr>
                                 <th style="width:20px"><input type="checkbox" id="btn-check-all-toggle"></th>
-                                <th class="text-center"> {{ __('container.Image') }}</th>
-                                <th  style="width: 70px"><i class="icon-energy"></i></th>
-
-                                <th> {{ __('container.type') }}</th>
-                                <th> {{ __('container.fullname') }}</th>
-                                <th> {{ __('container.mobile') }}</th>
-                                <th>{{ __('container.email') }}</th>
-                                <th></th>
+                                {{-- <th class="text-center"> آواتار</th> --}}
+                                <th>نام و نام خانوادگی</th>
+                                <th> نوع کاربر</th>
+                                <th> موبایل</th>
+                                <th>ایمیل</th>
+                                <th>زمان ایجاد</th>
+                                <th>عملیات</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -64,48 +62,46 @@
                                 @foreach($users as $item)
                                     <tr>
                                         <td><input class="item-checked" type="checkbox" value="{{$item->id}}"></td>
-                                        <td  class="text-center">
+                                        {{-- <td  class="text-center">
                                             <img class="image-thumb-index" @if(!$item->avatar) style="width: 50px;" @endif src="{{ $item->avatar ? asset($item->avatar) : asset('back/assets/images/avatar-empty.png') }}" alt="image">
-                                        </td>
-                                        <td><small>{{$item->id}}</small></td>
+                                        </td> --}}
+                                        <td>{{$item->fullName}}</td>
                                         <td>
-                                            @if($item->type=="user")
-                                                <span class="label label-default">{{ __('container.User') }}</span>
-                                            @elseif($item->type=="staff")
-                                                <span class="label label-default">{{ __('container.Staff') }}</span>
-
-                                            @elseif($item->type=="acceptor")
-                                                <span class="label label-default">{{ __('container.Acceptor') }}</span>
+                                            @if($item->level=="user")
+                                                <span class="label label-default">کاربر</span>
+                                            @elseif($item->level=="admin")
+                                                <span class="label label-default">مدیر</span>
                                             @endif
 
                                         </td>
-                                        <td>{{$item->name}}</td>
+
                                         <td>{{$item->mobile}}</td>
                                         <td>{{$item->email}}</td>
+                                        <td>{{ jDate($item->created_at)->format('%d %B، %Y') }}</td>
                                         <td>
-                                            @can('users.show')
-                                            <a href="{{route('back.users.show',['user'=>$item])}}">
-                                                <button class="btn btn-warning">{{__('container.Show')}}<div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00736;"></div><div class="paper-ripple__waves"></div></div></button>
-                                            </a>
-                                            @endcan
-                                                @can('users.update')
-                                            <a href="{{route('back.users.edit',['user'=>$item])}}" class="btn btn-info">{{ __('container.Edit') }}<div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00256;"></div><div class="paper-ripple__waves"></div></div></a>
-                                                @endcan
-                                                @can('users.delete')
-                                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" data-action="{{route('back.users.destroy',['user'=>$item])}}" class="btn btn-danger delete-modal">{{ __('container.Delete') }}<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
-                                                @endcan
+
+
+                                            <a href="{{route('back.users.edit',['user'=>$item])}}" class="btn btn-info">ویرایش<div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00256;"></div><div class="paper-ripple__waves"></div></div></a>
+
+                                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" data-action="{{route('back.users.destroy',['user'=>$item])}}" class="btn btn-danger delete-modal">حذف<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
+
                                         </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
-                                    <td class="text-center" colspan="9">{{__('container.emptyTable')}}</td>
+                                    <td class="text-center" colspan="9">چیزی برای نمایش وجود ندارد</td>
                                 </tr>
                             @endif
 
 
                             </tbody>
                         </table>
+
+                        <div class="pagination-wrap mt-40 text-center">
+                            {{ $users->links('pagination::bootstrap-4') }}
+                        </div>
+
                     </div><!-- /.table-responsive -->
                 </div><!-- /.portlet-body -->
             </div><!-- /.portlet -->
@@ -113,8 +109,8 @@
 
     </div>
 
-    @can('users.delete')
-@include('back.partials.delete-modal',['text_body'=>__('container.By deleting the user, you will not be able to recover it.')])
-@include('back.partials.multiple-delete-modal',['text_body'=>__('container.By deleting other users, you will not be able to recover them.')])
-    @endcan
+
+@include('back.partials.delete-modal',['text_body'=>'با حذف کاربر،دیگر قادر به بازیابی آن نخواهید بود' ])
+@include('back.partials.multiple-delete-modal',['text_body'=>'با حذف کاربران،دیگر قادر به بازیابی آنها نخواهید بود.'])
+
 @endsection

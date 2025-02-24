@@ -3,159 +3,183 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\Province;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-
+use Illuminate\Validation\Rule;
 class AdminUserController extends Controller
 {
 
     public function index(Request $request)
     {
-
+        $this->authorize('users.index');
         $users = User::latest()->paginate(20);
 
         return view('back.users.index', compact('users'));
     }
 
-
-
-    public function show($id)
+    public function create()
     {
-        try {
-            if (Gate::denies('view-users')) {
-                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
-            }
+        $this->authorize('users.create');
+        $provinces=Province::all();
+        $roles=Role::all();
+        return view('back.users.create',compact('provinces','roles'));
+    }
 
-            $item = User::findOrFail($id);
-            return response()->json($item);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'کاربر یافت نشد.'], 404);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'دریافت کاربر با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
-        }
+
+    public function edit(User $user)
+    {
+        $this->authorize('users.update');
+        $provinces=Province::all();
+        $roles=Role::all();
+        return view('back.users.edit',compact('user','provinces','roles'));
     }
 
 
 
     public function store(Request $request)
     {
-
-        try {
-            if (Gate::denies('create-users')) {
-                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
-            }
-
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'mobile' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/|unique:users,mobile',
-                'province_id' => 'required|integer|exists:provinces,id',
-                'level' => 'required|in:user,admin',
-                'roles'      => 'nullable|array',
-                'password' => 'required|min:8|confirmed',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
+        $this->authorize('users.create');
 
 
 
-            $user = User::create([
-                'id' => Str::uuid()->toString(),
-                'name' => $request->name,
-                'email' => $request->email,
-                'mobile' => $request->mobile,
-                'level' => $request->level,
-                'province_id' => $request->province_id,
-                'password' => Hash::make($request->password),
-            ]);
+        $request->validate([
+            'fullName' => 'required|string|max:255',
+            'jobTitle' => 'required|string|max:255',
+            'education' => 'required|string|max:255',
+            'nationalCode' => 'required|digits:10|unique:users,nationalCode',
+            'email' => 'required|email|unique:users,email',
+            'province_id' => 'required|integer|exists:provinces,id',
+            'level' => 'required|in:admin,user',
+            'password' => 'required|min:6|confirmed',
+        ]);
 
-            $user->assignRole($request->roles);
 
+        $user = User::create([
+            'id' => Str::uuid()->toString(),
+            'fullName' => $request->fullName,
+            'jobTitle' => $request->jobTitle,
+            'education' => $request->education,
+            'nationalCode' => $request->nationalCode,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'level' => $request->level,
+            'province_id' => $request->province_id,
+            'password' => Hash::make($request->password),
+            'mobile_verified_at' => $request->mobile_verified_at ? Carbon::now() : null,
+        ]);
+        $user->roles()->attach($request->roles);
 
-            return response()->json(['message' => 'کاربر با موفقیت ایجاد شد.', 'user' => $user], 201);
-        } catch (ValidationException $e) {
-            return response()->json(['error' => 'اعتبارسنجی شکست خورد.', 'details' => $e->errors()], 422);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'ایجاد کاربر با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
-        }
+        toastr()->success('کاربر با موفقیت ایجاد شد');
+        return redirect()->route('back.users.index');
+
     }
 
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        try {
-            if (Gate::denies('update-users')) {
-                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
-            }
+        $this->authorize('users.update');
 
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $id,
-                'mobile' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/|unique:users,mobile,' . $id,
-                'level' => 'required|in:user,admin',
-                'province_id' => 'required|integer|exists:provinces,id',
-                'roles'      => 'nullable|array',
-                'password' => 'nullable|min:8|confirmed',
-            ]);
+        $request->validate([
+            'fullName' => 'required|string|max:255',
+            'jobTitle' => 'required|string|max:255',
+            'education' => 'required|string|max:255',
+            'nationalCode' => 'required|digits:10|unique:users,nationalCode,'.$user->id,
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'province_id' => 'required|integer|exists:provinces,id',
+            'level' => 'required|in:admin,user',
+            'password' => 'nullable|min:6|confirmed',
+        ]);
 
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
+        // به‌روزرسانی اطلاعات کاربر
+        $user->update([
+            'fullName' => $request->fullName,
+            'jobTitle' => $request->jobTitle,
+            'education' => $request->education,
+            'nationalCode' => $request->nationalCode,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'level' => $request->level,
+            'province_id' => $request->province_id,
+            'mobile_verified_at' => $request->mobile_verified_at=="yes" ? Carbon::now() : null,
+        ]);
 
-
-            $user = User::findOrFail($id);
+        // اگر پسورد تغییر کرده باشد
+        if ($request->password) {
             $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'mobile' => $request->mobile,
-                'level' => $request->level,
-                'province_id' => $request->province_id,
-                'password' => $request->password ? Hash::make($request->password) : $user->password,
+                'password' => Hash::make($request->password)
             ]);
-
-            if ($request->has('roles')) {
-                $user->syncRoles($request->roles);
-            }
-
-            return response()->json(['message' => 'کاربر با موفقیت به‌روزرسانی شد.', 'user' => $user]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'کاربر یافت نشد.'], 404);
-        } catch (ValidationException $e) {
-            return response()->json(['error' => 'اعتبارسنجی شکست خورد.', 'details' => $e->errors()], 422);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'به‌روزرسانی کاربر با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
+
+        // به‌روزرسانی نقش‌های کاربر
+        $user->roles()->sync($request->roles);
+
+
+        toastr()->success('کاربر با موفقیت ویرایش شد');
+        return redirect()->route('back.users.index');
     }
 
 
 
-    public function destroy($id)
+
+    public function destroy(User $user, $multiple = false)
     {
-        try {
-            if (Gate::denies('delete-users')) {
-                return response()->json(['error' => '403', 'message' => "شما مجوز دسترسی به این صفحه را ندارید."], 403);
-            }
+        $this->authorize('users.delete');
+        $user->roles()->detach();
+        $user->delete();
 
-            $item = User::findOrFail($id);
-            $item->roles()->detach();
+        if (!$multiple) {
+            toastr()->success('کاربر با موفقیت حذف شد');
+        }else{
+            toastr()->success('کاربران با موفقیت حذف شدند');
 
-            $item->delete();
-
-            return response()->json(['message' => 'کاربر با موفقیت حذف شد.']);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'کاربر یافت نشد.'], 404);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'حذف کاربر با شکست مواجه شد.', 'message' => $e->getMessage()], 500);
         }
+        return redirect()->route('back.users.index');
+    }
+
+    public function multipleDestroy(Request $request)
+    {
+
+        $this->authorize('users.delete');
+        $ids=explode(',',$request->ids);
+        $newArray = [];
+
+        foreach ($ids as $id) {
+            $newArray[] = ['ids' => $id];
+        }
+
+
+        $request->merge(['ids' => $newArray]);
+        // $request->validate([
+        //     'ids'   => 'required|array',
+        //     'ids.*' => [
+        //         Rule::exists('users', 'id')->where(function ($query) {
+        //             $query->where('id', '!=', Auth::id())->where('level', '!=', 'creator');
+        //         })
+        //     ]
+        // ]);
+
+
+        foreach ($request->ids as $id) {
+            $user = User::find($id['ids']);
+            $this->destroy($user, true);
+        }
+        return redirect()->route('back.users.index');
+    }
+
+    public function logout()
+    {
+        Auth::logout(); // خروج کاربر از سیستم
+        return redirect('/'); // هدایت به صفحه اصلی (یا هر مسیری که بخواهید)
     }
 }

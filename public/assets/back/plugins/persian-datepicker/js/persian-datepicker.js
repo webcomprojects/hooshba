@@ -2,8 +2,8 @@
 ** persian-datepicker - v1.2.0
 ** Reza Babakhani <babakhani.reza@gmail.com>
 ** http://babakhani.github.io/PersianWebToolkit/docs/datepicker
-** Under MIT license 
-*/ 
+** Under MIT license
+*/
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -3840,7 +3840,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
    * Safe way of detecting whether or not the given thing is a primitive and
    * whether it has the given property
    */
-  function primitiveHasOwnProperty (primitive, propName) {  
+  function primitiveHasOwnProperty (primitive, propName) {
     return (
       primitive != null
       && typeof primitive !== 'object'
@@ -4209,7 +4209,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
           while (intermediateValue != null && index < names.length) {
             if (index === names.length - 1)
               lookupHit = (
-                hasProperty(intermediateValue, names[index]) 
+                hasProperty(intermediateValue, names[index])
                 || primitiveHasOwnProperty(intermediateValue, names[index])
               );
 

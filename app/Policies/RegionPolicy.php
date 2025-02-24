@@ -15,21 +15,21 @@ class RegionPolicy
 
     public function view(User $user, Region $region)
     {
-        return $user->hasPermissionTo('view-regions');
+        return $user->hasPermissionTo('regions.view');
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create-regions');
+        return $user->hasPermissionTo('regions.create');
     }
 
     public function update(User $user, Region $region)
     {
-        return $user->hasPermissionTo('update-regions');
+        return $user->hasPermissionTo('regions.update');
     }
 
     public function delete(User $user, Region $region)
     {
-        return $user->hasPermissionTo('delete-regions');
+        return $user->hasPermissionTo('regions.delete');
     }
 }

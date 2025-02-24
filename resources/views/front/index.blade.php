@@ -247,7 +247,7 @@
                         <div class="card-info">
                             <div class="card-title">
                                 <a href="team-details.html">{{$event->title}}</a>
-                                <p class="card-dept mt-10">{{ $event->categories->first()->name }}</p>
+                                <p class="card-dept mt-10">{{ @$event->categories->first()->name }}</p>
                             </div>
                             <div class="blog-post-meta mb-20">
                                 <ul class="list-wrap">
@@ -332,7 +332,7 @@
                                                 src="{{ asset($post->featured_image) }}" alt="{{ $post->title }}"></a>
                                     </div>
                                     <div class="blog-post-content blog__post-content-three">
-                                        <a class="post-tag" href="blog.html">{{ $post->categories->first()->name }}</a>
+                                        <a class="post-tag" href="blog.html">{{ @$post->categories->first()->name }}</a>
                                         <h2 class="title"><a href="blog-details.html">{{ $post->title }}</a>
                                         </h2>
                                         <div class="blog-post-meta mb-20">

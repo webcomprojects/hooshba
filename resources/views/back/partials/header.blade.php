@@ -1,7 +1,7 @@
 <div class="navbar navbar-fixed-top" id="main-navbar">
     <div class="header-right">
-        <a href="dashboard.html" class="logo-con">
-            <img src="{{asset('assets/back/images/logo.png')}}" class="img-responsive center-block" alt="لوگو قالب مدیران">
+        <a target="_blink" href="/" class="logo-con h-100 mt-0">
+            <img src="{{asset('assets/back/images/logo.png')}}" class="img-responsive center-block h-100" alt="لوگو قالب مدیران">
         </a>
     </div><!-- /.header-right -->
     <div class="header-left">
@@ -25,7 +25,7 @@
                         <i class="icon-size-fullscreen"></i>
                     </a>
                 </li>
-                <li class="dropdown dropdown-messages">
+                {{-- <li class="dropdown dropdown-messages">
                     <a href="#" class="dropdown-toggle btn" data-bs-toggle="dropdown">
                         <i class="icon-envelope"></i>
                         <span class="badge badge-primary">
@@ -203,16 +203,16 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li class="dropdown dropdown-user">
                     <a href="#" class="dropdown-toggle dropdown-hover" data-bs-toggle="dropdown">
                         <img src="{{asset('assets/back/images/user/48.png')}}" alt="عکس پرفایل" class="img-circle img-responsive">
-                        <span>حمید آفرینش فر</span>
+                        <span>{{Auth::user()->fullName}}</span>
                         <i class="icon-arrow-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>
+                        {{-- <li>
                             <a href="edit_profile.html">
                                 <i class="icon-note"></i>
                                 ویرایش پروفایل
@@ -238,9 +238,9 @@
                                 کیف پول
                             </a>
                         </li>
-                        <li class="divider"></li>
+                        <li class="divider"></li> --}}
                         <li>
-                            <a href="login.html">
+                            <a href="/logout">
                                 <i class="icon-power"></i>
                                 خروج
                             </a>

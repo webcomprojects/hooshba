@@ -10,6 +10,7 @@
 .effect img{
     width: 100% !important;
     border-radius: 10px;
+    max-height: 200px;
 }
 
 /*----------------------- Simple Effect Start ---------------------*/

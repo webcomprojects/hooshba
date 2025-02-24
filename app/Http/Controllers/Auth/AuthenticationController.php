@@ -228,10 +228,6 @@ class AuthenticationController extends Controller
     public function logout(Request $request)
     {
         $request->user()->logout();
-
-        return response()->json([
-            'message' => 'خروج با موفقیت انجام شد.',
-        ]);
         toastr()->success('خروج با موفقیت انجام شد');
 
         return redirect('/');

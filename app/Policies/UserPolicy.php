@@ -3,32 +3,35 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
-    public function viewAny(User $user)
+    use HandlesAuthorization;
+
+    public function viewAny(User $User)
     {
-        return $user->hasPermissionTo('users');
+        return $User->can('users.index');
     }
 
-    public function view(User $user, User $model)
+    public function view(User $User, User $model)
     {
-        return $user->hasPermissionTo('view-users');
+        return $User->can('users.view');
     }
 
-    public function create(User $user)
+    public function create(User $User)
     {
-        return $user->hasPermissionTo('create-users');
+        return $User->can('users.create');
     }
 
-    public function update(User $user, User $model)
+    public function update(User $User, User $model)
     {
-        return $user->hasPermissionTo('update-users');
+        return $User->can('users.update') && ($model->level != 'creator');
     }
 
-    public function delete(User $user, User $model)
+    public function delete(User $User, User $model)
     {
-        return $user->hasPermissionTo('delete-users');
+        return $User->can('users.delete') && ($model->level != 'creator');
     }
 }

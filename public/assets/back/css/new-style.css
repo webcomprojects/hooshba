@@ -1,3 +1,14 @@
-body[class*="bg-"] .metismenu a:not(.current).active {
+.select2-selection.select2-selection--multiple{
+    height: 38px;
+}
+
+.select2-selection.select2-selection--multiple .select2-selection__choice{
+    font-size: 11px;
+    padding: 0 5px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.metismenu li a.active{
     background-color: rgba(50, 50, 50, 0.5) !important;
 }

@@ -1,0 +1,328 @@
+.details-form-template-item {
+    box-shadow: 0 0 7px 0px #ccc;
+    padding: 15px;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+}
+.delete-details-form-template {
+    height: 40px;
+    margin-top: 31px;
+    margin-left: 20px;
+}
+.delete-details-form-template-option {
+    height: 40px;
+    margin-top: 31px;
+    margin-left: 20px;
+}
+#reservation-fanweb-tbs .tab-pane.active .align-items-baseline{
+    position: relative;
+}
+#reservation-fanweb-tbs .tab-pane.active .align-items-baseline label{
+    min-width: 55px;
+}
+#reservation-fanweb-tbs .tab-pane.active .align-items-baseline i.in-calendar{
+    position: absolute;
+    left: 10px;
+    top: 12px;
+}
+
+
+
+li{
+    list-style: none;
+}
+.d-none{
+    display: none!important;
+}
+.text-center{
+    text-align: center;
+}
+.text-right{
+    text-align: right;
+}
+.badge-danger {
+    color: #fff;
+    background-color: #dc3545;
+}
+.reservation-fanweb-container .sf-viewport{
+    min-height: 300px;
+}
+
+
+
+#reservation-fanweb-form-wizard-time .badge-secondary,#reservation-fanweb-form-wizard-staff .badge-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    cursor: pointer;
+}
+.d-block {
+    display: block !important;
+}
+.custom-control {
+    position: relative;
+    z-index: 1;
+    display: block;
+    min-height: 1.5rem;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+}
+label.custom-control-label {
+    position: relative;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.custom-control-label {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.custom-control-input {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 1rem;
+    height: 1.25rem;
+    opacity: 0;
+}
+.custom-control-label::before {
+    position: absolute;
+    top: 0.25rem;
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    content: "";
+    background-color: #fff;
+    border: #adb5bd solid 1px;
+}
+.custom-control-label::after {
+    position: absolute;
+    top: 0.25rem;
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    content: "";
+    background: 50%/50% 50% no-repeat;
+}
+.h5, h5 {
+    font-size: 14px;
+}
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z'/%3e%3c/svg%3e")
+}
+.custom-checkbox .custom-control-input:indeterminate~.custom-control-label::before {
+    border-color: #007bff;
+    background-color: #007bff
+}
+.custom-checkbox .custom-control-input:indeterminate~.custom-control-label::after {
+    background: #fff;
+}
+
+.custom-checkbox .custom-control-input:disabled:checked~.custom-control-label::before {
+    background-color: rgba(0, 123, 255, .5)
+}
+
+.custom-checkbox .custom-control-input:disabled:indeterminate~.custom-control-label::before {
+    background-color: rgba(0, 123, 255, .5)
+}
+
+.custom-radio .custom-control-label::before {
+    border-radius: 50%
+}
+
+.custom-radio .custom-control-input:checked~.custom-control-label::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")
+}
+
+.custom-radio .custom-control-input:disabled:checked~.custom-control-label::before {
+    background-color: rgba(0, 123, 255, .5)
+}
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #007bff;
+    background-color: #007bff
+}
+
+.custom-control-input:focus~.custom-control-label::before {
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25)
+}
+
+.custom-control-input:focus:not(:checked)~.custom-control-label::before {
+    border-color: #80bdff
+}
+
+.custom-control-input:not(:disabled):active~.custom-control-label::before {
+    color: #fff;
+    background-color: #b3d7ff;
+    border-color: #b3d7ff
+}
+
+.custom-control-input:disabled~.custom-control-label,
+.custom-control-input[disabled]~.custom-control-label {
+    color: #6c757d
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 0.25rem;
+}
+
+.custom-switch {
+    padding-left: 2.25rem
+}
+
+label.custom-control-label::after, label.custom-control-label::before {
+    right: 0;
+    left: auto;
+}
+.flex-wrap {
+    flex-wrap: wrap !important;
+}
+.d-flex {
+    display: flex !important;
+}
+
+.reservation-fanweb-time-item{
+    cursor: pointer;
+}
+.reservation-fanweb-staff-item{
+    cursor: pointer;
+}
+.badge-warning {
+    background-color: #ffc107;
+}
+.custom-checkbox .custom-control-label::before {
+    border-radius: 0.25rem;
+}
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+#reservation-fanweb-get-times-from-staff .custom-control-label{
+    padding-right: 20px;
+}
+
+
+.payment-details {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.details-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.service-provider {
+    color: #007bff;
+}
+
+.services {
+    margin-top: 10px;
+}
+
+.price {
+    color: #28a745;
+    font-size: 20px;
+}
+/* اضافه کردن استایل به عناصر مشخصات پرداخت */
+.payment-details {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: right;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin: 0 auto;
+}
+
+
+.reservation-fanweb-container .details-label {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.reservation-fanweb-container .service-provider {
+    color: #007bff;
+}
+
+.reservation-fanweb-container .services {
+    margin-top: 10px;
+    padding-left: 20px;
+    list-style: square;
+    color: #333;
+}
+
+.reservation-fanweb-container .price {
+    font-size: 24px;
+    color: #28a745;
+}
+#reservation-fanweb-inline-ExampleAlt{
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 1px 0px #ccc;
+}
+#reservation-fanweb-show-times,#reservation-fanweb-staff-services,#reservation-fanweb-show-staffs{
+    WIDTH: 100%;
+    BORDER: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 15px;
+    padding: 20px 20px;
+    max-height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+#reservation-fanweb-show-times .reservation-fanweb-time-item,
+#reservation-fanweb-staff-services .reservation-fanweb-service-item,
+#reservation-fanweb-show-staffs .reservation-fanweb-staff-item{
+    width: 100%;
+    padding: 10px 15px 10px;
+    box-shadow: 0 0 4px 2px #ccc;
+    border-radius: 4px;
+}
+#reservation-fanweb-show-times .reservation-fanweb-time-item label,
+#reservation-fanweb-staff-services .reservation-fanweb-service-item label,
+#reservation-fanweb-show-staffs .reservation-fanweb-staff-item label{
+    cursor: pointer;
+}
+#reservation-fanweb-show-times .reservation-fanweb-time-item input,
+#reservation-fanweb-staff-services .reservation-fanweb-service-item input,
+#reservation-fanweb-show-staffs .reservation-fanweb-staff-item input{
+    width: 20px;
+    margin-left: 10px;
+}
+.align-items-center{
+    align-items: center;
+}
+.reservation-fanweb-container .form-group textarea{
+    max-width: 100%;
+    min-width: 100%;
+}
+#reservation-fanweb-form-wizard-staff select,#reservation-fanweb-form-wizard-staff select .select2-container .select2-selection--single{
+
+    background-size: 0.8em;
+    background-repeat: no-repeat;
+    background-position-x: calc(9px)!important;
+    background-position-y: center;
+}
+.swal2-styled{
+    font-family: main-font;
+}
+.reservation-fanweb-staff-time .badge.badge-secondary{
+    border-radius: 6px !important;
+}

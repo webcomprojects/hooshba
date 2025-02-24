@@ -15,21 +15,21 @@ class MemberPolicy
 
     public function view(User $user, Member $member)
     {
-        return $user->hasmemberTo('view-members');
+        return $user->hasmemberTo('members.view');
     }
 
     public function create(User $user)
     {
-        return $user->hasmemberTo('create-members');
+        return $user->hasmemberTo('members.create');
     }
 
     public function update(User $user, Member $member)
     {
-        return $user->hasmemberTo('update-members');
+        return $user->hasmemberTo('members.update');
     }
 
     public function delete(User $user, Member $member)
     {
-        return $user->hasmemberTo('delete-members');
+        return $user->hasmemberTo('members.delete');
     }
 }

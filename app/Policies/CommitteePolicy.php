@@ -15,21 +15,21 @@ class CommitteePolicy
 
     public function view(User $user, Committee $committee)
     {
-        return $user->hascommitteeTo('view-committees');
+        return $user->hascommitteeTo('committees.view');
     }
 
     public function create(User $user)
     {
-        return $user->hascommitteeTo('create-committees');
+        return $user->hascommitteeTo('committees.create');
     }
 
     public function update(User $user, Committee $committee)
     {
-        return $user->hascommitteeTo('update-committees');
+        return $user->hascommitteeTo('committees.update');
     }
 
     public function delete(User $user, Committee $committee)
     {
-        return $user->hascommitteeTo('delete-committees');
+        return $user->hascommitteeTo('committees.delete');
     }
 }

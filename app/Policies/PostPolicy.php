@@ -15,21 +15,21 @@ class PostPolicy
 
     public function view(User $user, Post $post)
     {
-        return $user->hasPermissionTo('view-posts');
+        return $user->hasPermissionTo('posts.view');
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create-posts');
+        return $user->hasPermissionTo('posts.create');
     }
 
     public function update(User $user, Post $post)
     {
-        return $user->hasPermissionTo('update-posts');
+        return $user->hasPermissionTo('posts.update');
     }
 
     public function delete(User $user, Post $post)
     {
-        return $user->hasPermissionTo('delete-posts');
+        return $user->hasPermissionTo('posts.delete');
     }
 }

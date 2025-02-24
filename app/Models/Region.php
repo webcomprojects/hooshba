@@ -8,7 +8,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Region extends Model
 {
-    use HasFactory,HasRoles;
+    use HasFactory;
     protected $fillable = ['slug', 'name', 'ordering', 'is_published', 'published_at'];
     public function provinces()
     {

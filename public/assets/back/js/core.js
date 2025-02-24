@@ -5,14 +5,14 @@
         var toggleSidebarSwitch = document.querySelector(".toggle-sidebar-switch");
         var creativeSidebarSwitch = document.querySelector(".creative-sidebar-switch");
         var fixHeaderSwitch = document.querySelector(".fix-header-switch");
-        
+
         // Initilize metisMenu
         this.initMetisMenu = function(){
             if (typeof metisMenu != "undefined"){
                 $("#side-menu").metisMenu();
             }
         };
-        
+
 
         // Check old IE browsers and show appropriate notice
         this.checkOldIE = function(){
@@ -63,8 +63,10 @@
                 e.preventDefault();
                 if ($("body").hasClass("dark")) {
                     window.Modiran.darkMode(false);
+                    localStorage.setItem('darkMode', false);
                 } else {
                     window.Modiran.darkMode(true);
+                    localStorage.setItem('darkMode', true);
                 }
                 return;
             });
@@ -72,37 +74,37 @@
 
         // Change sidebar state
         this.changeSidebarState = function(newState){
-            
+
             if(newState==="collapse"){
                 $("body").addClass("sidebar-collapse");
                 $(".metismenu>li").removeClass("active");
                 $(".metismenu > li > ul").removeClass("in");
-                
-                
+
+
                 if(!toggleSidebarSwitch.checked){
                     $('.toggle-sidebar-switch').trigger('click');
                 }
             }else{
                 $("body").removeClass("sidebar-collapse");
-                
+
                 if(toggleSidebarSwitch.checked){
                     $('.toggle-sidebar-switch').trigger('click');
                 }
             }
-            
+
             window.Modiran.updateSettingCodes();
         };
 
 
         // Change sidebar state
         this.darkMode = function(newState){
-            
+
             if(newState==true){
                 $("body").addClass("dark");
             }else{
                 $("body").removeClass("dark");
             }
-            
+
             window.Modiran.updateSettingCodes();
         };
 
@@ -114,7 +116,7 @@
                 $(".btn-status").html($(this).html());
             });
         };
-        
+
 
         // Define tooltip
         this.tooltip = function() {
@@ -128,7 +130,7 @@
         this.handleCodeButton = function() {
             $(".btn-code").on("click", function(e) {
                 e.preventDefault();
-                    
+
                 var result = escapeHtml($(this).parent().find(".code-modal").html());
                 result = "<pre class='codes'><code id='code-for-copy'>" + result + "</code></pre>";
 
@@ -164,7 +166,7 @@
         this.toggleFullScreen = function() {
             if (typeof screenfull !== "undefined"){
                 if (screenfull.isEnabled) {
-                    $("#toggle-fullscreen").click(function(){      
+                    $("#toggle-fullscreen").click(function(){
                         $(this).find("i").toggleClass("icon-size-fullscreen icon-size-actual");
                         screenfull.toggle();
                     });
@@ -189,7 +191,7 @@
                     var toggledPanel = $(this).parents(".box")[0];
                     screenfull.toggle(toggledPanel);
                 });
-           
+
             }
         };
 
@@ -217,7 +219,7 @@
                         function(){$(this).closest(".box").hide("fast");});
             });
         };
-        
+
 
         // Define buttonsBoxCollapse
         this.buttonsBoxCollapse = function() {
@@ -225,25 +227,25 @@
 
             collapseButton.on("click", function(e) {
                 e.preventDefault();
-                
+
                 $(this).parent().toggleClass("show");
             });
         };
-        
+
 
         // Handle settings box
         this.handleSettings = function() {
-            // Toggle box button 
+            // Toggle box button
             $("#toggle-setting").on("click", function(e) {
                 e.preventDefault();
-                
+
                 $(this).parent().toggleClass("active");
             });
-            
+
             // Change Theme Color
             $(".theme-colors .btn").on("click", function(e) {
                 e.preventDefault();
-                
+
                 var colorName = $(this).attr("data-color");
 
                 // Remove current theme color class
@@ -254,14 +256,16 @@
                 $("body").addClass("theme-" + colorName);
                 $(".theme-colors .btn").removeClass("active");
                 $(this).addClass("active");
-
+                localStorage.setItem('selectedColor', colorName);
                 window.Modiran.updateSettingCodes();
             });
+
+
 
             // Change Sidebar Background
             $(".sidebar-bg li").on("click", function(e) {
                 e.preventDefault();
-                
+
                 var bgCode = $(this).find("img").attr("data-bg");
 
                 // Remove current bg class
@@ -277,8 +281,9 @@
                 $(".sidebar-bg li").removeClass("active");
                 $(this).addClass("active");
                 window.Modiran.updateSettingCodes();
+                localStorage.setItem('selectedBackground', bgCode);
             });
-            
+
             // Update code guide box
             this.updateSettingCodes = function(){
                 var headerStatus = sidebarStatus = creativeSidebarStatus = darkModeStatus = "";
@@ -290,7 +295,7 @@
                 if(currentSidebarBg){
                     sidebarBg = " bg-" + currentSidebarBg;
                 }
-                
+
                 if (typeof Switchery != "undefined"){
                     if(fixHeaderSwitch.checked){
                         headerStatus = " fix-header";
@@ -299,7 +304,7 @@
                     if(toggleSidebarSwitch.checked){
                         sidebarStatus = " sidebar-collapse";
                     }
-                    
+
                     if(!creativeSidebarSwitch.checked){
                         creativeSidebarStatus = " sidebar-extra";
                     }
@@ -308,16 +313,16 @@
                         darkModeStatus = " dark";
                     }
                 }
-                
+
                 var result = escapeHtml('<body class="' + themeColor + sidebarBg + headerStatus + sidebarStatus + creativeSidebarStatus + darkModeStatus + '">');
                 $(".theme-code code").html(result);
-                
-                
+
+
             }
             window.Modiran.updateSettingCodes();
         };
-        
-        
+
+
         // Handle ripple effect
         this.handleRipple = function() {
             var rippleTargets = document.querySelectorAll(".active-ripple .btn:not(.no-ripple), .active-ripple .metismenu a, .ripple-effect");
@@ -331,16 +336,16 @@
                 });
             });
         };
-        
-        
+
+
         // Handle  switcheries
         this.handleSwitchery = function(){
             if (typeof Switchery != "undefined"){
                 var size = "small",
                     color = "#999";
                 new Switchery(fixHeaderSwitch,
-                { 
-                    size: size, 
+                {
+                    size: size,
                     color: color
                 });
                 fixHeaderSwitch.onchange = function() {
@@ -357,8 +362,8 @@
                 };
 
                 new Switchery(toggleSidebarSwitch,
-                { 
-                    size: size, 
+                {
+                    size: size,
                     color: color
                 });
                 toggleSidebarSwitch.onchange = function() {
@@ -371,8 +376,8 @@
                 };
 
                 new Switchery(creativeSidebarSwitch,
-                { 
-                    size: size, 
+                {
+                    size: size,
                     color: color
                 });
                 creativeSidebarSwitch.onchange = function() {
@@ -390,7 +395,7 @@
                 };
             }
         };
-        
+
         // Handle scrollbars
         this.handleScrollbars = function(){
             if (typeof mCustomScrollbar != "undefined"){
@@ -404,7 +409,7 @@
                 });
             }
         };
-        
+
         // Initilize sweet alert
         this.initiSwal = function(){
             if (typeof swal != "undefined"){
@@ -414,7 +419,7 @@
                 });
             }
         };
-        
+
         // Initilize iCkeck
         this.initiCkeck = function(){
             $("input:not(.normal)").iCheck({
@@ -422,7 +427,7 @@
                 radioClass: 'iradio_square-grey'
             });
         };
-        
+
         // Handle numeric text inputs
         this.handleNumericInputs = function(){
             $(document).on("input", ".numeric", function() {
@@ -438,7 +443,7 @@
 
 function escapeHtml(text) {
     if (text == null) return;
-    
+
     var html = text
         .replace(/<!--/g, "")
         .replace(/-->/g, "")
@@ -451,7 +456,7 @@ function escapeHtml(text) {
         .replace(/\s*$/g, "");
 
     return html;
-        
+
 }
 (function($) {
     $(document).ready(function() {
@@ -478,7 +483,7 @@ function escapeHtml(text) {
         Modiran.initiCkeck();
         Modiran.handleNumericInputs();
     });
-    
+
     // Handle file inputs
     $(".form-control[type='file']").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
@@ -489,8 +494,8 @@ function escapeHtml(text) {
         // Animate loader off screen
         $("#loader").animate({
             "opacity": "0"
-        }, 
-        10, 
+        },
+        10,
         function(){
             $("#loader").css("display","none");
         });
@@ -510,7 +515,7 @@ function escapeHtml(text) {
     });
 
     // Close settings or sidebar if clicked point was out of them
-    $(document).mouseup(function(e) 
+    $(document).mouseup(function(e)
     {
         var container = $(".settings");
         var btnClose = $("#toggle-setting");
@@ -522,7 +527,7 @@ function escapeHtml(text) {
                 return;
             }
             // if the target of the click isn't the container nor a descendant of the container
-            if (!container.is(e.target) && container.has(e.target).length === 0) 
+            if (!container.is(e.target) && container.has(e.target).length === 0)
             {
                 $(".settings").removeClass("active");
             }
@@ -538,7 +543,7 @@ function escapeHtml(text) {
                 return;
             }
             // if the target of the click isn't the container nor a descendant of the container
-            if (!container.is(e.target) && container.has(e.target).length === 0) 
+            if (!container.is(e.target) && container.has(e.target).length === 0)
             {
                 btnClose.click();
             }
@@ -559,5 +564,5 @@ function escapeHtml(text) {
         }
     })();
 
-    
+
 })(jQuery);

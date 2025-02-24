@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('nationalCode')->unique();
             $table->string('email')->unique();
             $table->string('mobile')->unique();
-            $table->enum('level', ['admin', 'user'])->default('user')->nullable();
+            $table->enum('level', ['creator','admin', 'user'])->default('user')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('mobile_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

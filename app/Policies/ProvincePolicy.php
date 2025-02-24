@@ -15,21 +15,21 @@ class ProvincePolicy
 
     public function view(User $user, Province $province)
     {
-        return $user->hasPermissionTo('view-provinces');
+        return $user->hasPermissionTo('provinces.view');
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create-provinces');
+        return $user->hasPermissionTo('provinces.create');
     }
 
     public function update(User $user, Province $province)
     {
-        return $user->hasPermissionTo('update-provinces');
+        return $user->hasPermissionTo('provinces.update');
     }
 
     public function delete(User $user, Province $province)
     {
-        return $user->hasPermissionTo('delete-provinces');
+        return $user->hasPermissionTo('provinces.delete');
     }
 }

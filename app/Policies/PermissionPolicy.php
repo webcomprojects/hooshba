@@ -15,21 +15,21 @@ class PermissionPolicy
 
     public function view(User $user, Permission $permission)
     {
-        return $user->hasPermissionTo('view-permissions');
+        return $user->hasPermissionTo('permissions.view');
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create-permissions');
+        return $user->hasPermissionTo('permissions.create');
     }
 
     public function update(User $user, Permission $permission)
     {
-        return $user->hasPermissionTo('update-permissions');
+        return $user->hasPermissionTo('permissions.update');
     }
 
     public function delete(User $user, Permission $permission)
     {
-        return $user->hasPermissionTo('delete-permissions');
+        return $user->hasPermissionTo('permissions.delete');
     }
 }

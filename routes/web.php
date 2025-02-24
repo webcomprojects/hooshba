@@ -3,9 +3,12 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Back\AdminDashboardController;
+use App\Http\Controllers\Back\AdminPostController;
+use App\Http\Controllers\Back\AdminProvinceController;
+use App\Http\Controllers\Back\AdminRegionController;
+use App\Http\Controllers\Back\AdminRoleController;
 use App\Http\Controllers\Back\AdminUserController;
 use App\Http\Controllers\Back\UserController;
-use App\Http\Controllers\Front\AdminPostController;
 use App\Http\Controllers\Front\MainController;
 use App\Http\Controllers\Front\MembershipController;
 use App\Http\Controllers\Front\PostController;
@@ -37,16 +40,33 @@ Route::group(['as' => 'front.'], function () {
 
 });
 
-Route::group(['as' => 'back.','prefix' => 'admin/' ], function () {
+Route::group(['as' => 'back.','prefix' => 'admin/' ,'middleware'=>['auth']], function () {
     // ------------------ MainController
 
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', AdminUserController::class);
+     Route::post('users/multipleDestroy',[AdminUserController::class,'multipleDestroy'])->name('users.multipleDestroy');
+
+     Route::resource('roles',AdminRoleController::class);
+     Route::post('roles/multipleDestroy',[AdminRoleController::class,'multipleDestroy'])->name('roles.multipleDestroy');
+
     Route::resource('posts', AdminPostController::class);
+    Route::post('posts/multipleDestroy',[AdminPostController::class,'multipleDestroy'])->name('posts.multipleDestroy');
+
+    Route::resource('regions', AdminRegionController::class);
+    Route::post('regions/multipleDestroy',[AdminRegionController::class,'multipleDestroy'])->name('regions.multipleDestroy');
+
+    Route::resource('provinces', AdminProvinceController::class);
+    Route::post('provinces/multipleDestroy',[AdminProvinceController::class,'multipleDestroy'])->name('provinces.multipleDestroy');
+
+
+    Route::get('get-tags', [AdminRoleController::class, 'get_tags'])->name('get-tags');
+
     Route::get('/get-new-captcha', [MainController::class, 'captcha']);
 
     Route::resource('/membership', MembershipController::class)->only('index','store');
     Route::resource('/blog', PostController::class);
+
 
 
 });
@@ -70,5 +90,6 @@ Route::get('/verifyCode',[AuthenticationController::class,'verifyCode'])->name('
 Route::post('/verifyCode',[AuthenticationController::class,'verifyCodeCheck'])->name('verifyCodeCheck');
 Route::get('/register-userInfo',[AuthenticationController::class,'registerUserInfo'])->name('registerUserInfo');
 Route::post('/register-userInfo',[AuthenticationController::class,'registerUserInfoStore'])->name('registerUserInfoStore');
+ Route::get('/logout', [AdminUserController::class, 'logout']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

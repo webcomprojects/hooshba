@@ -17,5 +17,11 @@ $(document).ready(function(){
         }
     });
 
-    $("#form").validate(); 
+    $("#form").validate();
+
+    $('#change-language').change(function () {
+        $(this).parents('form').submit();
+    })
+
 });
+

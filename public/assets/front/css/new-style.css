@@ -281,3 +281,9 @@ hr{
         max-width: unset;
     }
 }
+
+.tgmenu__navbar-wrap > ul > li .sub-menu .sub-menu{
+    right: 100%;
+    left: auto;
+    top: 0;
+}

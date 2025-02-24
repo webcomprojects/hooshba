@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids,HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids;
 
     protected $primaryKey = 'id';
     public $incrementing = false;
@@ -35,6 +35,7 @@ class User extends Authenticatable
         'user',
         'level',
         'province_id',
+        'mobile_verified_at',
         'password',
     ];
 
@@ -81,4 +82,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserMeta::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+
 }
