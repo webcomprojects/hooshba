@@ -48,23 +48,35 @@
                             <thead>
                             <tr>
                                 <th style="width:20px"><input type="checkbox" id="btn-check-all-toggle"></th>
-                                {{-- <th class="text-center"> آواتار</th> --}}
 
                                 <th> تصویر</th>
-                                <th> عنوان</th>
+                                <th> نام و نام خانوادگی</th>
+                                <th> نوع</th>
+                                <th> ایمیل</th>
+                                <th> موبایل</th>
                                 <th>زمان ایجاد</th>
                                 <th>عملیات</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(count($posts))
-                                @foreach($posts as $item)
+                            @if(count($members))
+                                @foreach($members as $item)
                                     <tr>
                                         <td><input class="item-checked" type="checkbox" value="{{$item->id}}"></td>
                                         <td  class="text-center">
-                                            <img class="image-thumb-index" @if(!$item->featured_image) style="width: 50px;" @endif src="{{ $item->featured_image ? asset($item->featured_image) : asset('assets/back/images/empty.svg') }}" alt="image">
+                                            <img class="image-thumb-index" @if(!$item->image) style="width: 50px;" @endif src="{{ $item->image ? asset($item->image) : asset('assets/back/images/empty.svg') }}" alt="image">
                                         </td>
-                                        <td><a href="{{route('front.blog.show',$item)}}" target="_blink">{{$item->title}}</a></td>
+                                        <td>{{$item->name}}</td>
+                                        <td class="text-center">
+                                            @if($item->type=="council")
+                                                <span class="label label-default">شورا</span>
+                                            @elseif ($item->type=="presidency")
+                                                <span class="label label-default">ریاست جمهوری </span>
+                                            @endif
+                                        </td>
+
+                                        <td>{{$item->email}}</td>
+                                        <td>{{$item->mobile}}</td>
                                         <td class="text-center">
                                             @if($item->is_published)
                                                 <span class="label label-success">انتشار</span>
@@ -94,7 +106,7 @@
                         </table>
 
                         <div class="pagination-wrap mt-40 text-center">
-                            {{ $posts->links('pagination::bootstrap-4') }}
+                            {{ $members->links('pagination::bootstrap-4') }}
                         </div>
 
                     </div><!-- /.table-responsive -->

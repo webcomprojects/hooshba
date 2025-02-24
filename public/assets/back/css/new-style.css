@@ -12,3 +12,33 @@
 .metismenu li a.active{
     background-color: rgba(50, 50, 50, 0.5) !important;
 }
+
+input[name=mobile],
+input[name=phone],
+input[name=national_id],
+input[name=birth_certificate_number],
+input[name=code],
+input[name=email],
+input[type=email],
+input[type=number],
+input[name=password],
+input[name=password_confirmation]
+{
+    direction: ltr;
+
+}
+
+
+input[name=mobile]::placeholder,
+input[name=phone]::placeholder,
+input[name=national_id]::placeholder,
+input[name=birth_certificate_number]::placeholder,
+input[name=code]::placeholder,
+input[name=email]::placeholder,
+input[type=email]::placeholder,
+input[type=number]::placeholder,
+input[name=password]::placeholder,
+input[name=password_confirmation]::placeholder
+ {
+    text-align: right;
+}

@@ -37,15 +37,21 @@
                     <div class="col-70">
                         <div class="blog__details-wrap">
                             <div class="blog__details-thumb">
-                                <img src="{{ asset($post->featured_image) }}"
-                                alt="{{ $post->title }}">
+                                @if ($post->video)
+                                {!! $post->video !!}
+                                @else
+                                    <img src="{{ asset($post->featured_image) }}" alt="{{ $post->title }}">
+                                @endif
+
                             </div>
                             <div class="blog__details-content">
-                                <h1 class="title">{{$post->title}}</h1>
+                                <h1 class="title">{{ $post->title }}</h1>
                                 <div class="blog-post-meta">
                                     <ul class="list-wrap">
-                                        <li><a class="blog__post-tag-two" href="{{ url('/blog?c=' . $post->categories->first()->slug . '&k=' . request('k')) }}">{{ @$post->categories->first()->name }}</a></li>
-                                       {{--  <li>
+                                        <li><a class="blog__post-tag-two"
+                                                href="{{ url('/blog?c=' . $post->categories->first()->slug . '&k=' . request('k')) }}">{{ @$post->categories->first()->name }}</a>
+                                        </li>
+                                        {{--  <li>
                                             <div class="blog-avatar">
                                                 <div class="avatar-thumb">
                                                     <img src="{{ asset($post->featured_image) }}"
@@ -55,8 +61,10 @@
                                                     <p>توسط <a href="blog-details.html">دومین اسمیت</a></p>
                                                 </div>
                                             </div>
-                                        </li>--}}
-                                        <li><i class="fas fa-calendar-alt"></i>{{ jDate($post->created_at)->format('%B %d، %Y') }}</li>
+                                        </li> --}}
+                                        <li><i
+                                                class="fas fa-calendar-alt"></i>{{ jDate($post->created_at)->format('%B %d، %Y') }}
+                                        </li>
                                         <li><i class="far fa-comment"></i><a href="blog-details.html"> دیدگاه</a></li>
                                     </ul>
                                 </div>
@@ -76,7 +84,7 @@
                                 </div>
                             </div> --}}
 
-{{--
+                            {{--
                             <div class="comments-wrap">
                                 <h3 class="comments-wrap-title">02 دیدگاه</h3>
                                 <div class="latest-comments">

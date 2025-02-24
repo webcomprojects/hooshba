@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Back\AdminDashboardController;
+use App\Http\Controllers\Back\AdminMemberController;
 use App\Http\Controllers\Back\AdminPostController;
 use App\Http\Controllers\Back\AdminProvinceController;
 use App\Http\Controllers\Back\AdminRegionController;
@@ -58,6 +59,10 @@ Route::group(['as' => 'back.','prefix' => 'admin/' ,'middleware'=>['auth']], fun
 
     Route::resource('provinces', AdminProvinceController::class);
     Route::post('provinces/multipleDestroy',[AdminProvinceController::class,'multipleDestroy'])->name('provinces.multipleDestroy');
+
+
+    Route::resource('members', AdminMemberController::class);
+    Route::post('members/multipleDestroy',[AdminMemberController::class,'multipleDestroy'])->name('members.multipleDestroy');
 
 
     Route::get('get-tags', [AdminRoleController::class, 'get_tags'])->name('get-tags');

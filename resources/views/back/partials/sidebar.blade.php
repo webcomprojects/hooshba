@@ -174,6 +174,37 @@
             </li>
             @endcan
 
+            @can('members')
+            <li class="{{ open_class(['back.members.*']) }}">
+                <a href="#" class="dropdown-toggle">
+                    <i class="  fas fa-people-group"></i>
+                    <span>اعضاء شورا </span>
+                </a>
+                <ul>
+                    @can('members.index')
+                    <li>
+                        <a href="{{route('back.members.index')}}" class="{{ active_class('back.members.index') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>لیست اعضاء شورا </span>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('members.create')
+
+                    <li>
+                        <a href="{{route('back.members.create')}}" class="{{ active_class('back.members.create') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>ایجاد عضو جدید</span>
+                        </a>
+                    </li>
+                    @endcan
+
+
+
+
+                </ul>
+            </li>
+            @endcan
 
 
 

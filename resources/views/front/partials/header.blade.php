@@ -38,7 +38,7 @@
                     <div class="tgmenu__wrap home-9">
                         <nav class="tgmenu__nav">
                             <div class="logo">
-                                <a href="index.html"><img src="{{asset('assets\front\img\logo\nav-logo.webp')}}" alt="Logo"></a>
+                                <a href="/"><img src="{{asset('assets\front\img\logo\nav-logo.webp')}}" alt="Logo"></a>
                             </div>
                             <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
                                 <ul class="navigation">

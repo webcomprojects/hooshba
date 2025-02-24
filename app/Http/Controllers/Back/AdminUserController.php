@@ -30,7 +30,7 @@ class AdminUserController extends Controller
     public function create()
     {
         $this->authorize('users.create');
-        $provinces=Province::all();
+        $provinces=Province::Published()->get();
         $roles=Role::all();
         return view('back.users.create',compact('provinces','roles'));
     }
@@ -39,7 +39,7 @@ class AdminUserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('users.update');
-        $provinces=Province::all();
+        $provinces=Province::Published()->get();
         $roles=Role::all();
         return view('back.users.edit',compact('user','provinces','roles'));
     }

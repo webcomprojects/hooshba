@@ -127,6 +127,8 @@ class AdminPostController extends Controller
             $slug = sluggable_helper_function($request->title);
         }
 
+        $request->merge(['slug' => $slug]);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
@@ -151,7 +153,7 @@ class AdminPostController extends Controller
         $post->update([
             'title' => $request->title,
             'content' => $request->content,
-            'slug' =>$slug,
+            'slug' =>$request->slug,
             'video' => $request->video,
             'featured_image' => $imagePath,
             'meta_title' => $request->meta_title,

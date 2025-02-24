@@ -100,7 +100,7 @@
                                                     <input name="is_published"
                                                         {{ $is_published == '1' ? 'checked' : '' }} value="1"
                                                         type="checkbox">
-                                                    <label>  انتشار نوشته؟</label>
+                                                    <label>  انتشار ؟</label>
 
                                                 </label>
                                             </div>

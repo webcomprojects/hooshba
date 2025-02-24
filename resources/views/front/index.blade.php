@@ -109,7 +109,7 @@
                                 {{-- <h4 class="title">
                                     <a href='services-details.html'> </a>
                                 </h4> --}}
-                                <a class="title">{{ $last_post->title }}</a>
+                                <a href="{{route('front.blog.show',$last_post)}}" class="title">{{ $last_post->title }}</a>
                                 <div class="blog-post-meta mb-20">
                                     <ul class="list-wrap">
                                         <li><i
@@ -143,15 +143,15 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-8">
                             <div class="services-item shine-animate-item">
                                 <div class="services-thumb">
-                                    <a class="shine-animate" href="services-details.html"><img
+                                    <a class="shine-animate" href="{{route('front.blog.show',$video)}}"><img
                                             src="{{ asset($video->featured_image) }}" alt="{{ $video->title }}"></a>
                                 </div>
                                 <div class="services-content">
-                                    <a class="icon">
+                                    <a href="{{route('front.blog.show',$video)}}" class="icon">
                                         <i class="fas fa-solid fa-play"></i>
                                     </a>
                                     <h4 class="title">
-                                        <a href="services-details.html">{{ $video->title }}</a>
+                                        <a href="{{route('front.blog.show',$video)}}">{{ $video->title }}</a>
                                     </h4>
 
                                     <div class="blog-post-meta mb-20">
@@ -162,7 +162,7 @@
                                         </ul>
                                     </div>
 
-                                    <a class="btn btn-no-arrow" href="blog-details.html">
+                                    <a class="btn btn-no-arrow" href="{{route('front.blog.show',$video)}}">
                                         مشاهده ویدئو |
                                         <i class="fas fa-solid fa-play"></i>
                                     </a>
@@ -200,11 +200,11 @@
 
                                     <div class="blog-post-item blog__post-three shine-animate-item p-0 ">
                                         <div class="blog-post-thumb blog__post-thumb-three mb-3">
-                                            <a class="shine-animate" href="blog-details.html"><img
+                                            <a class="shine-animate" href="{{route('front.blog.show',$event)}}"><img
                                                     src="{{ asset($event->featured_image) }}" alt="{{ $event->title }}"></a>
                                         </div>
                                         <div class="blog-post-content blog__post-content-three p-2 pt-0">
-                                            <h2 class="title"><a href="blog-details.html">{{ $event->title }}</a>
+                                            <h2 class="title"><a href="{{route('front.blog.show',$event)}}">{{ $event->title }}</a>
                                             </h2>
                                             <div class="blog-post-meta mb-20">
                                                 <ul class="list-wrap">
@@ -213,7 +213,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <a class="btn" href="blog-details.html">مطالعه بیشتر</a>
+                                            <a class="btn" href="{{route('front.blog.show',$event)}}">مطالعه بیشتر</a>
                                         </div>
                                     </div>
 
@@ -246,7 +246,7 @@
                         </div>
                         <div class="card-info">
                             <div class="card-title">
-                                <a href="team-details.html">{{$event->title}}</a>
+                                <a href="{{route('front.blog.show',$event)}}">{{$event->title}}</a>
                                 <p class="card-dept mt-10">{{ @$event->categories->first()->name }}</p>
                             </div>
                             <div class="blog-post-meta mb-20">
@@ -256,7 +256,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <a class="btn" href="blog-details.html">مطالعه بیشتر</a>
+                            <a class="btn" href="{{route('front.blog.show',$event)}}">مطالعه بیشتر</a>
                         </div>
                     </div>
                 </div>
@@ -328,12 +328,12 @@
 
                                 <div class="blog-post-item blog__post-three shine-animate-item">
                                     <div class="blog-post-thumb blog__post-thumb-three">
-                                        <a class="shine-animate" href="blog-details.html"><img
+                                        <a class="shine-animate" href="{{route('front.blog.show',$post)}}"><img
                                                 src="{{ asset($post->featured_image) }}" alt="{{ $post->title }}"></a>
                                     </div>
                                     <div class="blog-post-content blog__post-content-three">
-                                        <a class="post-tag" href="blog.html">{{ @$post->categories->first()->name }}</a>
-                                        <h2 class="title"><a href="blog-details.html">{{ $post->title }}</a>
+                                        <a class="post-tag">{{ @$post->categories->first()->name }}</a>
+                                        <h2 class="title"><a href="{{route('front.blog.show',$post)}}">{{ $post->title }}</a>
                                         </h2>
                                         <div class="blog-post-meta mb-20">
                                             <ul class="list-wrap">
@@ -342,7 +342,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <a class="btn" href="blog-details.html">مطالعه بیشتر</a>
+                                        <a class="btn" href="{{route('front.blog.show',$post)}}">مطالعه بیشتر</a>
                                     </div>
                                 </div>
 
