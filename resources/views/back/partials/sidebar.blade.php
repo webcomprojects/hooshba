@@ -69,6 +69,56 @@
                     </li>
                     @endcan
 
+                    @can('posts.category')
+
+                    <li>
+                        <a href="{{route('back.posts.categories')}}" class="{{ active_class('back.posts.categories') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>دسته بندی </span>
+                        </a>
+                    </li>
+                    @endcan
+
+
+
+
+                </ul>
+            </li>
+            @endcan
+
+            @can('committees')
+            <li class="{{ open_class(['back.committees.*']) }}">
+                <a href="#" class="dropdown-toggle">
+                    <i class="  fas fa-users-rectangle"></i>
+                    <span>کمیته ها </span>
+                </a>
+                <ul>
+                    @can('committees.index')
+                    <li>
+                        <a href="{{route('back.committees.index')}}" class="{{ active_class('back.committees.index') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>لیست کمیته ها </span>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('committees.create')
+
+                    <li>
+                        <a href="{{route('back.committees.create')}}" class="{{ active_class('back.committees.create') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>ایجاد کمیته</span>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('committees.category')
+
+                    <li>
+                        <a href="{{route('back.committees.categories')}}" class="{{ active_class('back.committees.categories') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>دسته بندی </span>
+                        </a>
+                    </li>
+                    @endcan
 
 
 
@@ -198,8 +248,16 @@
                         </a>
                     </li>
                     @endcan
+{{-- 
+                    @can('members.category')
 
-
+                    <li>
+                        <a href="{{route('back.members.categories')}}" class="{{ active_class('back.members.categories') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>دسته بندی </span>
+                        </a>
+                    </li>
+                    @endcan --}}
 
 
                 </ul>

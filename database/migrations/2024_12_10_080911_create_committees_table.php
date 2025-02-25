@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->text('content')->nullable();
             $table->text('image')->nullable();
+            $table->text('video')->nullable();
             $table->string('slug')->unique();
 
             $table->uuid('user_id');

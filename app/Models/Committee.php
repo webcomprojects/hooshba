@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Committee extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids,Sluggable;
     protected $fillable = [
         'name',
         'phone',
@@ -24,6 +25,21 @@ class Committee extends Model
         'is_published',
         'published_at',
     ];
+
+
+    public function sluggable() : array
+    {
+        return [
+            'slug' => [
+                'source' => 'title',
+            ],
+        ];
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function user()
     {

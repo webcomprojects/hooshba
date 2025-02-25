@@ -9,7 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Member extends Model
 {
-    use HasFactory, HasUuids,HasRoles;
+    use HasFactory, HasUuids;
     protected $fillable = [
         'slug',
         'name',

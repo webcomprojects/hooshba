@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->enum('type',['post','committee','member'])->default('post')->nullable();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->bigInteger('ordering')->nullable();
 
             $table->unsignedBigInteger('province_id')->nullable();
             $table->foreign('province_id')->references('id')->on('provinces')->onDelete('restrict');

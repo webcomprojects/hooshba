@@ -94,3 +94,21 @@ $(document).ready(function() {
     })
 });
 
+function blockUi(selector) {
+    $(selector).block({
+        message: '<h4>لطفاً صبر کنید...</h4>',
+        css: {
+            border: 'none',
+            padding: '10px',
+            backgroundColor: '#000',
+            '-webkit-border-radius': '10px',
+            '-moz-border-radius': '10px',
+            opacity: .7,
+            color: '#fff'
+        }
+    });
+}
+
+function unblockUi(selector) {
+    $(selector).unblock();
+}

@@ -429,3 +429,18 @@ function to_english_numbers(String $string): String {
 
     return str_replace($allPersianDigits, $replaces , $string);
 }
+
+ function categoriesBuildTree(array $categories, $parentId = null)
+{
+    $branch = [];
+    foreach ($categories as $category) {
+        if ($category['parent_id'] == $parentId) {
+            $children = categoriesBuildTree($categories, $category['id']);
+            if ($children) {
+                $category['children'] = $children;
+            }
+            $branch[] = $category;
+        }
+    }
+    return $branch;
+}

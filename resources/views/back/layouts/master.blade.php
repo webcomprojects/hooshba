@@ -7,9 +7,10 @@
         </title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="قالب مدیریت ایرانی مدیران ">
-        <meta name="keywords" content="قالب مدیریت, قالب داشبورد, قالب ادمین, قالب مدیران, قالب مدیریت راستچین , قالب ایرانی مدیریت, پوسته مدیریت, قالب ادمین داشبورد سایت, قالب مدیریتی, مدیران, قالب مدیریت مدیران, پنل مدیریت, پنل مدیریت مدرن, قالب ادمین متریال, قالب مدیریت بوت استرپ, قالب ادمین بوتسترپ, قالب ادمین سایت, پوسته مدیریتی ایرانی, قالب مدیرتی مدیران ایرانی, بهترین قالب مدیریت, قالب مدیریت ریسپانسیو, قالب مدیریت ارزان, قالب admin">
+        <meta name="description" content=" مدیریت  ">
+        <meta name="keywords" content="admin">
         <meta name="fontiran.com:license" content="NE29X">
+        <meta name="csrf-token" data-refresh-url="{{ route('csrf') }}" content="{{ csrf_token() }}">
         <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets\front\img\favicon.ico')}}">
 
         @stack('befor-styles')
@@ -28,6 +29,7 @@
         <link href="{{asset('assets/back/plugins/iCheck/skins/square/_all.css')}}" rel="stylesheet">
         <link href="{{asset('assets/back/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet">
         <link href="{{asset('assets/back/plugins/noty/css/flat.css')}}" rel="stylesheet">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="{{asset('assets/back/css/style.css')}}" rel="stylesheet">
         <link href="{{asset('assets/back/css/colors.css')}}" rel="stylesheet">
                <link href="{{asset('assets/back/css/new-style.css')}}" rel="stylesheet">
@@ -87,8 +89,8 @@
         <script src="{{asset('assets/back/plugins/screenfull/dist/screenfull.min.js')}}"></script>
         <script src="{{asset('assets/back/plugins/iCheck/icheck.min.js')}}"></script>
         <script src="{{asset('assets/back/plugins/switchery/dist/switchery.js')}}"></script>
-
-        @stack('plugin-scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+                @stack('plugin-scripts')
 
 
         <script src="{{asset('assets/back/js/core.js')}}"></script>

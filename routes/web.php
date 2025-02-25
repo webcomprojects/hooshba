@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticationController;
+use App\Http\Controllers\Back\AdminCategoriesController;
+use App\Http\Controllers\Back\AdminCommitteeController;
 use App\Http\Controllers\Back\AdminDashboardController;
 use App\Http\Controllers\Back\AdminMemberController;
 use App\Http\Controllers\Back\AdminPostController;
@@ -52,7 +54,12 @@ Route::group(['as' => 'back.','prefix' => 'admin/' ,'middleware'=>['auth']], fun
      Route::post('roles/multipleDestroy',[AdminRoleController::class,'multipleDestroy'])->name('roles.multipleDestroy');
 
     Route::resource('posts', AdminPostController::class);
+    Route::get('post/categories',[AdminPostController::class,'categories'])->name('posts.categories');
     Route::post('posts/multipleDestroy',[AdminPostController::class,'multipleDestroy'])->name('posts.multipleDestroy');
+
+    Route::resource('committees', AdminCommitteeController::class);
+    Route::get('committee/categories',[AdminCommitteeController::class,'categories'])->name('committees.categories');
+    Route::post('committees/multipleDestroy',[AdminCommitteeController::class,'multipleDestroy'])->name('committees.multipleDestroy');
 
     Route::resource('regions', AdminRegionController::class);
     Route::post('regions/multipleDestroy',[AdminRegionController::class,'multipleDestroy'])->name('regions.multipleDestroy');
@@ -62,8 +69,11 @@ Route::group(['as' => 'back.','prefix' => 'admin/' ,'middleware'=>['auth']], fun
 
 
     Route::resource('members', AdminMemberController::class);
+    Route::get('member/categories',[AdminMemberController::class,'categories'])->name('members.categories');
     Route::post('members/multipleDestroy',[AdminMemberController::class,'multipleDestroy'])->name('members.multipleDestroy');
 
+    Route::resource('categories', AdminCategoriesController::class)->only(['index','store','update']);
+    Route::post('categories/update-ordering', [AdminCategoriesController::class,'updateOrdering']);
 
     Route::get('get-tags', [AdminRoleController::class, 'get_tags'])->name('get-tags');
 
@@ -98,3 +108,7 @@ Route::post('/register-userInfo',[AuthenticationController::class,'registerUserI
  Route::get('/logout', [AdminUserController::class, 'logout']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('refresh-csrf', function () {
+    return csrf_token();
+})->name('csrf');

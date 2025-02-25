@@ -4,69 +4,64 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Post;
+use App\Models\Committee;
 use App\Models\Province;
 use App\Models\Tag;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Str;
 
-class AdminPostController extends Controller
+class AdminCommitteeController extends Controller
 {
-
-
     public function index(Request $request)
     {
-        $this->authorize('posts.index');
-        $posts = Post::latest()->paginate(15);
-        return view('back.posts.index', compact('posts'));
+        $this->authorize('committees.index');
+        $committees = Committee::latest()->paginate(15);
+        return view('back.committees.index', compact('committees'));
     }
 
     public function categories()
     {
-        $cats=Category::where('type','post')->orderBy('ordering','asc')->get()->toArray();
+        $cats=Category::where('type','committee')->orderBy('ordering','asc')->get()->toArray();
         $categories=categoriesBuildTree($cats);
         return view('back.categories.index',compact('categories'));
     }
 
     public function create()
     {
-        $this->authorize('posts.create');
-        $categories = Category::where('type', 'post')->orderBy('ordering','asc')->get();
+        $this->authorize('committees.create');
+        $categories = Category::where('type', 'committee')->orderBy('ordering','asc')->get();
         $provinces=Province::latest()->Published()->get();
-        return view('back.posts.create', compact('categories','provinces'));
+        return view('back.committees.create', compact('categories','provinces'));
     }
 
     public function show($slug)
     {
-        $last_posts = Post::with('categories')->orderBy('created_at', 'desc')->take(4)->get();
+        $last_committees = Committee::with('categories')->orderBy('created_at', 'desc')->take(4)->get();
         $categories = Category::get();
         $tags = Tag::get();
-        $post = Post::with(['user', 'categories', 'tags'])->where('slug', $slug)->first();
-        return view('front.blog.show', compact('post', 'categories', 'tags', 'last_posts'));
+        $committee = Committee::with(['user', 'categories', 'tags'])->where('slug', $slug)->first();
+        return view('front.blog.show', compact('committee', 'categories', 'tags', 'last_committees'));
     }
 
     public function store(Request $request)
     {
-        $this->authorize('posts.create');
+        $this->authorize('committees.create');
 
         if ($request->input('slug')) {
             $slug = sluggable_helper_function($request->slug);
         } else {
-            $slug = sluggable_helper_function($request->title);
+            $slug = sluggable_helper_function($request->name);
         }
 
         $request->merge(['slug' => $slug]);
 
         $request->validate([
-            'title' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|email',
+            'phone' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'content' => 'required|string',
-            'slug' => 'nullable|string|unique:posts,slug',
-            'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'slug' => 'nullable|string|unique:committees,slug',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'video' => 'nullable|string',
             'meta_title' => 'nullable||string|max:255',
             'meta_description' => 'nullable||string|max:2048',
@@ -79,76 +74,75 @@ class AdminPostController extends Controller
 
 
         $imagePath=null;
-        if ($request->hasFile('featured_image')) {
+        if ($request->hasFile('image')) {
             $imagePath = $this->uploadImage($request);
         }
 
-        $post = Post::create([
+        $committee = Committee::create([
             'user_id' => Auth::id(),
-            'title' => $request->title,
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'email' => $request->email,
+            'phone' => $request->phone,
             'content' => $request->content,
-            'slug' =>$request->slug,
             'video' => $request->video,
-            'featured_image' => $imagePath,
-            'meta_title' => $request->meta_title,
-            'meta_description' => $request->meta_description,
+            'image' => $imagePath,
             'is_published' => $request->is_published ? 1 : 0,
             'published_at'=> now(),
             'province_id' => $request->province_id,
         ]);
 
         if ($request->categories) {
-            $post->categories()->sync($request->categories);
+            $committee->categories()->sync($request->categories);
         }
 
-        if ($request->tags) {
-            $tags = [];
-            foreach ($request->tags as $tagName) {
-                $tag = Tag::firstOrCreate(
-                    ['name' => $tagName],
-                    ['slug' => sluggable_helper_function($tagName)]
-                );
-                $tags[] = $tag->id;
-            }
-            $post->tags()->sync($tags);
-        }
+        // if ($request->tags) {
+        //     $tags = [];
+        //     foreach ($request->tags as $tagName) {
+        //         $tag = Tag::firstOrCreate(
+        //             ['name' => $tagName],
+        //             ['slug' => sluggable_helper_function($tagName)]
+        //         );
+        //         $tags[] = $tag->id;
+        //     }
+        //     $committee->tags()->sync($tags);
+        // }
 
-        toastr()->success('مقاله با موفیت ایجاد شد');
-        return redirect()->route('back.posts.index');
+        toastr()->success('کمیته با موفیت ایجاد شد');
+        return redirect()->route('back.committees.index');
     }
 
-    public function edit(Post $post)
+    public function edit(Committee $committee)
     {
-        $this->authorize('posts.update');
-        $categories = Category::where('type', 'post')->orderBy('ordering','asc')->get();
+        $this->authorize('committees.update');
+        $categories = Category::where('type', 'committee')->orderBy('ordering','asc')->get();
         $provinces=Province::latest()->Published()->get();
-        return view('back.posts.edit', compact('post','categories','provinces'));
+        return view('back.committees.edit', compact('committee','categories','provinces'));
     }
 
 
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Committee $committee)
     {
 
-        $this->authorize('posts.update');
+        $this->authorize('committees.update');
 
 
         if ($request->input('slug')) {
             $slug = sluggable_helper_function($request->slug);
         } else {
-            $slug = sluggable_helper_function($request->title);
+            $slug = sluggable_helper_function($request->name);
         }
 
         $request->merge(['slug' => $slug]);
 
         $request->validate([
-            'title' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|email',
+            'phone' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'content' => 'required|string',
-            'slug' => 'nullable|string|unique:posts,slug,'.$post->id,
-            'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'slug' => 'nullable|string|unique:committees,slug,'.$committee->id,
+            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'video' => 'nullable|string',
-            'meta_title' => 'nullable||string|max:255',
-            'meta_description' => 'nullable||string|max:2048',
-            'tags' => 'nullable|array',
             'is_published' => 'nullable|boolean|in:0,1',
             'categories' => 'nullable|array',
             'categories.*' => 'exists:categories,id',
@@ -156,74 +150,74 @@ class AdminPostController extends Controller
         ]);
 
 
-        $imagePath=$post->featured_image;
-        if ($request->hasFile('featured_image')) {
+        $imagePath=$committee->image;
+        if ($request->hasFile('image')) {
 
-            if (!empty($post->featured_image) && file_exists(public_path($post->featured_image))) {
-                if (is_file(public_path($post->featured_image))) {
-                    unlink(public_path($post->featured_image));
+            if (!empty($committee->image) && file_exists(public_path($committee->image))) {
+                if (is_file(public_path($committee->image))) {
+                    unlink(public_path($committee->image));
                 }
             }
 
             $imagePath = $this->uploadImage($request);
         }
 
-        $post->update([
-            'title' => $request->title,
+        $committee->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
             'content' => $request->content,
             'slug' =>$request->slug,
             'video' => $request->video,
-            'featured_image' => $imagePath,
-            'meta_title' => $request->meta_title,
-            'meta_description' => $request->meta_description,
+            'image' => $imagePath,
             'is_published' => $request->is_published ? 1 : 0,
             'published_at'=> now(),
             'province_id' => $request->province_id,
         ]);
 
         if ($request->categories) {
-            $post->categories()->sync($request->categories);
+            $committee->categories()->sync($request->categories);
         }
 
-        if ($request->tags) {
-            $tags = [];
-            foreach ($request->tags as $tagName) {
-                $tag = Tag::firstOrCreate(
-                    ['name' => $tagName],
-                    ['slug' => sluggable_helper_function($tagName)]
-                );
-                $tags[] = $tag->id;
-            }
-            $post->tags()->sync($tags);
-        }
+        // if ($request->tags) {
+        //     $tags = [];
+        //     foreach ($request->tags as $tagName) {
+        //         $tag = Tag::firstOrCreate(
+        //             ['name' => $tagName],
+        //             ['slug' => sluggable_helper_function($tagName)]
+        //         );
+        //         $tags[] = $tag->id;
+        //     }
+        //     $committee->tags()->sync($tags);
+        // }
 
-        toastr()->success('مقاله با موفیت بروزرسانی شد');
-        return redirect()->route('back.posts.index');
+        toastr()->success('کمیته با موفیت بروزرسانی شد');
+        return redirect()->route('back.committees.index');
     }
 
-    public function destroy(Post $post)
+    public function destroy(Committee $committee)
     {
-        $this->authorize('posts.delete');
+        $this->authorize('committees.delete');
 
         // بررسی و حذف تصویر ویژه
-        if (!empty($post->featured_image) && file_exists(public_path($post->featured_image))) {
-            if (is_file(public_path($post->featured_image))) {
-                unlink(public_path($post->featured_image));
+        if (!empty($committee->image) && file_exists(public_path($committee->image))) {
+            if (is_file(public_path($committee->image))) {
+                unlink(public_path($committee->image));
             }
         }
 
         // بررسی و حذف ویدیو
-        if (!empty($post->video) && file_exists(public_path($post->video))) {
-            if (is_file(public_path($post->video))) {
-                unlink(public_path($post->video));
+        if (!empty($committee->video) && file_exists(public_path($committee->video))) {
+            if (is_file(public_path($committee->video))) {
+                unlink(public_path($committee->video));
             }
         }
 
         // حذف پست
-        $post->delete();
-        toastr()->success('مقاله با موفیت حذف شد');
+        $committee->delete();
+        toastr()->success('کمیته با موفیت حذف شد');
 
-        return redirect()->route('back.posts.index');
+        return redirect()->route('back.committees.index');
     }
 
     public function multipleDestroy(Request $request)
@@ -242,15 +236,15 @@ class AdminPostController extends Controller
         ]);
 
         foreach ($request->ids as $id) {
-            $role = Post::find($id['ids']);
+            $role = Committee::find($id['ids']);
             $this->destroy($role, true);
         }
-        toastr()->success('مقالات با موفیت حذف شدند');
+        toastr()->success('کمیته ها با موفیت حذف شدند');
 
-        return redirect()->route('back.posts.index');
+        return redirect()->route('back.committees.index');
     }
 
-    private function uploadImage(Request $request, $inputName = 'featured_image')
+    private function uploadImage(Request $request, $inputName = 'image')
     {
 
         if (!$request->hasFile($inputName)) {
@@ -270,11 +264,11 @@ class AdminPostController extends Controller
         $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
         // ذخیره فایل در مسیر public/uploads/images
-        $filePath = 'storage/uploads/images/' . $fileName;
-        $file->move(public_path('storage/uploads/images'), $fileName);
+        $filePath = 'storage/uploads/images/committees/' . $fileName;
+        $file->move(public_path('storage/uploads/images/committees'), $fileName);
 
         // بازگشت مسیر فایل ذخیره شده
-        return '/storage/uploads/images/' . $fileName;
+        return '/storage/uploads/images/committees/' . $fileName;
     }
 
     private function uploadVideo(Request $request, $inputName = 'video')
@@ -316,5 +310,6 @@ class AdminPostController extends Controller
 
         return response()->json($tags);
     }
+
 
 }

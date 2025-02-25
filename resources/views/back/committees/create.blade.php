@@ -10,8 +10,8 @@
             <div class="breadcrumb-box shadow">
                 <ul class="breadcrumb">
                     <li><a href="{{ route('back.dashboard') }}">داشبورد</a></li>
-                    <li><a href="{{ route('back.users.index') }}">لیست مقالات</a></li>
-                    <li><a>ایجاد مقاله جدید</a></li>
+                    <li><a href="{{ route('back.users.index') }}">لیست کمیته ها</a></li>
+                    <li><a>ایجاد کمیته جدید</a></li>
                 </ul>
             </div>
 
@@ -23,7 +23,7 @@
                     <div class="portlet-title">
                         <h3 class="title">
                             <i class="icon-note"></i>
-                            ایجاد مقاله جدید
+                            ایجاد کمیته جدید
                         </h3>
                     </div><!-- /.portlet-title -->
                     <div class="buttons-box">
@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 m-auto m-b-30">
 
-                            <form action="{{ route('back.posts.store') }}" role="form" method="POST"
+                            <form action="{{ route('back.committees.store') }}" role="form" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @if ($errors->any())
@@ -56,9 +56,9 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group curve">
-                                            <label> عنوان </label>
-                                            <input name="title" type="text" class="form-control"
-                                                value="{{ old('title') }}">
+                                            <label> نام </label>
+                                            <input name="name" type="text" class="form-control"
+                                                value="{{ old('name') }}">
                                         </div>
                                     </div>
 
@@ -73,6 +73,21 @@
                                                 @endforeach
 
                                             </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group curve">
+                                            <label> ایمیل</label>
+                                            <input name="email" type="email" class="form-control"
+                                                value="{{ old('email') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group curve">
+                                            <label> تلفن</label>
+                                            <input name="phone" type="text" class="form-control"
+                                                value="{{ old('phone') }}">
                                         </div>
                                     </div>
 
@@ -95,14 +110,15 @@
                                         </div>
                                     </div>
 
+
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="first-name-vertical">محتوا</label>
-                                            <textarea id="content" class="form-control" rows="3" name="content">{!! old('content') !!}<</textarea>
+                                            <label for="first-name-vertical">توضیحات</label>
+                                            <textarea id="content" class="form-control" rows="3" name="content">{!! old('content') !!}</textarea>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group curve">
                                             <label> عنوان سئو </label>
                                             <input name="meta_title" type="text" class="form-control"
@@ -124,7 +140,6 @@
                                             <textarea class="form-control" name="meta_description" rows="3" style="height: 96px;"></textarea>
                                         </div>
                                     </div>
-
                                     <div class="col-12 col-md-6">
                                         <fieldset class="form-group">
                                             <label>کلمات کلیدی</label>
@@ -138,7 +153,8 @@
                                                 <div class="tags_clear"></div>
                                             </div>
                                         </fieldset>
-                                    </div>
+                                    </div>--}}
+
 
 
                                     <div class="col-md-6">
@@ -153,7 +169,7 @@
 
 
                                         <div class="form-group relative">
-                                            <input type="file" name="featured_image" class="form-control">
+                                            <input type="file" name="image" class="form-control">
                                             <label> تصویر شاخص </label>
                                             <div class="input-group round">
                                                 <input type="text" class="form-control file-input"

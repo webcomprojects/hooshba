@@ -21,6 +21,10 @@ class Category extends Model
     {
         return $this->belongsToMany(Post::class);
     }
+    public function committees()
+    {
+        return $this->belongsToMany(Committee::class);
+    }
     public function members()
     {
         return $this->belongsToMany(Member::class);

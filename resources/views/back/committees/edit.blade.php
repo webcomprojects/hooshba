@@ -10,8 +10,8 @@
             <div class="breadcrumb-box shadow">
                 <ul class="breadcrumb">
                     <li><a href="{{ route('back.dashboard') }}">داشبورد</a></li>
-                    <li><a href="{{ route('back.users.index') }}">لیست مقالات</a></li>
-                    <li><a>ایجاد مقاله جدید</a></li>
+                    <li><a href="{{ route('back.users.index') }}">لیست کمیته ها</a></li>
+                    <li><a>ایجاد کمیته جدید</a></li>
                 </ul>
             </div>
 
@@ -23,7 +23,7 @@
                     <div class="portlet-title">
                         <h3 class="title">
                             <i class="icon-note"></i>
-                            ایجاد مقاله جدید
+                            ایجاد کمیته جدید
                         </h3>
                     </div><!-- /.portlet-title -->
                     <div class="buttons-box">
@@ -38,9 +38,10 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 m-auto m-b-30">
 
-                            <form action="{{ route('back.posts.store') }}" role="form" method="POST"
+                            <form action="{{ route('back.committees.update',$committee) }}" role="form" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
+                                @method('put')
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
@@ -56,9 +57,9 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group curve">
-                                            <label> عنوان </label>
-                                            <input name="title" type="text" class="form-control"
-                                                value="{{ old('title') }}">
+                                            <label> نام </label>
+                                            <input name="name" type="text" class="form-control"
+                                                value="{{ old('name') ? old('name') : $committee->name }}">
                                         </div>
                                     </div>
 
@@ -67,12 +68,31 @@
                                             <label>دسته یندی </label>
                                             <select name="categories[]" class="form-control select2" multiple>
                                                 @foreach ($categories as $item)
+                                                @php
+                                                // بررسی مقادیر قبلی برای فرم و در غیر این صورت استفاده از نقش‌های کاربر
+                                                $cat = old('categories', $committee->categories->pluck('id')->toArray());
+                                            @endphp
                                                     <option
-                                                        {{ in_array($item->id, @old('categories') ?: []) ? 'selected' : '' }}
+                                                        {{ in_array($item->id, $cat) ? 'selected' : '' }}
                                                         value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
 
                                             </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group curve">
+                                            <label> ایمیل</label>
+                                            <input name="email" type="email" class="form-control"
+                                                value="{{ old('email') ? old('email') : $committee->email }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group curve">
+                                            <label> تلفن</label>
+                                            <input name="phone" type="text" class="form-control"
+                                                value="{{ old('phone') ? old('phone') : $committee->phone}}">
                                         </div>
                                     </div>
 
@@ -82,9 +102,12 @@
                                             <div class="input-group round">
 
                                                 <select id="province" name="province_id" class="form-control select2">
+                                                    @php
+                                                        $provinceSelected=old('province_id') ? old('province_id') : $committee->province_id;
+                                                    @endphp
                                                     <option  value="">انتخاب کنید</option>
                                                     @foreach ($provinces as $province)
-                                                        <option {{ old('province_id') == $province->id ? 'selected' : '' }}
+                                                        <option {{ $provinceSelected == $province->id ? 'selected' : '' }}
                                                             value="{{ $province->id }}" data-title="{{ $province->name }}">
                                                             {{ $province->name }}</option>
                                                     @endforeach
@@ -95,18 +118,19 @@
                                         </div>
                                     </div>
 
+
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="first-name-vertical">محتوا</label>
-                                            <textarea id="content" class="form-control" rows="3" name="content">{!! old('content') !!}<</textarea>
+                                            <label for="first-name-vertical">توضیحات</label>
+                                            <textarea id="content" class="form-control" rows="3" name="content">{!! old('content') ? old('content') : $committee->content !!}</textarea>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group curve">
                                             <label> عنوان سئو </label>
                                             <input name="meta_title" type="text" class="form-control"
-                                                value="{{ old('meta_title') }}">
+                                                value="{{  old('meta_title') ? old('meta_title') : $committee->meta_title }}">
                                         </div>
                                     </div>
 
@@ -114,14 +138,14 @@
                                         <div class="form-group curve">
                                             <label> url </label>
                                             <input name="slug" type="text" class="form-control"
-                                                value="{{ old('slug') }}">
+                                                value="{{  old('slug') ? old('slug') : $committee->slug }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>توضیحات سئو</label>
-                                            <textarea class="form-control" name="meta_description" rows="3" style="height: 96px;"></textarea>
+                                            <textarea class="form-control" name="meta_description" rows="3" style="height: 96px;">{!!  old('meta_description') ? old('meta_description') : $committee->meta_description !!}</textarea>
                                         </div>
                                     </div>
 
@@ -138,26 +162,30 @@
                                                 <div class="tags_clear"></div>
                                             </div>
                                         </fieldset>
-                                    </div>
+                                    </div> --}}
+
 
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>لینک ویدئو(کد امبد)</label>
-                                            <textarea class="form-control" name="video" rows="3" style="height: 96px;">{!!  old('video')  !!}</textarea>
+                                            <textarea class="form-control" name="video" rows="3" style="height: 96px;">{!!  old('video') ? old('video') : $committee->video !!}</textarea>
                                         </div>
                                     </div>
 
-
-                                    <div class="col-md-6">
+ <div class="col-md-6">
 
 
                                         <div class="form-group relative">
-                                            <input type="file" name="featured_image" class="form-control">
+                                            <input type="file" name="image" class="form-control">
                                             <label> تصویر شاخص </label>
+                                            <br>
+                                            <img class="image-thumb-index d-block mb-2" @if(!$committee->image) style="width: 50px;" @endif src="{{ $committee->image ? asset($committee->image) : asset('assets/back/images/empty.svg') }}" alt="image">
+
+
                                             <div class="input-group round">
                                                 <input type="text" class="form-control file-input"
-                                                    placeholder="برای آپلود کلیک کنید">
+                                                    placeholder="برای جایگزین تصویر، کلیک کنید">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-success">
                                                         <i class="icon-picture"></i>
@@ -178,8 +206,11 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <label>
+                                                    @php
+                                                    $is_published=old('is_published') ? old('is_published') : $committee->is_published
+                                                @endphp
                                                     <input name="is_published"
-                                                        {{ old('is_published') == '1' ? 'checked' : '' }} value="1"
+                                                        {{ $is_published == '1' ? 'checked' : '' }} value="1"
                                                         type="checkbox">
                                                     <label>  انتشار نوشته؟</label>
 
@@ -209,7 +240,7 @@
                                         <div class="form-group">
                                             <button class="btn btn-success btn-block">
                                                 <i class="icon-check"></i>
-                                                ایجاد
+                                                ویرایش
                                                 <div class="paper-ripple">
                                                     <div class="paper-ripple__background" style="opacity: 0;"></div>
                                                     <div class="paper-ripple__waves"></div>

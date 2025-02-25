@@ -139,7 +139,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical">توضیحات دیگر</label>
-                                            <textarea id="content" class="form-control" rows="3" name="content">{!! old('content') !!}</textarea>
+                                            <textarea id="content" class="form-control" rows="3" name="description">{!! old('description') !!}</textarea>
                                         </div>
                                     </div>
 

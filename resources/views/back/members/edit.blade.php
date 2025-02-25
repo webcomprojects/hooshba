@@ -10,8 +10,8 @@
             <div class="breadcrumb-box shadow">
                 <ul class="breadcrumb">
                     <li><a href="{{ route('back.dashboard') }}">داشبورد</a></li>
-                    <li><a href="{{ route('back.users.index') }}">لیست مقالات</a></li>
-                    <li><a>ایجاد مقاله جدید</a></li>
+                    <li><a href="{{ route('back.users.index') }}">لیست اعضاء</a></li>
+                    <li><a>ایجاد اعضاء جدید</a></li>
                 </ul>
             </div>
 
@@ -23,7 +23,7 @@
                     <div class="portlet-title">
                         <h3 class="title">
                             <i class="icon-note"></i>
-                            ایجاد مقاله جدید
+                            ایجاد اعضاء جدید
                         </h3>
                     </div><!-- /.portlet-title -->
                     <div class="buttons-box">
@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 m-auto m-b-30">
 
-                            <form action="{{ route('back.posts.update',$post) }}" role="form" method="POST"
+                            <form action="{{ route('back.members.update',$member) }}" role="form" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
@@ -57,97 +57,113 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group curve">
-                                            <label> عنوان </label>
-                                            <input name="title" type="text" class="form-control"
-                                                value="{{ old('title') ? old('title') : $post->title }}">
+                                            <label> نام </label>
+                                            <input name="name" type="text" class="form-control"
+                                                value="{{ old('name') ? old('name') : $member->name }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>دسته یندی </label>
-                                            <select name="categories[]" class="form-control select2" multiple>
-                                                @foreach ($categories as $item)
+                                            <label>نوع عضو  </label>
+                                            <select name="type" class="form-control " required>
                                                 @php
-                                                // بررسی مقادیر قبلی برای فرم و در غیر این صورت استفاده از نقش‌های کاربر
-                                                $cat = old('categories', $post->categories->pluck('id')->toArray());
-                                            @endphp
-                                                    <option
-                                                        {{ in_array($item->id, $cat) ? 'selected' : '' }}
-                                                        value="{{ $item->id }}">{{ $item->name }}</option>
-                                                @endforeach
-
+                                                    $typeSelectd=old('type') ? old('type') : $member->type;
+                                                @endphp
+                                                <option  value="">انتخاب کنید</option>
+                                                <option {{$typeSelectd== "council" ? "selected" : ""}}  value="council">شورا</option>
+                                                <option {{$typeSelectd == "presidency" ? "selected" : ""}}  value="presidency">ریاست جمهوری</option>
                                             </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group curve">
+                                            <label> موقعیت شغلی </label>
+                                            <input name="job_position" type="text" class="form-control"
+                                                value="{{ old('job_position') ? old('job_position') : $member->job_position }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>استان</label>
+                                            <div class="input-group round">
+
+                                                <select id="province" name="province_id" class="form-control select2">
+                                                    @php
+                                                        $provinceSelected=old('province_id') ? old('province_id') : $member->province_id;
+                                                    @endphp
+                                                    <option  value="">انتخاب کنید</option>
+                                                    @foreach ($provinces as $province)
+                                                        <option {{ $provinceSelected == $province->id ? 'selected' : '' }}
+                                                            value="{{ $province->id }}" data-title="{{ $province->name }}">
+                                                            {{ $province->name }}</option>
+                                                    @endforeach
+
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group curve">
+                                            <label> ایمیل</label>
+                                            <input name="email" type="email" class="form-control"
+                                                value="{{ old('email') ? old('email') : $member->email }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group curve">
+                                            <label> موبایل</label>
+                                            <input name="mobile" type="text" class="form-control"
+                                                value="{{ old('mobile') ? old('mobile') : $member->mobile}}">
+                                        </div>
+                                    </div>
+
+                                     <div class="col-md-12">
+                                        <div class="form-group curve">
+                                            <label> لینک ها</label>
+                                            <input name="links" type="text" class="form-control"
+                                                value="{{ old('links') ? old('links') : $member->links }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical"> سوابق تحصیلی</label>
+                                            <textarea class="form-control" rows="6" name="educational_background">{!! old('educational_background') ? old('educational_background') : $member->educational_background  !!}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical"> سوابق شغلی</label>
+                                            <textarea class="form-control" rows="6" name="executive_background">{!! old('executive_background') ? old('executive_background') : $member->executive_background !!}</textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="first-name-vertical">محتوا</label>
-                                            <textarea id="content" class="form-control" rows="3" name="content">{!! old('content') ? old('content') : $post->content !!}</textarea>
+                                            <label for="first-name-vertical">توضیحات دیگر</label>
+                                            <textarea id="content" class="form-control" rows="3" name="description">{!! old('description') ? old('description') : $member->description !!}</textarea>
                                         </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group curve">
-                                            <label> عنوان سئو </label>
-                                            <input name="meta_title" type="text" class="form-control"
-                                                value="{{  old('meta_title') ? old('meta_title') : $post->meta_title }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group curve">
-                                            <label> url </label>
-                                            <input name="slug" type="text" class="form-control"
-                                                value="{{  old('slug') ? old('slug') : $post->slug }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>توضیحات سئو</label>
-                                            <textarea class="form-control" name="meta_description" rows="3" style="height: 96px;">{!!  old('meta_description') ? old('meta_description') : $post->meta_description !!}</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-6">
-                                        <fieldset class="form-group">
-                                            <label>کلمات کلیدی</label>
-                                            <input id="tags" type="text" name="tags" class="form-control"
-                                                data-tagsinput-init="true" style="display: none;">
-                                            <div id="tags_tagsinput" class="tagsinput"
-                                                style="width: 100%; min-height: 100px; height: 100px;">
-                                                <div id="tags_addTag"><input id="tags_tag" value=""
-                                                        data-default="افزودن" class="ui-autocomplete-input"
-                                                        autocomplete="off" style="color: rgb(0, 0, 0); width: 68px;"></div>
-                                                <div class="tags_clear"></div>
-                                            </div>
-                                        </fieldset>
                                     </div>
 
 
 
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>لینک ویدئو(کد امبد)</label>
-                                            <textarea class="form-control" name="video" rows="3" style="height: 96px;">{!!  old('video') ? old('video') : $post->video !!}</textarea>
-                                        </div>
-                                    </div>
-
- <div class="col-md-6">
 
 
                                         <div class="form-group relative">
-                                            <input type="file" name="featured_image" class="form-control">
+                                            <input type="file" name="image" class="form-control">
                                             <label> تصویر شاخص </label>
                                             <br>
-                                            <img class="image-thumb-index d-block mb-2" @if(!$post->featured_image) style="width: 50px;" @endif src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/back/images/empty.svg') }}" alt="image">
-
+                                            <img class="image-thumb-index d-block mb-2" @if(!$member->image) style="width: 50px;" @endif src="{{ $member->image ? asset($member->image) : asset('assets/back/images/empty.svg') }}" alt="image">
 
                                             <div class="input-group round">
                                                 <input type="text" class="form-control file-input"
-                                                    placeholder="برای جایگزین تصویر، کلیک کنید">
+                                                    placeholder="برای آپلود کلیک کنید">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-success">
                                                         <i class="icon-picture"></i>
@@ -169,17 +185,18 @@
                                             <div class="input-group">
                                                 <label>
                                                     @php
-                                                    $is_published=old('is_published') ? old('is_published') : $post->is_published
+                                                    $is_published=old('is_published') ? old('is_published') : $member->is_published
                                                 @endphp
                                                     <input name="is_published"
                                                         {{ $is_published == '1' ? 'checked' : '' }} value="1"
                                                         type="checkbox">
-                                                    <label>  انتشار نوشته؟</label>
+                                                    <label>  انتشار؟</label>
 
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
+
                                     {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label> تاریخ انتشار</label>

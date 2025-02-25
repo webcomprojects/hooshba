@@ -7,7 +7,7 @@
             <div class="breadcrumb-box shadow">
                 <ul class="breadcrumb">
                     <li><a href="{{route('back.dashboard')}}">داشبورد</a></li>
-                    <li><a>لیست اعضاء</a></li>
+                    <li><a>لیست کمیته ها</a></li>
                 </ul>
             </div>
 
@@ -20,7 +20,7 @@
                     <div class="portlet-title">
                         <h3 class="title">
                             <i class="icon-frane"></i>
-                            لیست عضاء
+                            لیست کمیته ها
                         </h3>
                     </div><!-- /.portlet-title -->
                     <div class="buttons-box">
@@ -37,7 +37,7 @@
                     <div class="d-flex align-items-center">
                         <div class="font-weight-bold text-danger mr-3"><span id="datatable-selected-rows">0</span> مورد انتخاب شده: </div>
 
-                        <button class="btn btn-danger multiple-delete-modal" data-action="{{route('back.members.multipleDestroy')}}" type="button" data-bs-toggle="modal" data-bs-target="#multiple-delete-modal">خذف همه</button>
+                        <button class="btn btn-danger multiple-delete-modal" data-action="{{route('back.committees.multipleDestroy')}}" type="button" data-bs-toggle="modal" data-bs-target="#multiple-delete-modal">خذف همه</button>
                     </div>
                 </div>
 
@@ -48,35 +48,27 @@
                             <thead>
                             <tr>
                                 <th style="width:20px"><input type="checkbox" id="btn-check-all-toggle"></th>
+                                {{-- <th class="text-center"> آواتار</th> --}}
 
                                 <th> تصویر</th>
-                                <th> نام و نام خانوادگی</th>
-                                <th> نوع</th>
+                                <th> نام</th>
+                                <th> تلفن</th>
                                 <th> ایمیل</th>
-                                <th> موبایل</th>
                                 <th>زمان ایجاد</th>
                                 <th>عملیات</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(count($members))
-                                @foreach($members as $item)
+                            @if(count($committees))
+                                @foreach($committees as $item)
                                     <tr>
                                         <td><input class="item-checked" type="checkbox" value="{{$item->id}}"></td>
                                         <td  class="text-center">
                                             <img class="image-thumb-index" @if(!$item->image) style="width: 50px;" @endif src="{{ $item->image ? asset($item->image) : asset('assets/back/images/empty.svg') }}" alt="image">
                                         </td>
                                         <td>{{$item->name}}</td>
-                                        <td class="text-center">
-                                            @if($item->type=="council")
-                                                <span class="label label-default">شورا</span>
-                                            @elseif ($item->type=="presidency")
-                                                <span class="label label-default">ریاست جمهوری </span>
-                                            @endif
-                                        </td>
-
+                                        <td>{{$item->phone}}</td>
                                         <td>{{$item->email}}</td>
-                                        <td>{{$item->mobile}}</td>
                                         <td class="text-center">
                                             @if($item->is_published)
                                                 <span class="label label-success">انتشار</span>
@@ -88,9 +80,9 @@
                                         <td>
 
 
-                                            <a href="{{route('back.members.edit',$item)}}" class="btn btn-info">ویرایش<div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00256;"></div><div class="paper-ripple__waves"></div></div></a>
+                                            <a href="{{route('back.committees.edit',$item)}}" class="btn btn-info">ویرایش<div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00256;"></div><div class="paper-ripple__waves"></div></div></a>
 
-                                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" data-action="{{route('back.members.destroy',$item)}}" class="btn btn-danger delete-modal">حذف<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
+                                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" data-action="{{route('back.committees.destroy',$item)}}" class="btn btn-danger delete-modal">حذف<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
 
                                         </td>
                                     </tr>
@@ -106,7 +98,7 @@
                         </table>
 
                         <div class="pagination-wrap mt-40 text-center">
-                            {{ $members->links('pagination::bootstrap-4') }}
+                            {{ $committees->links('pagination::bootstrap-4') }}
                         </div>
 
                     </div><!-- /.table-responsive -->
@@ -117,7 +109,7 @@
     </div>
 
 
-@include('back.partials.delete-modal',['text_body'=>'با حذف عضو،دیگر قادر به بازیابی آن نخواهید بود' ])
-@include('back.partials.multiple-delete-modal',['text_body'=>'با حذف عضاء،دیگر قادر به بازیابی آنها نخواهید بود.'])
+@include('back.partials.delete-modal',['text_body'=>'با حذف کمیته،دیگر قادر به بازیابی آن نخواهید بود' ])
+@include('back.partials.multiple-delete-modal',['text_body'=>'با حذف کمیته ها،دیگر قادر به بازیابی آنها نخواهید بود.'])
 
 @endsection

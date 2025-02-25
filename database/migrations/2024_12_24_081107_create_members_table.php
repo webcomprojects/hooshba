@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->json('links')->nullable();
             $table->text('description')->nullable();
-            $table->json('educational_background')->nullable();
-            $table->json('executive_background')->nullable();
+            $table->text('educational_background')->nullable();
+            $table->text('executive_background')->nullable();
 
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');

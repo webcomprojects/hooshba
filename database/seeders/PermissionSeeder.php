@@ -10,7 +10,7 @@ use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
 {
-  
+
     public $ordering = 1;
     public $ids = [];
     public function run(): void
@@ -53,6 +53,7 @@ class PermissionSeeder extends Seeder
                     'create' => 'ایجاد کمیته',
                     'update' => 'ویرایش کمیته',
                     'delete' => 'حذف کمیته',
+                    'category' => 'دسته بندی',
                 ]
             ],
 
@@ -63,6 +64,7 @@ class PermissionSeeder extends Seeder
                     'create' => 'افزودن عضو',
                     'update' => 'ویرایش عضو',
                     'delete' => 'حذف عضو',
+                    'category' => 'دسته بندی',
                 ]
             ],
 
@@ -81,6 +83,7 @@ class PermissionSeeder extends Seeder
                     'create' => 'ایجاد پست',
                     'update' => 'ویرایش پست',
                     'delete' => 'حذف پست',
+                    'category' => 'دسته بندی',
                 ]
             ],
 

@@ -81,6 +81,29 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>استان</label>
+                                            <div class="input-group round">
+
+                                                <select id="province" name="province_id" class="form-control select2">
+                                                    @php
+                                                        $provinceSelected=old('province_id') ? old('province_id') : $member->province_id;
+                                                    @endphp
+                                                    <option  value="">انتخاب کنید</option>
+                                                    @foreach ($provinces as $province)
+                                                        <option {{ $provinceSelected == $province->id ? 'selected' : '' }}
+                                                            value="{{ $province->id }}" data-title="{{ $province->name }}">
+                                                            {{ $province->name }}</option>
+                                                    @endforeach
+
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical">محتوا</label>
