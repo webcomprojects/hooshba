@@ -64,7 +64,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>دسته یندی </label>
+                                            <label>دسته بندی </label>
                                             <select name="categories[]" class="form-control select2" multiple>
                                                 @foreach ($categories as $item)
                                                     <option
