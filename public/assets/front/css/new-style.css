@@ -287,3 +287,18 @@ hr{
     left: auto;
     top: 0;
 }
+.menu-item-has-children{
+    position: relative;
+}
+
+.menu-item-has-children .sub-menu-2{
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.team-content .title {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    height: 60px;
+}

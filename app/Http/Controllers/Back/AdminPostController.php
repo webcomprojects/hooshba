@@ -66,7 +66,7 @@ class AdminPostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'slug' => 'nullable|string|unique:posts,slug',
-            'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'featured_image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
             'video' => 'nullable|string',
             'meta_title' => 'nullable||string|max:255',
             'meta_description' => 'nullable||string|max:2048',
@@ -144,7 +144,7 @@ class AdminPostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'slug' => 'nullable|string|unique:posts,slug,'.$post->id,
-            'featured_image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'featured_image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
             'video' => 'nullable|string',
             'meta_title' => 'nullable||string|max:255',
             'meta_description' => 'nullable||string|max:2048',
@@ -260,7 +260,7 @@ class AdminPostController extends Controller
         $file = $request->file($inputName);
 
         $validated = $request->validate([
-            $inputName => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            $inputName => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         /*$fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();

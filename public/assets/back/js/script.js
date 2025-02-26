@@ -96,7 +96,7 @@ $(document).ready(function() {
 
 function blockUi(selector) {
     $(selector).block({
-        message: '<h4>لطفاً صبر کنید...</h4>',
+        message: '',
         css: {
             border: 'none',
             padding: '10px',

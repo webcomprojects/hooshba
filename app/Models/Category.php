@@ -13,8 +13,10 @@ class Category extends Model
     protected $fillable = [
         'name',
         'parent_id',
+        'province_id',
         'type',
         'slug',
+        'ordering'
     ];
 
     public function posts()
@@ -30,4 +32,8 @@ class Category extends Model
         return $this->belongsToMany(Member::class);
     }
 
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
 }

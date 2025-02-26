@@ -34,14 +34,7 @@ class AdminCommitteeController extends Controller
         return view('back.committees.create', compact('categories','provinces'));
     }
 
-    public function show($slug)
-    {
-        $last_committees = Committee::with('categories')->orderBy('created_at', 'desc')->take(4)->get();
-        $categories = Category::get();
-        $tags = Tag::get();
-        $committee = Committee::with(['user', 'categories', 'tags'])->where('slug', $slug)->first();
-        return view('front.blog.show', compact('committee', 'categories', 'tags', 'last_committees'));
-    }
+
 
     public function store(Request $request)
     {
@@ -61,7 +54,7 @@ class AdminCommitteeController extends Controller
             'phone' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'content' => 'required|string',
             'slug' => 'nullable|string|unique:committees,slug',
-            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
             'video' => 'nullable|string',
             'meta_title' => 'nullable||string|max:255',
             'meta_description' => 'nullable||string|max:2048',
@@ -141,7 +134,7 @@ class AdminCommitteeController extends Controller
             'phone' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'content' => 'required|string',
             'slug' => 'nullable|string|unique:committees,slug,'.$committee->id,
-            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
             'video' => 'nullable|string',
             'is_published' => 'nullable|boolean|in:0,1',
             'categories' => 'nullable|array',
@@ -254,7 +247,7 @@ class AdminCommitteeController extends Controller
         $file = $request->file($inputName);
 
         $validated = $request->validate([
-            $inputName => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            $inputName => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         /*$fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();

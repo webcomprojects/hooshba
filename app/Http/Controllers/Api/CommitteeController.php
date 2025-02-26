@@ -215,7 +215,7 @@ class CommitteeController extends Controller
                 'email' => 'nullable|email|max:255',
                 'content' => 'nullable|string',
                 'slug' => 'nullable|string|unique:committees,slug',
-                'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+                'image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
                 'is_published' => 'required|boolean|in:0,1',
                 'province_id' => 'nullable|exists:provinces,id'
             ])->validate();
@@ -336,7 +336,7 @@ class CommitteeController extends Controller
                 'email' => 'nullable|email|max:255',
                 'content' => 'nullable|string',
                 'slug' => 'sometimes|string|unique:committees,slug,' . $id,
-                'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+                'image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
                 'is_published' => 'required|boolean|in:0,1',
                 'province_id' => 'nullable|exists:provinces,id'
             ])->validate();
@@ -554,7 +554,7 @@ class CommitteeController extends Controller
             $file = $request->file($inputName);
 
             $validated = $request->validate([
-                $inputName => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                $inputName => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             ]);
 
             $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();

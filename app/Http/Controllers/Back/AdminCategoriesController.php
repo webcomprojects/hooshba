@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class AdminCategoriesController extends Controller
 {
 
+
     public function store(Request $request)
     {
         $slug = sluggable_helper_function($request->name);
@@ -19,22 +20,23 @@ class AdminCategoriesController extends Controller
             'slug' => 'nullable|string|unique:categories,slug',
             'type' => 'required|in:post,committee,member',
         ]);
-
+        $maxOrdering = Category::max('ordering');
         Category::create([
             'name' => $request->name,
             'slug' => $request->slug,
             'type' => $request->type,
+            'ordering' => $maxOrdering + 1
         ]);
 
-        toastr()->success('دسته بندی با موفیت اضافه شد');
+       // toastr()->success('دسته بندی با موفیت اضافه شد');
 
         if ($request->type == "post") {
             return redirect()->route('back.posts.categories');
-        }elseif ($request->type == "member") {
+        } elseif ($request->type == "member") {
             return redirect()->route('back.members.categories');
-        }elseif ($request->type == "committee") {
+        } elseif ($request->type == "committee") {
             return redirect()->route('back.committees.categories');
-        }else{
+        } else {
             return redirect()->route('back.dashboard');
         }
     }
@@ -62,6 +64,54 @@ class AdminCategoriesController extends Controller
             if (!empty($category['children'])) {
                 $this->updateCategoryOrder($category['children'], $category['id'], 0);
             }
+        }
+    }
+
+    public function edit(Category $category)
+    {
+        return $category;
+    }
+
+    public function update(Request $request,Category $category)
+    {
+        $slug = sluggable_helper_function($request->name);
+        $request->merge(['slug' => $slug]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|unique:categories,slug,'.$category->id,
+            'province_id' => 'nullable|exists:provinces,id'
+        ]);
+
+        $category->update([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'province_id' => $request->province_id,
+        ]);
+       // toastr()->success('دسته بندی با موفیت ویرایش شد');
+
+        return redirect()->back();
+
+    }
+
+    public function destroy(Category $category)
+    {
+        $this->authorize('posts.delete');
+
+
+        $this->deleteChildren($category);
+        // حذف پست
+        $category->delete();
+        //toastr()->success('دسته بندی با موفیت حذف شد');
+
+        return redirect()->back();
+    }
+
+
+    private function deleteChildren(Category $category)
+    {
+        foreach ($category->children as $child) {
+            $this->deleteChildren($child); // حذف فرزندان به‌صورت بازگشتی
+            $child->delete(); // حذف دسته‌بندی فرزند
         }
     }
 }

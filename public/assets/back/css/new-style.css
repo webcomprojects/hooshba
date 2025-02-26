@@ -42,3 +42,31 @@ input[name=password_confirmation]::placeholder
  {
     text-align: right;
 }
+.edit-category-item{
+    padding: 5px 6px;
+    background: #171014b0;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.remove-category-item{
+    padding: 5px 6px;
+    background: #171014b0;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dd-item, .dd-empty, .dd-placeholder{
+    position: relative;
+}
+.operation-category-item{
+    position: absolute;
+    right: 5px;
+    z-index: 1;
+    top: 5px;
+}
+
+.dd .dd-handle, .dd-list.dd-dragel > li div {
+    padding-right: 70px;
+}

@@ -43,23 +43,24 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                     <div class="row">
                                         <div class="col-10">
                                             <div class="form-group curve">
-                                                <input name="name" type="text" class="form-control" value="{{old('name')}}"
-                                                    placeholder="افزودن دسته بندی جدید...">
+                                                <input name="name" type="text" class="form-control"
+                                                    value="{{ old('name') }}" placeholder="افزودن دسته بندی جدید..."
+                                                    autofocus>
                                             </div>
                                         </div>
 
-                                        <input type="hidden" name="type" value="{{request()->segment(2)}}">
+                                        <input type="hidden" name="type" value="{{ request()->segment(2) }}">
 
                                         <div class="col-2">
                                             <div class="form-group">
@@ -86,11 +87,14 @@
                                 <div class="portlet box ">
 
                                     <div class="portlet-body">
-        
+
                                         <div class="nestable dd" id="nestable-via-output">
                                             <ol class="dd-list">
-                                                @foreach ($categories as $index =>  $category)
-                                                    @include('back.categories.category-item', ['category' => $category,'index'=>$index])
+                                                @foreach ($categories as $index => $category)
+                                                    @include('back.categories.category-item', [
+                                                        'category' => $category,
+                                                        'index' => $index,
+                                                    ])
                                                 @endforeach
                                             </ol>
 
@@ -106,7 +110,78 @@
         </div>
 
     </div>
+
+    <div id="edit-category-modal" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">آیا مطمعن هستید؟</h4>
+                </div><!-- /.modal-header -->
+
+                <div class="modal-footer" style="border-top: unset">
+                    <form action="#" id="edit-category-form" class="row" method="post">
+                        @csrf
+                        @method('put')
+
+                        <div class="col-md-12">
+                            <div class="form-group curve">
+                                <label> نام </label>
+                                <input name="name" type="text" class="form-control"
+                                    value="{{ old('name') }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>استان</label>
+                                <div class="input-group round">
+
+                                    <select id="province" name="province_id" class="form-control ">
+                                        <option  value="">انتخاب کنید</option>
+                                        @foreach (\App\Models\Province::latest()->Published()->get() as $province)
+                                            <option {{ old('province_id') == $province->id ? 'selected' : '' }}
+                                                value="{{ $province->id }}" data-title="{{ $province->name }}">
+                                                {{ $province->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <p class="text-right">
+                            <button class="btn btn-success btn-block">
+                                <i class="icon-check"></i>
+                                ویرایش
+                                <div class="paper-ripple">
+                                    <div class="paper-ripple__background" style="opacity: 0;"></div>
+                                    <div class="paper-ripple__waves"></div>
+                                </div>
+                                <div class="paper-ripple">
+                                    <div class="paper-ripple__background" style="opacity: 0.00984;">
+                                    </div>
+                                    <div class="paper-ripple__waves"></div>
+                                </div>
+                                <div class="paper-ripple">
+                                    <div class="paper-ripple__background" style="opacity: 0;"></div>
+                                    <div class="paper-ripple__waves"></div>
+                                </div>
+                            </button>
+                        </p>
+                    </form>
+                </div><!-- /.modal-footer -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    @include('back.partials.delete-modal', [
+        'text_body' => ' با حذف دسته بندی،دیگر قادر به بازیابی آن نخواهید بود، دسته بندی های فرزد هم حذف می شوند .',
+    ])
+
 @endsection
+
 @push('plugin-scripts')
     <script src="{{ asset('assets/back/plugins/nestable/jquery.nestable.js') }}"></script>
 @endpush

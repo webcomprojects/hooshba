@@ -52,7 +52,7 @@ class AdminMemberController extends Controller
             'mobile' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'links' => 'nullable|array',
             'description' => 'nullable|string',
-            'image' =>  'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'image' =>  'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
             'educational_background' => 'required|max:1024',
             'executive_background' => 'required|max:1024',
             'province_id' => 'nullable|exists:provinces,id',
@@ -115,7 +115,7 @@ class AdminMemberController extends Controller
             'mobile' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/',
             'links' => 'nullable|array',
             'description' => 'nullable|string',
-            'image' =>  'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'image' =>  'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
             'educational_background' => 'required|max:1024',
             'executive_background' => 'required|max:1024',
             'province_id' => 'nullable|exists:provinces,id',
@@ -210,7 +210,7 @@ class AdminMemberController extends Controller
         $file = $request->file($inputName);
 
         $validated = $request->validate([
-            $inputName => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            $inputName => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         /*$fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();

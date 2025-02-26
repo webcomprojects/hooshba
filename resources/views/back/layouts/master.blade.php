@@ -94,7 +94,6 @@
 
 
         <script src="{{asset('assets/back/js/core.js')}}"></script>
-        <script src="{{asset('assets/back/plugins/jquery-blockUI/jquery.blockUI.js')}}"></script>
 
 
         <script src="{{asset('assets/back/plugins/noty/js/noty/packaged/jquery.noty.packaged.min.js')}}"></script>

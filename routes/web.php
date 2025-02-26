@@ -12,6 +12,7 @@ use App\Http\Controllers\Back\AdminRegionController;
 use App\Http\Controllers\Back\AdminRoleController;
 use App\Http\Controllers\Back\AdminUserController;
 use App\Http\Controllers\Back\UserController;
+use App\Http\Controllers\Front\CommitteeController;
 use App\Http\Controllers\Front\MainController;
 use App\Http\Controllers\Front\MembershipController;
 use App\Http\Controllers\Front\PostController;
@@ -39,6 +40,7 @@ Route::group(['as' => 'front.'], function () {
 
     Route::resource('/membership', MembershipController::class)->only('index','store');
     Route::resource('/blog', PostController::class);
+    Route::resource('/committees', CommitteeController::class);
 
 
 });
@@ -72,7 +74,7 @@ Route::group(['as' => 'back.','prefix' => 'admin/' ,'middleware'=>['auth']], fun
     Route::get('member/categories',[AdminMemberController::class,'categories'])->name('members.categories');
     Route::post('members/multipleDestroy',[AdminMemberController::class,'multipleDestroy'])->name('members.multipleDestroy');
 
-    Route::resource('categories', AdminCategoriesController::class)->only(['index','store','update']);
+    Route::resource('categories', AdminCategoriesController::class);
     Route::post('categories/update-ordering', [AdminCategoriesController::class,'updateOrdering']);
 
     Route::get('get-tags', [AdminRoleController::class, 'get_tags'])->name('get-tags');
