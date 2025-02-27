@@ -10,8 +10,7 @@
             <div class="breadcrumb-box shadow">
                 <ul class="breadcrumb">
                     <li><a href="{{ route('back.dashboard') }}">داشبورد</a></li>
-                    <li><a href="{{ route('back.users.index') }}">لیست مقالات</a></li>
-                    <li><a>ایجاد مقاله جدید</a></li>
+                    <li><a> معرفی شوراء </a></li>
                 </ul>
             </div>
 
@@ -23,7 +22,7 @@
                     <div class="portlet-title">
                         <h3 class="title">
                             <i class="icon-note"></i>
-                            ایجاد مقاله جدید
+                            معرفی شوراء
                         </h3>
                     </div><!-- /.portlet-title -->
                     <div class="buttons-box">
@@ -38,7 +37,7 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 m-auto m-b-30">
 
-                            <form action="{{ route('back.posts.store') }}" role="form" method="POST"
+                            <form action="{{ route('back.about-us.introduction.store') }}" role="form" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @if ($errors->any())
@@ -57,97 +56,38 @@
                                     <div class="col-md-6">
                                         <div class="form-group curve">
                                             <label> عنوان </label>
-                                            <input name="title" type="text" class="form-control"
-                                                value="{{ old('title') }}">
+                                            <input name="introduction_title" type="text" class="form-control"
+                                                value="{{ option('introduction_title') }}">
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>دسته بندی </label>
-                                            <select name="categories[]" class="form-control select2" multiple>
-                                                @foreach ($categories as $item)
-                                                    <option
-                                                        {{ in_array($item->id, @old('categories') ?: []) ? 'selected' : '' }}
-                                                        value="{{ $item->id }}">{{ $item->name }}</option>
-                                                @endforeach
+                                </div>
 
-                                            </select>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group curve">
+                                            <label> خلاصه توضیحات </label>
+                                           <textarea name="introduction_shortContent" rows="4" class="form-control">{!! option('introduction_shortContent') !!}</textarea>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>استان</label>
-                                            <div class="input-group round">
-
-                                                <select id="province" name="province_id" class="form-control select2">
-                                                    <option  value="">انتخاب کنید</option>
-                                                    @foreach ($provinces as $province)
-                                                        <option {{ old('province_id') == $province->id ? 'selected' : '' }}
-                                                            value="{{ $province->id }}" data-title="{{ $province->name }}">
-                                                            {{ $province->name }}</option>
-                                                    @endforeach
-
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
+                                <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical">محتوا</label>
-                                            <textarea id="content" class="form-control" rows="3" name="content">{!! old('content') !!}</textarea>
+                                            <textarea id="content" class="form-control" rows="3" name="introduction_content">{!! option('introduction_content') !!}</textarea>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group curve">
-                                            <label> عنوان سئو </label>
-                                            <input name="meta_title" type="text" class="form-control"
-                                                value="{{ old('meta_title') }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group curve">
-                                            <label> url </label>
-                                            <input name="slug" type="text" class="form-control"
-                                                value="{{ old('slug') }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>توضیحات سئو</label>
-                                            <textarea class="form-control" name="meta_description" rows="3" style="height: 96px;"></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-6">
-                                        <fieldset class="form-group">
-                                            <label>کلمات کلیدی</label>
-                                            <input id="tags" type="text" name="tags" class="form-control"
-                                                data-tagsinput-init="true" style="display: none;">
-                                            <div id="tags_tagsinput" class="tagsinput"
-                                                style="width: 100%; min-height: 100px; height: 100px;">
-                                                <div id="tags_addTag"><input id="tags_tag" value=""
-                                                        data-default="افزودن" class="ui-autocomplete-input"
-                                                        autocomplete="off" style="color: rgb(0, 0, 0); width: 68px;"></div>
-                                                <div class="tags_clear"></div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
 
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>لینک ویدئو(کد امبد)</label>
-                                            <textarea class="form-control" name="video" rows="3" style="height: 96px;">{!!  old('video')  !!}</textarea>
+                                            <textarea class="form-control" name="introduction_video" rows="3" style="height: 96px;">{!!  option('introduction_video')  !!}</textarea>
                                         </div>
                                     </div>
-
 
                                     <div class="col-md-6">
 
@@ -155,6 +95,9 @@
                                         <div class="form-group relative">
                                             <input type="file" name="featured_image" class="form-control">
                                             <label> تصویر شاخص </label>
+                                            <br>
+                                            <img class="image-thumb-index d-block mb-2" @if(!option('introduction_featured_image')) style="width: 50px;" @endif src="{{ option('introduction_featured_image') ? asset(option('introduction_featured_image')) : asset('assets/back/images/empty.svg') }}" alt="image">
+
                                             <div class="input-group round">
                                                 <input type="text" class="form-control file-input"
                                                     placeholder="برای آپلود کلیک کنید">
@@ -174,33 +117,22 @@
 
                                     </div>
 
+
                                     <div class="col-12">
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <label>
-                                                    <input name="is_published"
-                                                        {{ old('is_published') == '1' ? 'checked' : '' }} value="1"
+                                                    <input name="introduction_is_published"
+                                                        {{ option('introduction_is_published') == '1' ? 'checked' : '' }} value="1"
                                                         type="checkbox">
-                                                    <label>  انتشار نوشته؟</label>
+                                                    <label>  انتشار ؟</label>
 
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label> تاریخ انتشار</label>
-                                            <input id="publish_date_picker" name="slug" type="text" class="form-control publish_date_picker" value="{{old('slug')}}">
-                                        @error('birth_date')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                        </div>
-                                    </div> --}}
 
                                 </div>
-
 
 
 
@@ -209,7 +141,7 @@
                                         <div class="form-group">
                                             <button class="btn btn-success btn-block">
                                                 <i class="icon-check"></i>
-                                                ایجاد
+                                                ویرایش
                                                 <div class="paper-ripple">
                                                     <div class="paper-ripple__background" style="opacity: 0;"></div>
                                                     <div class="paper-ripple__waves"></div>

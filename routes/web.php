@@ -5,7 +5,9 @@ use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Back\AdminCategoriesController;
 use App\Http\Controllers\Back\AdminCommitteeController;
 use App\Http\Controllers\Back\AdminDashboardController;
+use App\Http\Controllers\Back\AdminIntroductionController;
 use App\Http\Controllers\Back\AdminMemberController;
+use App\Http\Controllers\Back\AdminOrganizationChartController;
 use App\Http\Controllers\Back\AdminPostController;
 use App\Http\Controllers\Back\AdminProvinceController;
 use App\Http\Controllers\Back\AdminRegionController;
@@ -13,8 +15,11 @@ use App\Http\Controllers\Back\AdminRoleController;
 use App\Http\Controllers\Back\AdminUserController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Front\CommitteeController;
+use App\Http\Controllers\Front\CouncilMembersController;
+use App\Http\Controllers\Front\IntroductionController;
 use App\Http\Controllers\Front\MainController;
 use App\Http\Controllers\Front\MembershipController;
+use App\Http\Controllers\Front\OrganizationChartController;
 use App\Http\Controllers\Front\PostController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -38,51 +43,60 @@ Route::group(['as' => 'front.'], function () {
     Route::get('/', [MainController::class, 'index'])->name('index');
     Route::get('/get-new-captcha', [MainController::class, 'captcha']);
 
-    Route::resource('/membership', MembershipController::class)->only('index','store');
-    Route::resource('/blog', PostController::class);
-    Route::resource('/committees', CommitteeController::class);
+    Route::resource('membership', MembershipController::class)->only('index', 'store');
+    Route::resource('blog', PostController::class);
+    Route::resource('committees', CommitteeController::class);
 
+    Route::resource('council-members', CouncilMembersController::class);
 
+    Route::resource('organization-chart', OrganizationChartController::class);
+    Route::resource('introduction', IntroductionController::class);
 });
 
-Route::group(['as' => 'back.','prefix' => 'admin/' ,'middleware'=>['auth']], function () {
+Route::group(['as' => 'back.', 'prefix' => 'admin/', 'middleware' => ['auth']], function () {
     // ------------------ MainController
 
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', AdminUserController::class);
-     Route::post('users/multipleDestroy',[AdminUserController::class,'multipleDestroy'])->name('users.multipleDestroy');
+    Route::post('users/multipleDestroy', [AdminUserController::class, 'multipleDestroy'])->name('users.multipleDestroy');
 
-     Route::resource('roles',AdminRoleController::class);
-     Route::post('roles/multipleDestroy',[AdminRoleController::class,'multipleDestroy'])->name('roles.multipleDestroy');
+    Route::resource('roles', AdminRoleController::class);
+    Route::post('roles/multipleDestroy', [AdminRoleController::class, 'multipleDestroy'])->name('roles.multipleDestroy');
 
     Route::resource('posts', AdminPostController::class);
-    Route::get('post/categories',[AdminPostController::class,'categories'])->name('posts.categories');
-    Route::post('posts/multipleDestroy',[AdminPostController::class,'multipleDestroy'])->name('posts.multipleDestroy');
+    Route::get('post/categories', [AdminPostController::class, 'categories'])->name('posts.categories');
+    Route::post('posts/multipleDestroy', [AdminPostController::class, 'multipleDestroy'])->name('posts.multipleDestroy');
 
     Route::resource('committees', AdminCommitteeController::class);
-    Route::get('committee/categories',[AdminCommitteeController::class,'categories'])->name('committees.categories');
-    Route::post('committees/multipleDestroy',[AdminCommitteeController::class,'multipleDestroy'])->name('committees.multipleDestroy');
+    Route::get('committee/categories', [AdminCommitteeController::class, 'categories'])->name('committees.categories');
+    Route::post('committees/multipleDestroy', [AdminCommitteeController::class, 'multipleDestroy'])->name('committees.multipleDestroy');
 
     Route::resource('regions', AdminRegionController::class);
-    Route::post('regions/multipleDestroy',[AdminRegionController::class,'multipleDestroy'])->name('regions.multipleDestroy');
+    Route::post('regions/multipleDestroy', [AdminRegionController::class, 'multipleDestroy'])->name('regions.multipleDestroy');
 
     Route::resource('provinces', AdminProvinceController::class);
-    Route::post('provinces/multipleDestroy',[AdminProvinceController::class,'multipleDestroy'])->name('provinces.multipleDestroy');
+    Route::post('provinces/multipleDestroy', [AdminProvinceController::class, 'multipleDestroy'])->name('provinces.multipleDestroy');
 
 
     Route::resource('members', AdminMemberController::class);
-    Route::get('member/categories',[AdminMemberController::class,'categories'])->name('members.categories');
-    Route::post('members/multipleDestroy',[AdminMemberController::class,'multipleDestroy'])->name('members.multipleDestroy');
+    Route::get('member/categories', [AdminMemberController::class, 'categories'])->name('members.categories');
+    Route::post('members/multipleDestroy', [AdminMemberController::class, 'multipleDestroy'])->name('members.multipleDestroy');
 
     Route::resource('categories', AdminCategoriesController::class);
-    Route::post('categories/update-ordering', [AdminCategoriesController::class,'updateOrdering']);
+    Route::post('categories/update-ordering', [AdminCategoriesController::class, 'updateOrdering']);
 
-    Route::get('get-tags', [AdminRoleController::class, 'get_tags'])->name('get-tags');
+    Route::group(['as' => 'about-us.', 'prefix' => 'about-us/'], function () {
+        Route::resource('organization-chart', AdminOrganizationChartController::class);
+        Route::post('organization-chart/update-ordering', [AdminOrganizationChartController::class, 'updateOrdering']);
+
+        Route::resource('introduction', AdminIntroductionController::class);
+    });
+    //Route::get('get-tags', [AdminRoleController::class, 'get_tags'])->name('get-tags');
 
     Route::get('/get-new-captcha', [MainController::class, 'captcha']);
 
-    Route::resource('/membership', MembershipController::class)->only('index','store');
-    Route::resource('/blog', PostController::class);
+    // Route::resource('/membership', MembershipController::class)->only('index','store');
+    // Route::resource('/blog', PostController::class);
 
 
 
@@ -101,13 +115,13 @@ Route::get('/clear-cache', function () {
 
 
 Auth::routes();
-Route::post('/login',[AuthenticationController::class,'login'])->name('login');
-Route::post('/sendVerificationCode',[AuthenticationController::class,'sendVerificationCode'])->name('sendVerificationCode');
-Route::get('/verifyCode',[AuthenticationController::class,'verifyCode'])->name('verifyCode');
-Route::post('/verifyCode',[AuthenticationController::class,'verifyCodeCheck'])->name('verifyCodeCheck');
-Route::get('/register-userInfo',[AuthenticationController::class,'registerUserInfo'])->name('registerUserInfo');
-Route::post('/register-userInfo',[AuthenticationController::class,'registerUserInfoStore'])->name('registerUserInfoStore');
- Route::get('/logout', [AdminUserController::class, 'logout']);
+Route::post('/login', [AuthenticationController::class, 'login'])->name('login');
+Route::post('/sendVerificationCode', [AuthenticationController::class, 'sendVerificationCode'])->name('sendVerificationCode');
+Route::get('/verifyCode', [AuthenticationController::class, 'verifyCode'])->name('verifyCode');
+Route::post('/verifyCode', [AuthenticationController::class, 'verifyCodeCheck'])->name('verifyCodeCheck');
+Route::get('/register-userInfo', [AuthenticationController::class, 'registerUserInfo'])->name('registerUserInfo');
+Route::post('/register-userInfo', [AuthenticationController::class, 'registerUserInfoStore'])->name('registerUserInfoStore');
+Route::get('/logout', [AdminUserController::class, 'logout']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

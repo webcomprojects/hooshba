@@ -248,7 +248,7 @@
                         </a>
                     </li>
                     @endcan
-{{-- 
+{{--
                     @can('members.category')
 
                     <li>
@@ -265,12 +265,44 @@
             @endcan
 
 
+            @can('provinces')
+            <li class="{{ open_class(['back.about-us.*']) }}">
+                <a href="#" class="dropdown-toggle">
+                    <i class="   fas fa-chalkboard-user"></i>
+                    <span> درباره ما </span>
+                </a>
+                <ul>
+                    @can('provinces.index')
+                    <li class="">
+                        <a href="{{route('back.about-us.organization-chart.index')}}" class="{{ active_class('back.about-us.organization-chart.index')}}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>چارت سازمانی</span>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('provinces.create')
+
+                    <li>
+                        <a href="{{route('back.about-us.introduction.index')}}" class="{{ active_class('back.about-us.introduction.index') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span> معرفی شوراء</span>
+                        </a>
+                    </li>
+                    @endcan
+
+
+
+
+                </ul>
+            </li>
+            @endcan
 
 
 
 
 
-            {{-- posts --}}
+
+
 
 
         </ul><!-- /#side-menu -->

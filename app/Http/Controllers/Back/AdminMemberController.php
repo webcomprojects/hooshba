@@ -53,8 +53,8 @@ class AdminMemberController extends Controller
             'links' => 'nullable|array',
             'description' => 'nullable|string',
             'image' =>  'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
-            'educational_background' => 'required|max:1024',
-            'executive_background' => 'required|max:1024',
+            'educational_background' => 'nullable|max:1024',
+            'executive_background' => 'nullable|max:1024',
             'province_id' => 'nullable|exists:provinces,id',
             'is_published' => 'nullable|boolean|in:0,1',
         ],[
@@ -116,8 +116,8 @@ class AdminMemberController extends Controller
             'links' => 'nullable|array',
             'description' => 'nullable|string',
             'image' =>  'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
-            'educational_background' => 'required|max:1024',
-            'executive_background' => 'required|max:1024',
+            'educational_background' => 'nullable|max:1024',
+            'executive_background' => 'nullable|max:1024',
             'province_id' => 'nullable|exists:provinces,id',
             'is_published' => 'nullable|boolean|in:0,1',
         ],[

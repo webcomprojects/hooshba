@@ -83,19 +83,18 @@
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">درباره ما</a>
-                                        {{-- <ul class="sub-menu">
-                                            <li><a href='about.html'>درباره  ما (کسب و کار)</a></li>
-                                            <li><a href='about-2.html'>درباره ما (سرمایه گذاری)</a></li>
-                                            <li><a href='about-5.html'>درباره ما (مشاوره)</a></li>
-                                            <li><a href='about-3.html'>درباره ما (بیمه)</a></li>
-                                            <li><a href='about-4.html'>درباره ما (دیجیتال مارکتینگ)</a></li>
-                                        </ul> --}}
+                                        <ul class="sub-menu">
+                                            <li><a href='{{route('front.organization-chart.index')}}'>چارت سازمانی</a></li>
+                                            <li><a href='{{route('front.introduction.index')}}'>معرفی شورا</a></li>
+                                            <li><a href=''>سامانه خدمات هوش مصنوعی</a></li>
+                                            <li><a href=''>  برنامه ها </a></li>
+                                        </ul>
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">ارتباط با ما</a>
                                         <ul class="sub-menu">
                                             <li><a href=''>حوزه ریاست</a></li>
-                                            <li><a href=''>اعضای شورا</a></li>
+                                            <li><a href="{{route('front.council-members.index')}}">اعضای شورا</a></li>
                                             <li class="{{count($categories) ? 'menu-item-has-children menu-arrow-left' : '' }}">
                                                 <a href='{{route('front.committees.index')}}'>کمیته ها</a>
 

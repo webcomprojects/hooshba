@@ -137,6 +137,7 @@
 .font-s-14p {
     font-size: 14px;
 }
+
 .font-s-15p {
     font-size: 15px;
 }
@@ -198,8 +199,7 @@ input[name=email],
 input[type=email],
 input[type=number],
 input[name=password],
-input[name=password_confirmation]
-{
+input[name=password_confirmation] {
     direction: ltr;
     padding-left: 60px !important;
 }
@@ -213,41 +213,52 @@ input[name=email]::placeholder,
 input[type=email]::placeholder,
 input[type=number]::placeholder,
 input[name=password]::placeholder,
-input[name=password_confirmation]::placeholder
- {
+input[name=password_confirmation]::placeholder {
     text-align: right;
 
 }
-.font-weight-700{
+
+.font-weight-700 {
     font-weight: 700;
 }
 
-.box-form-membership{
+.box-form-membership {
     max-width: 70%;
 }
-.gfield_required{
+
+.gfield_required {
     color: #c02b0a;
     display: inline-block;
     font-size: 16px;
     padding-right: 5px;
 }
-hr{
+
+hr {
     border-bottom: 1px solid #000000;
 }
-.register__area-one{
+
+.register__area-one {
     background: unset;
 }
-.Educational_background_item,.career_history_item,.experiencesAi_item,.corporate_experiencesAi_item{
+
+.Educational_background_item,
+.career_history_item,
+.experiencesAi_item,
+.corporate_experiencesAi_item {
     position: relative;
 }
-.remove_btn_Educational_background_item,.remove_btn_career_history_item{
+
+.remove_btn_Educational_background_item,
+.remove_btn_career_history_item {
     position: absolute;
     left: -46px;
     top: 11px;
     background: #ff3939 none repeat scroll 0 0;
     padding: 13px;
 }
-.remove_btn_experiencesAi_item,.remove_btn_corporate_experiencesAi_item{
+
+.remove_btn_experiencesAi_item,
+.remove_btn_corporate_experiencesAi_item {
     position: absolute;
     left: 0;
     top: unset;
@@ -256,22 +267,25 @@ hr{
     bottom: 39px;
 }
 
-.blog__post-content-two .title{
+.blog__post-content-two .title {
     font-size: 18px;
     min-height: 45px;
     line-height: 1.4;
 }
-.blog__post-content-two{
+
+.blog__post-content-two {
     padding-bottom: 0;
 }
-.sidebar__post-content .title
-{
+
+.sidebar__post-content .title {
     font-size: 13px;
 }
-.blog__details-content > .title {
+
+.blog__details-content>.title {
     font-size: 30px;
 }
-.tgmenu__main-menu li.menu-item-has-children.menu-arrow-left > a::after{
+
+.tgmenu__main-menu li.menu-item-has-children.menu-arrow-left>a::after {
     content: "\f104";
     float: left;
 }
@@ -282,23 +296,75 @@ hr{
     }
 }
 
-.tgmenu__navbar-wrap > ul > li .sub-menu .sub-menu{
+.tgmenu__navbar-wrap>ul>li .sub-menu .sub-menu {
     right: 100%;
     left: auto;
     top: 0;
 }
-.menu-item-has-children{
+
+.menu-item-has-children {
     position: relative;
 }
 
-.menu-item-has-children .sub-menu-2{
+.menu-item-has-children .sub-menu-2 {
     max-height: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
 .team-content .title {
     font-size: 19px;
     font-weight: 600;
     margin-bottom: 8px;
     height: 60px;
+}
+
+.boc-light {
+    background-color: unset !important;
+    width: 50% !important;
+    margin: 0 auto;
+    font-family: IRANSans !important;
+    font-size: 14px;
+    /* اندازه فونت */
+    color: #333;
+    direction: ltr;
+}
+.council-members-item{
+    position: relative;
+}
+.council-members-item-title {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: absolute;
+    top: 95px;
+    left: 85px;
+    font-size: 17px;
+}
+.council-members-item-title span:first-child{
+  font-weight: 700;
+}
+.council-members-avatar{
+    position: absolute;
+    top: -64px;
+    right: 30px;
+    border: 4px solid #314065;
+    border-radius: 50%;
+    padding: 4px;
+    background: #fff;
+}
+.council-members-avatar img{
+    width: 110px;
+    height: 110px;
+}
+.council-members-item-btn{
+    bottom: 11px;
+    left: 18px;
+    position: absolute;
+}
+.council-members-logo{
+    position: absolute;
+    top: 12px;
+    width: 40%;
+    left: 27px;
 }
