@@ -14,6 +14,7 @@ use App\Http\Controllers\Back\AdminPostController;
 use App\Http\Controllers\Back\AdminProvinceController;
 use App\Http\Controllers\Back\AdminRegionController;
 use App\Http\Controllers\Back\AdminRoleController;
+use App\Http\Controllers\Back\AdminSettingsController;
 use App\Http\Controllers\Back\AdminUserController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Front\CommitteeController;
@@ -53,10 +54,12 @@ Route::group(['as' => 'front.'], function () {
 
     Route::resource('council-members', CouncilMembersController::class);
 
-    Route::resource('organization-chart', OrganizationChartController::class);
-    Route::resource('introduction', IntroductionController::class);
-    Route::resource('goals', GoalsController::class);
-    Route::resource('plans', PlansController::class);
+    Route::group(['as' => 'about-us.', 'prefix' => 'about-us/'], function () {
+        Route::resource('organization-chart', OrganizationChartController::class);
+        Route::resource('introduction', IntroductionController::class);
+        Route::resource('goals', GoalsController::class);
+        Route::resource('plans', PlansController::class);
+    });
 });
 
 Route::group(['as' => 'back.', 'prefix' => 'admin/', 'middleware' => ['auth']], function () {
@@ -90,6 +93,9 @@ Route::group(['as' => 'back.', 'prefix' => 'admin/', 'middleware' => ['auth']], 
 
     Route::resource('categories', AdminCategoriesController::class);
     Route::post('categories/update-ordering', [AdminCategoriesController::class, 'updateOrdering']);
+
+    Route::get('settings/information', [AdminSettingsController::class, 'information'])->name('settings.information');
+    Route::post('settings/information', [AdminSettingsController::class, 'information_store'])->name('settings.information.store');
 
     Route::group(['as' => 'about-us.', 'prefix' => 'about-us/'], function () {
         Route::resource('organization-chart', AdminOrganizationChartController::class);

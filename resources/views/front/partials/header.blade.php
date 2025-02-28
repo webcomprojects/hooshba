@@ -4,9 +4,16 @@
             <div class="row">
                 <div class="col-lg-6">
                     <ul class="tg-header__top-info tg-header__top-info-four list-wrap">
-                        <li><i class="flaticon-phone-call"></i><a href="tel:0123456789" dir="ltr">+123 9898 500</a>
-                        </li>
-                        <li><i class="flaticon-pin"></i>شیراز - بلوار چمران کوچه 12 </li>
+                        @if (option('info_tel'))
+                            <li><i class="flaticon-phone-call"></i><a href="tel:{{ option('info_tel') }}"
+                                    dir="ltr">{{ option('info_tel') }}</a>
+                            </li>
+                        @endif
+
+                        @if (option('info_address'))
+                            <li><i class="flaticon-pin"></i>{{ option('info_address') }}</li>
+                        @endif
+
                     </ul>
                 </div>
                 <div class="col-lg-6">
@@ -35,7 +42,7 @@
 
     @php
         $categories = \App\Models\Category::where('type', 'committee')->orderBy('ordering', 'asc')->get();
-        $provinces=\App\Models\Province::latest()->Published()->get();
+        $provinces = \App\Models\Province::latest()->Published()->get();
     @endphp
     <div id="sticky-header" class="tg-header__area tg-header__area-four">
         <div class="container">
@@ -44,8 +51,7 @@
                     <div class="tgmenu__wrap home-9">
                         <nav class="tgmenu__nav">
                             <div class="logo">
-                                <a href="/"><img src="{{ asset('assets\front\img\logo\nav-logo.webp') }}"
-                                        alt="Logo"></a>
+                                <a href="/"><img src="{{ asset(option('info_nav_logo')) }}" alt="Logo"></a>
                             </div>
                             <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
                                 <ul class="navigation">
@@ -84,33 +90,41 @@
                                     <li class="menu-item-has-children">
                                         <a href="#">درباره ما</a>
                                         <ul class="sub-menu">
-                                            <li><a href='{{route('front.organization-chart.index')}}'>چارت سازمانی</a></li>
-                                            <li><a href='{{route('front.introduction.index')}}'>معرفی شورا</a></li>
-                                            <li><a href='{{route('front.goals.index')}}'>سامانه خدمات هوش مصنوعی</a></li>
-                                            <li><a href='{{route('front.plans.index')}}'>  برنامه ها </a></li>
+                                            <li><a href='{{ route('front.about-us.organization-chart.index') }}'>چارت
+                                                    سازمانی</a></li>
+                                            <li><a href='{{ route('front.about-us.introduction.index') }}'>معرفی
+                                                    شورا</a></li>
+                                            <li><a href='{{ route('front.about-us.goals.index') }}'>سامانه خدمات هوش
+                                                    مصنوعی</a></li>
+                                            <li><a href='{{ route('front.about-us.plans.index') }}'> برنامه ها </a></li>
                                         </ul>
                                     </li>
                                     <li class="menu-item-has-children">
                                         <a href="#">ارتباط با ما</a>
                                         <ul class="sub-menu">
                                             <li><a href=''>حوزه ریاست</a></li>
-                                            <li><a href="{{route('front.council-members.index')}}">اعضای شورا</a></li>
-                                            <li class="{{count($categories) ? 'menu-item-has-children menu-arrow-left' : '' }}">
-                                                <a href='{{route('front.committees.index')}}'>کمیته ها</a>
+                                            <li><a href="{{ route('front.council-members.index') }}">اعضای شورا</a>
+                                            </li>
+                                            <li
+                                                class="{{ count($categories) ? 'menu-item-has-children menu-arrow-left' : '' }}">
+                                                <a href='{{ route('front.committees.index') }}'>کمیته ها</a>
 
                                                 @if (count($categories))
                                                     <ul class="sub-menu">
 
                                                         @foreach ($categories as $categorie)
-                                                            <li><a href='{{route('front.committees.index')}}?c={{ $categorie->slug }}'>{{ $categorie->name }}</a></li>
+                                                            <li><a
+                                                                    href='{{ route('front.committees.index') }}?c={{ $categorie->slug }}'>{{ $categorie->name }}</a>
+                                                            </li>
                                                         @endforeach
 
                                                     </ul>
                                                 @endif
 
                                             </li>
-                                            <li class="{{count($provinces) ? 'menu-item-has-children menu-arrow-left' : '' }}">
-                                                <a href='{{route('front.committees.index')}}'>استان ها</a>
+                                            <li
+                                                class="{{ count($provinces) ? 'menu-item-has-children menu-arrow-left' : '' }}">
+                                                <a href='{{ route('front.committees.index') }}'>استان ها</a>
 
                                                 @if (count($provinces))
                                                     <ul class="sub-menu sub-menu-2">
@@ -220,22 +234,22 @@
                         <nav class="tgmobile__menu-box">
                             <div class="close-btn"><i class="fas fa-times"></i></div>
                             <div class="nav-logo">
-                                <a href="index.html"><img src="assets\img\logo\logo.png" alt="Logo"></a>
+                                <a href="index.html"><img src="{{ asset(option('info_nav_logo')) }}" alt="Logo"></a>
                             </div>
-                            <div class="tgmobile__search">
+                            {{-- <div class="tgmobile__search">
                                 <form action="#">
                                     <input type="text" placeholder="جستجو ....">
                                     <button><i class="fas fa-search"></i></button>
                                 </form>
-                            </div>
+                            </div> --}}
                             <div class="tgmobile__menu-outer">
                                 <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
                             </div>
                             <div class="tgmobile__menu-bottom">
                                 <div class="contact-info">
                                     <ul class="list-wrap">
-                                        <li><a href="mailto:info@apexa.com">info@apexa.com</a></li>
-                                        <li><a href="tel:0123456789" dir="ltr">+123 888 9999</a></li>
+                                        <li><a href="mailto:{{option('info_email')}}">{{option('info_email')}}</a></li>
+                                        <li><a href="tel:{{option('info_tel')}}" dir="ltr">{{option('info_tel')}}</a></li>
                                     </ul>
                                 </div>
                                 <div class="social-links">
@@ -316,23 +330,30 @@
             <button><i class="far fa-window-close"></i></button>
         </div>
         <div class="offCanvas__logo mb-30">
-            <a href="index.html"><img src="{{ asset('assets\front\img\logo\nav-logo.webp') }}" alt="Logo"></a>
+            <a href="index.html"><img src="{{ asset(option('info_nav_logo')) }}" alt="Logo"></a>
         </div>
         <div class="offCanvas__side-info mb-30">
-            <div class="contact-list mb-30">
-                <h4>آدرس دفتر مرکزی</h4>
-                <p>شیراز - بلوار ارم کوچه 3<br>ساختمان یاس </p>
-            </div>
-            <div class="contact-list mb-30">
-                <h4>شماره تماس</h4>
-                <p>+0989 7876 9865 9</p>
-                <p>+(090) 8765 86543 85</p>
-            </div>
-            <div class="contact-list mb-30">
-                <h4>آدرس ایمیل</h4>
-                <p>info@example.com</p>
-                <p>example.mail@hum.com</p>
-            </div>
+            @if (option('info_address'))
+                <div class="contact-list mb-30">
+                    <h4>آدرس </h4>
+                    <p>{{ option('info_address') }}</p>
+                </div>
+            @endif
+
+            @if (option('info_tel'))
+                <div class="contact-list mb-30">
+                    <h4>شماره تماس</h4>
+                    <p>{{ option('info_tel') }}</p>
+                </div>
+            @endif
+
+            @if (option('info_email'))
+                <div class="contact-list mb-30">
+                    <h4>آدرس ایمیل</h4>
+                    <p>{{ option('info_email') }}</p>
+                </div>
+            @endif
+
         </div>
         <div class="offCanvas__social-icon mt-30">
             <a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>

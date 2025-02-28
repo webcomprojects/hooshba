@@ -44,7 +44,7 @@
                         </div>
                     </div> --}}
                     <div class="services__content-five">
-                        <h2 class="title"><a href="services-details.html"> {{$exp['title'] }}</a></h2>
+                        <h2 class="title"><a href=""> {{$exp['title'] }}</a></h2>
                       <p>{!! $exp['description'] !!}</p>
                       <p>{!! $exp['time'] !!}</p>
 

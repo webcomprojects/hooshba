@@ -9,7 +9,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-6">
                                 <div class="footer-widget">
                                     <div class="fw-logo mb-25">
-                                        <a href=''><img src="{{asset('assets\front\img\logo\logo.webp')}}" alt=""></a>
+                                        <a href=''><img src="{{ asset(option('info_logo')) }}" alt="logo"></a>
                                     </div>
                                     {{-- <div class="footer-info-list mb-25">
                                         <ul class="list-wrap">
@@ -46,10 +46,7 @@
 
                                 <div class="col-xl-6 col-lg-6 col-md-6">
 
-                                    <p class="text-justify font-s-14p ">
-
-                                        شورای تخصصی هوش مصنوعی ایران، با هدف سامان‌دهی، هدایت و توسعه فناوری‌های پیشرفته هوش مصنوعی در کشور، تلاش می‌کند تا با ایجاد هماهنگی بین نهادهای علمی، صنعتی و اجرایی، زمینه‌ساز تحقق اهداف ملی در حوزه‌های نوآوری، تحقیقات و کاربردهای هوش مصنوعی باشد. این شورا با بهره‌گیری از ظرفیت‌های داخلی و بین‌المللی، در راستای ارتقای جایگاه ایران در عرصه‌های جهانی و ایجاد آینده‌ای هوشمند و پایدار گام برمی‌دارد.
-                                    </p>
+                                    <p class="text-justify font-s-14p ">{!! option('info_footer_text') !!}</p>
 
                                     <div class="footer__social-three">
                                         <ul class="list-wrap">

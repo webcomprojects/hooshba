@@ -315,6 +315,35 @@
             </li>
             @endcan
 
+            @can('provinces')
+            <li class="{{ open_class(['back.about-us.*']) }}">
+                <a href="#" class="dropdown-toggle">
+                    <i class="   icon-settings"></i>
+                    <span> تنظیمات </span>
+                </a>
+                <ul>
+                    @can('provinces.index')
+                    <li class="">
+                        <a href="{{route('back.settings.information')}}" class="{{ active_class('back.settings.information')}}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>تنظیمات عمومی</span>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('provinces.create')
+
+                    <li>
+                        <a href="{{route('back.about-us.introduction.index')}}" class="{{ active_class('back.about-us.introduction.index') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>لینک های فوتر</span>
+                        </a>
+                    </li>
+                    @endcan
+
+                </ul>
+            </li>
+            @endcan
+
 
 
 

@@ -10,7 +10,8 @@
             <div class="breadcrumb-box shadow">
                 <ul class="breadcrumb">
                     <li><a href="{{ route('back.dashboard') }}">داشبورد</a></li>
-                    <li><a> معرفی شوراء </a></li>
+                    <li><a> برنامه‌های ما
+                    </a></li>
                 </ul>
             </div>
 
@@ -22,7 +23,8 @@
                     <div class="portlet-title">
                         <h3 class="title">
                             <i class="icon-note"></i>
-                            معرفی شوراء
+                            برنامه‌های ما
+
                         </h3>
                     </div><!-- /.portlet-title -->
                     <div class="buttons-box">

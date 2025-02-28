@@ -22,6 +22,7 @@ input[name=email],
 input[type=email],
 input[type=number],
 input[name=password],
+input[name=info_tel],
 input[name=password_confirmation]
 {
     direction: ltr;
@@ -38,6 +39,7 @@ input[name=email]::placeholder,
 input[type=email]::placeholder,
 input[type=number]::placeholder,
 input[name=password]::placeholder,
+input[name=info_tel]::placeholder,
 input[name=password_confirmation]::placeholder
  {
     text-align: right;
@@ -69,4 +71,9 @@ input[name=password_confirmation]::placeholder
 
 .dd .dd-handle, .dd-list.dd-dragel > li div {
     padding-right: 70px;
+}
+
+.information .image-thumb-index {
+    max-width: 150px;
+    height: 60px;
 }
