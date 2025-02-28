@@ -48,7 +48,7 @@
     <div id="preloader">
         <div id="loader" class="loader">
             <div class="loader-container">
-                <div class="loader-icon"><img src="{{asset('assets\front\img\favicon.ico')}}" alt="Preloader"></div>
+                <div class="loader-icon"><img src="{{ asset(option('info_icon')) }}" alt="Preloader"></div>
             </div>
         </div>
     </div>
