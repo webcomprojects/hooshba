@@ -37,7 +37,7 @@
                         <label>
                             <input type="checkbox" class="cb-remember" name="remember" {{ old('remember') ? 'checked' : '' }}> یادآوری
                         </label>
-                        <a href="forgot-password.html">رمز عبور خود را فراموش کردید؟</a>
+                        {{-- <a href="forgot-password.html">رمز عبور خود را فراموش کردید؟</a> --}}
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-login" value="ورود">
