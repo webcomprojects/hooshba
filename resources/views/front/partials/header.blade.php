@@ -86,8 +86,8 @@
                                         <ul class="sub-menu">
                                             <li><a href='{{route('front.organization-chart.index')}}'>چارت سازمانی</a></li>
                                             <li><a href='{{route('front.introduction.index')}}'>معرفی شورا</a></li>
-                                            <li><a href=''>سامانه خدمات هوش مصنوعی</a></li>
-                                            <li><a href=''>  برنامه ها </a></li>
+                                            <li><a href='{{route('front.goals.index')}}'>سامانه خدمات هوش مصنوعی</a></li>
+                                            <li><a href='{{route('front.plans.index')}}'>  برنامه ها </a></li>
                                         </ul>
                                     </li>
                                     <li class="menu-item-has-children">

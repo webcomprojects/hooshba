@@ -289,6 +289,24 @@
                         </a>
                     </li>
                     @endcan
+                    @can('provinces.create')
+
+                    <li>
+                        <a href="{{route('back.about-us.goals.index')}}" class="{{ active_class('back.about-us.goals.index') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>  اهداف ما</span>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('provinces.create')
+
+                    <li>
+                        <a href="{{route('back.about-us.plans.index')}}" class="{{ active_class('back.about-us.plans.index') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>  برنامه‌های ما</span>
+                        </a>
+                    </li>
+                    @endcan
 
 
 

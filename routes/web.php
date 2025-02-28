@@ -5,9 +5,11 @@ use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Back\AdminCategoriesController;
 use App\Http\Controllers\Back\AdminCommitteeController;
 use App\Http\Controllers\Back\AdminDashboardController;
+use App\Http\Controllers\Back\AdminGoalsController;
 use App\Http\Controllers\Back\AdminIntroductionController;
 use App\Http\Controllers\Back\AdminMemberController;
 use App\Http\Controllers\Back\AdminOrganizationChartController;
+use App\Http\Controllers\Back\AdminPlansController;
 use App\Http\Controllers\Back\AdminPostController;
 use App\Http\Controllers\Back\AdminProvinceController;
 use App\Http\Controllers\Back\AdminRegionController;
@@ -16,10 +18,12 @@ use App\Http\Controllers\Back\AdminUserController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Front\CommitteeController;
 use App\Http\Controllers\Front\CouncilMembersController;
+use App\Http\Controllers\Front\GoalsController;
 use App\Http\Controllers\Front\IntroductionController;
 use App\Http\Controllers\Front\MainController;
 use App\Http\Controllers\Front\MembershipController;
 use App\Http\Controllers\Front\OrganizationChartController;
+use App\Http\Controllers\Front\PlansController;
 use App\Http\Controllers\Front\PostController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -51,6 +55,8 @@ Route::group(['as' => 'front.'], function () {
 
     Route::resource('organization-chart', OrganizationChartController::class);
     Route::resource('introduction', IntroductionController::class);
+    Route::resource('goals', GoalsController::class);
+    Route::resource('plans', PlansController::class);
 });
 
 Route::group(['as' => 'back.', 'prefix' => 'admin/', 'middleware' => ['auth']], function () {
@@ -90,6 +96,8 @@ Route::group(['as' => 'back.', 'prefix' => 'admin/', 'middleware' => ['auth']], 
         Route::post('organization-chart/update-ordering', [AdminOrganizationChartController::class, 'updateOrdering']);
 
         Route::resource('introduction', AdminIntroductionController::class);
+        Route::resource('goals', AdminGoalsController::class);
+        Route::resource('plans', AdminPlansController::class);
     });
     //Route::get('get-tags', [AdminRoleController::class, 'get_tags'])->name('get-tags');
 
