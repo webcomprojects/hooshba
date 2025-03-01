@@ -54,6 +54,7 @@ class AdminUserController extends Controller
 
         $request->validate([
             'fullName' => 'required|string|max:255',
+            'mobile' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/|unique:users,mobile',
             'jobTitle' => 'required|string|max:255',
             'education' => 'required|string|max:255',
             'nationalCode' => 'required|digits:10|unique:users,nationalCode',
@@ -96,6 +97,7 @@ class AdminUserController extends Controller
 
         $request->validate([
             'fullName' => 'required|string|max:255',
+            'mobile' => 'required|digits:11|regex:/^[0][9][0-9]{9,9}$/|unique:users,mobile,'.$user->id,
             'jobTitle' => 'required|string|max:255',
             'education' => 'required|string|max:255',
             'nationalCode' => 'required|digits:10|unique:users,nationalCode,'.$user->id,
