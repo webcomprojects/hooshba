@@ -133,15 +133,15 @@
                             </thead>
                             <tbody>
                                 @if (count($footers2))
-                                    @foreach ($footers2 as $item)
+                                    @foreach ($footers2 as $item2)
                                         <tr>
 
-                                            <td>{{ $item->title }}</td>
-                                            <td>{{ $item->link }}</td>
+                                            <td>{{ $item2->title }}</td>
+                                            <td>{{ $item2->link }}</td>
 
 
                                             <td>
-                                                <a href="{{ route('back.settings.footerlinks.edit', $item) }}"
+                                                <a href="{{ route('back.settings.footerlinks.edit', $item2) }}"
                                                     class="btn btn-info">ویرایش<div class="paper-ripple">
                                                         <div class="paper-ripple__background" style="opacity: 0.00256;">
                                                         </div>
@@ -149,7 +149,7 @@
                                                     </div></a>
 
                                                 <button data-bs-toggle="modal" data-bs-target="#delete-modal"
-                                                    data-action="{{ route('back.settings.footerlinks.destroy', ['footerlink'=>$item]) }}"
+                                                    data-action="{{ route('back.settings.footerlinks.destroy', ['footerlink'=>$item2]) }}"
                                                     class="btn btn-danger delete-modal">حذف<div class="paper-ripple">
                                                         <div class="paper-ripple__background"></div>
                                                         <div class="paper-ripple__waves"></div>
@@ -205,15 +205,15 @@
                             </thead>
                             <tbody>
                                 @if (count($footers3))
-                                    @foreach ($footers3 as $item)
+                                    @foreach ($footers3 as $item3)
                                         <tr>
 
-                                            <td>{{ $item->title }}</td>
-                                            <td>{{ $item->link }}</td>
+                                            <td>{{ $item3->title }}</td>
+                                            <td>{{ $item3->link }}</td>
 
 
                                             <td>
-                                                <a href="{{ route('back.settings.footerlinks.edit', $item) }}"
+                                                <a href="{{ route('back.settings.footerlinks.edit', $item3) }}"
                                                     class="btn btn-info">ویرایش<div class="paper-ripple">
                                                         <div class="paper-ripple__background" style="opacity: 0.00256;">
                                                         </div>
@@ -221,7 +221,7 @@
                                                     </div></a>
 
                                                 <button data-bs-toggle="modal" data-bs-target="#delete-modal"
-                                                    data-action="{{ route('back.settings.footerlinks.destroy', ['footerlink'=>$item]) }}"
+                                                    data-action="{{ route('back.settings.footerlinks.destroy', ['footerlink'=>$item3]) }}"
                                                     class="btn btn-danger delete-modal">حذف<div class="paper-ripple">
                                                         <div class="paper-ripple__background"></div>
                                                         <div class="paper-ripple__waves"></div>
