@@ -293,12 +293,37 @@
                                 </p>
                                 <div class="footer__social-two">
                                     <ul class="list-wrap">
-                                        <li><a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="javascript:void(0)"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="javascript:void(0)"><i class="fab fa-instagram"></i></a></li>
-                                        <li><a href="javascript:void(0)"><i class="fab fa-pinterest-p"></i></a></li>
-                                        <li><a href="javascript:void(0)"><i class="fab fa-youtube"></i></a></li>
-                                    </ul>
+                                        @if (option('social_telegram'))
+                                        <li><a href="{{ option('social_telegram') }}"><i
+                                                    class="fab fa-telegram"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_instagram'))
+                                        <li><a href="{{ option('social_instagram') }}"><i
+                                                    class="fab fa-instagram"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_whatsapp'))
+                                        <li><a href="{{ option('social_whatsapp') }}"><i
+                                                    class="fab fa-whatsapp"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_facebook'))
+                                        <li><a href="{{ option('social_facebook') }}"><i
+                                                    class="fab fa-facebook-f"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_youtube'))
+                                        <li><a href="{{ option('social_youtube') }}"><i
+                                                    class="fab fa-youtube"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_aparat'))
+                                        <li><a href="{{ option('social_aparat') }}"><i class="fab fa-video"></i></a>
+                                        </li>
+                                    @endif
+
+                                </ul>
                                 </div>
                             </div>
                         </div>
