@@ -38,6 +38,30 @@ class AdminFooterLinksController extends Controller
 
     }
 
+    public function edit(FooterLink $footerlink)
+    {
+        return view('back.settings.footerlink.edit',compact('footerlink'));
+    }
+    public function update(Request $request,FooterLink $footerlink)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'link' => 'nullable|string|max:255',
+            'link_group_id' => 'required|in:0,1,2',
+        ]);
+
+
+        $footerlink->title=$request->title;
+        $footerlink->link=$request->link;
+        $footerlink->link_group_id=$request->link_group_id;
+        $footerlink->save();
+
+        toastr()->success('با موفقیت ذخیره شد');
+        return redirect()->route('back.settings.footerlinks.index');
+
+    }
+
+
     public function footerLinks_groups()
     {
         return view('back.settings.footerlink.groups');
