@@ -96,7 +96,15 @@
                     </div>
 
                     @php
-                        $footerlink_groups = json_decode(json_encode(option('footerlink_groups', [])));
+                        $footerlink_groups = option('footerlink_groups', []);
+
+                        if (is_array($footerlink_groups)) {
+                            // اگر آرایه است، نیازی به json_decode نیست
+                        } elseif (is_string($footerlink_groups)) {
+                            $footerlink_groups = json_decode($footerlink_groups, true);
+                        } else {
+                            $footerlink_groups = []; // مقدار پیش‌فرض در صورت بروز خطا
+                        }
 
                         $footerLinks1 = App\Models\FooterLink::where('link_group_id', 0)->get();
                         $footerLinks2 = App\Models\FooterLink::where('link_group_id', 1)->get();
