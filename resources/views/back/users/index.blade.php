@@ -60,7 +60,7 @@
                             <tbody>
                             @if(count($users))
                                 @foreach($users as $item)
-                                @if (Auth::user()->level == 'creator' || $item->level != 'creator')
+                                @if (Auth::user()->level != 'creator' and $item->level != 'creator')
                                 <tr>
                                     <td><input class="item-checked" type="checkbox" value="{{$item->id}}"></td>
                                     {{-- <td  class="text-center">
