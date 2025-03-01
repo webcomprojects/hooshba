@@ -103,9 +103,9 @@
                                             <div class="input-group round">
 
                                                 <select  name="link_group_id" class="form-control ">
-                                                    <option value="0" {{old('link_group_id',$footerlink->link)==0 ? "selected" : ""}} > گروه اول</option>
-                                                    <option value="1" {{old('link_group_id',$footerlink->link)==1 ? "selected" : ""}}> گروه دوم</option>
-                                                    <option value="2" {{old('link_group_id',$footerlink->link)==2 ? "selected" : ""}}> گروه سوم</option>
+                                                    <option value="0" {{old('link_group_id',$footerlink->link_group_id)==0 ? "selected" : ""}} > گروه اول</option>
+                                                    <option value="1" {{old('link_group_id',$footerlink->link_group_id)==1 ? "selected" : ""}}> گروه دوم</option>
+                                                    <option value="2" {{old('link_group_id',$footerlink->link_group_id)==2 ? "selected" : ""}}> گروه سوم</option>
 
                                                 </select>
                                             </div>
