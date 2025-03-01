@@ -96,8 +96,7 @@
                     </div>
 
                     @php
-                        $raw_footerlink_groups = option('footerlink_groups', '[]'); // مقدار پیش‌فرض را به رشته JSON تغییر دهید
-                        $footerlink_groups = json_decode($raw_footerlink_groups, true);
+                        $footerlink_groups = json_decode(json_encode(option('footerlink_groups', [])));
 
                         $footerLinks1 = App\Models\FooterLink::where('link_group_id', 0)->get();
                         $footerLinks2 = App\Models\FooterLink::where('link_group_id', 1)->get();
