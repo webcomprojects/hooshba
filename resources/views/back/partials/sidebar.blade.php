@@ -316,7 +316,7 @@
             @endcan
 
             @can('provinces')
-            <li class="{{ open_class(['back.about-us.*']) }}">
+            <li class="{{ open_class(['back.settings.*']) }}">
                 <a href="#" class="dropdown-toggle">
                     <i class="   icon-settings"></i>
                     <span> تنظیمات </span>
@@ -324,7 +324,7 @@
                 <ul>
                     @can('provinces.index')
                     <li class="">
-                        <a href="{{route('back.settings.information')}}" class="{{ active_class('back.settings.information')}}">
+                        <a href="{{route('back.settings.information.index')}}" class="{{ active_class('back.settings.information.index')}}">
                             <i class="far fa-circle-dot"></i>
                             <span>تنظیمات عمومی</span>
                         </a>
@@ -333,7 +333,16 @@
                     @can('provinces.create')
 
                     <li>
-                        <a href="{{route('back.about-us.introduction.index')}}" class="{{ active_class('back.about-us.introduction.index') }}">
+                        <a href="{{route('back.settings.socials.index')}}" class="{{ active_class('back.settings.socials.index') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span> شبکه های اجتماعی </span>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('provinces.create')
+
+                    <li>
+                        <a href="{{route('back.settings.footerlinks.index')}}" class="{{ active_class('back.settings.footerlinks.index') }}">
                             <i class="far fa-circle-dot"></i>
                             <span>لینک های فوتر</span>
                         </a>

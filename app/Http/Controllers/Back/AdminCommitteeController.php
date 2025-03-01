@@ -208,7 +208,7 @@ class AdminCommitteeController extends Controller
 
         // حذف پست
         $committee->delete();
-        toastr()->success('کمیته با موفیت حذف شد');
+        toastr()->success('کمیته با موفقیت حذف شد');
 
         return redirect()->route('back.committees.index');
     }
@@ -232,7 +232,7 @@ class AdminCommitteeController extends Controller
             $role = Committee::find($id['ids']);
             $this->destroy($role, true);
         }
-        toastr()->success('کمیته ها با موفیت حذف شدند');
+        toastr()->success('کمیته ها با موفقیت حذف شدند');
 
         return redirect()->route('back.committees.index');
     }

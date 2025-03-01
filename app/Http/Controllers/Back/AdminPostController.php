@@ -221,7 +221,7 @@ class AdminPostController extends Controller
 
         // حذف پست
         $post->delete();
-        toastr()->success('مقاله با موفیت حذف شد');
+        toastr()->success('مقاله با موفقیت حذف شد');
 
         return redirect()->route('back.posts.index');
     }
@@ -245,7 +245,7 @@ class AdminPostController extends Controller
             $role = Post::find($id['ids']);
             $this->destroy($role, true);
         }
-        toastr()->success('مقالات با موفیت حذف شدند');
+        toastr()->success('مقالات با موفقیت حذف شدند');
 
         return redirect()->route('back.posts.index');
     }

@@ -44,21 +44,49 @@
                             </div>
 
 
-                                <div class="col-xl-6 col-lg-6 col-md-6">
+                            <div class="col-xl-6 col-lg-6 col-md-6">
 
-                                    <p class="text-justify font-s-14p ">{!! option('info_footer_text') !!}</p>
+                                <p class="text-justify font-s-14p ">{!! option('info_footer_text') !!}</p>
 
-                                    <div class="footer__social-three">
-                                        <ul class="list-wrap">
-                                            <li><a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li><a href="javascript:void(0)"><i class="fab fa-twitter"></i></a></li>
-                                            <li><a href="javascript:void(0)"><i class="fab fa-instagram"></i></a></li>
-                                            <li><a href="javascript:void(0)"><i class="fab fa-pinterest-p"></i></a></li>
-                                            <li><a href="javascript:void(0)"><i class="fab fa-youtube"></i></a></li>
-                                        </ul>
-                                    </div>
+                                <div class="footer__social-three">
+                                    <ul class="list-wrap">
+                                        @if (option('social_telegram'))
+                                            <li><a href="{{ option('social_telegram') }}"><i
+                                                        class="fab fa-telegram"></i></a></li>
+                                        @endif
 
+                                        @if (option('social_instagram'))
+                                            <li><a href="{{ option('social_instagram') }}"><i
+                                                        class="fab fa-instagram"></i></a></li>
+                                        @endif
+
+                                        @if (option('social_whatsapp'))
+                                            <li><a href="{{ option('social_whatsapp') }}"><i
+                                                        class="fab fa-whatsapp"></i></a></li>
+                                        @endif
+
+                                        @if (option('social_facebook'))
+                                            <li><a href="{{ option('social_facebook') }}"><i
+                                                        class="fab fa-facebook-f"></i></a></li>
+                                        @endif
+
+                                        @if (option('social_youtube'))
+                                            <li><a href="{{ option('social_youtube') }}"><i
+                                                        class="fab fa-youtube"></i></a></li>
+                                        @endif
+
+                                        @if (option('social_aparat'))
+                                            <li><a href="{{ option('social_aparat') }}"><i class="fab fa-video"></i></a>
+                                            </li>
+                                        @endif
+
+
+
+
+                                    </ul>
                                 </div>
+
+                            </div>
 
 
                         </div>
@@ -67,47 +95,77 @@
 
                     </div>
 
+                    @php
+                        $footerlink_groups = json_decode(option('footerlink_groups', []));
+                        $footerLinks1 = App\Models\FooterLink::where('link_group_id', 0)->get();
+                        $footerLinks2 = App\Models\FooterLink::where('link_group_id', 1)->get();
+                        $footerLinks3 = App\Models\FooterLink::where('link_group_id', 2)->get();
+
+                    @endphp
+
+
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <div class="row">
-                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                                <div class="footer-widget">
-                                    <h4 class="fw-title">سامانه ها </h4>
-                                    <div class="footer-link-list">
-                                        <ul class="list-wrap">
-                                            <li><a href='about.html'>آموزش</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                                <div class="footer-widget">
-                                    <h4 class="fw-title">لینک های مهم</h4>
-                                    <div class="footer-link-list">
-                                        <ul class="list-wrap">
-                                            <li><a href='about.html'>شورای تخصصی هوش مصنوعی ایران </a></li>
-                                            <li><a href='about.html'>کمیته ها </a></li>
-                                            <li><a href='about.html'>استان ها </a></li>
-                                            <li><a href='about.html'> </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            @if ($footerlink_groups[0])
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="footer-widget">
+                                        <h4 class="fw-title">{{ $footerlink_groups[0] }}</h4>
+                                        <div class="footer-link-list">
+                                            <ul class="list-wrap">
+                                                @if (count($footerLinks1))
+                                                    @foreach ($footerLinks1 as $footerLink1)
+                                                        <li><a
+                                                                href='{{ $footerLink1->link }}'>{{ $footerLink1->title }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
 
-                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                                <div class="footer-widget">
-                                    <h4 class="fw-title">دسترسی سریع</h4>
-                                    <div class="footer-link-list">
-                                        <ul class="list-wrap">
-                                            <li><a href='about.html'>خانه </a></li>
-                                            <li><a href='about.html'>درباره ما </a></li>
-                                            <li><a href='about.html'> ارتباط با ما</a></li>
-                                            <li><a href='about.html'>سامانه آموزش </a></li>
-                                            <li><a href='about.html'> اخبار</a></li>
-                                            <li><a href='about.html'> رویدادها</a></li>
-                                        </ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+
+                            @if ($footerlink_groups[1])
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="footer-widget">
+                                        <h4 class="fw-title"> {{ $footerlink_groups[1] }}</h4>
+                                        <div class="footer-link-list">
+                                            <ul class="list-wrap">
+                                                @if (count($footerLinks2))
+                                                    @foreach ($footerLinks2 as $footerLink2)
+                                                        <li><a
+                                                                href='{{ $footerLink2->link }}'>{{ $footerLink2->title }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+
+                            @if ($footerlink_groups[2])
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="footer-widget">
+                                        <h4 class="fw-title"> {{ $footerlink_groups[2] }}</h4>
+                                        <div class="footer-link-list">
+                                            <ul class="list-wrap">
+                                                @if (count($footerLinks3))
+                                                @foreach ($footerLinks3 as $footerLink3)
+                                                    <li><a
+                                                            href='{{ $footerLink3->link }}'>{{ $footerLink3->title }}</a>
+                                                    </li>
+                                                @endforeach
+                                            @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+
 
                         </div>
                     </div>

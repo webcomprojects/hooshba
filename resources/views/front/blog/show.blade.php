@@ -65,7 +65,7 @@
                                         <li><i
                                                 class="fas fa-calendar-alt"></i>{{ jDate($post->created_at)->format('%B %d، %Y') }}
                                         </li>
-                                        <li><i class="far fa-comment"></i><a href="blog-details.html"> دیدگاه</a></li>
+                                        <li><i class="far fa-comment"></i><a href=""> دیدگاه</a></li>
                                     </ul>
                                 </div>
 

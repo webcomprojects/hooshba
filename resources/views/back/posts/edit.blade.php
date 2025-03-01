@@ -88,7 +88,7 @@
 
                                                 <select id="province" name="province_id" class="form-control select2">
                                                     @php
-                                                        $provinceSelected=old('province_id') ? old('province_id') : $member->province_id;
+                                                        $provinceSelected=old('province_id') ? old('province_id') : $post->province_id;
                                                     @endphp
                                                     <option  value="">انتخاب کنید</option>
                                                     @foreach ($provinces as $province)

@@ -172,7 +172,7 @@ class AdminMemberController extends Controller
 
         // حذف پست
         $member->delete();
-        toastr()->success('عضو با موفیت حذف شد');
+        toastr()->success('عضو با موفقیت حذف شد');
 
         return redirect()->route('back.members.index');
     }
@@ -196,7 +196,7 @@ class AdminMemberController extends Controller
             $role = Member::find($id['ids']);
             $this->destroy($role, true);
         }
-        toastr()->success('اعضاء با موفیت حذف شدند');
+        toastr()->success('اعضاء با موفقیت حذف شدند');
 
         return redirect()->route('back.members.index');
     }

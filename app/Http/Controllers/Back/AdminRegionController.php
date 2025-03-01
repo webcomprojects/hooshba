@@ -69,7 +69,7 @@ class AdminRegionController extends Controller
     {
         $this->authorize('regions.delete');
         $region->delete();
-        toastr()->success('منطقه با موفیت حذف شد');
+        toastr()->success('منطقه با موفقیت حذف شد');
 
         return redirect()->route('back.regions.index');
     }
@@ -93,7 +93,7 @@ class AdminRegionController extends Controller
             $role = Region::find($id['ids']);
             $this->destroy($role, true);
         }
-        toastr()->success('مناطق با موفیت حذف شدند');
+        toastr()->success('مناطق با موفقیت حذف شدند');
 
         return redirect()->route('back.regions.index');
     }

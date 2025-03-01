@@ -42,10 +42,16 @@
                             </div> --}}
                                 <div class="col-xl-12 col-lg-12">
                                     <div class="banner__img home-9 video-slider">
-                                        <video class="w-100" style="height: 400px; width: 100%;" autoplay muted loop>
-                                            <source src="/assets/front/img/slider/bg-video.mp4" type="video/mp4">
+                                        <video class="w-100" style="width: 100%;height: 580px;" autoplay muted loop>
+                                            <source src="{{asset('assets/front/img/slider/bg-video.mp4')}}" type="video/mp4">
                                             مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند.
                                         </video>
+
+                                        <div class="logo-in-slider">
+                                            <div class="fw-logo mb-25">
+                                                <a><img src="{{ asset(option('info_logo')) }}" alt="logo"></a>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -174,14 +180,14 @@
             </div>
             <div class="services-bottom-content">
                 <p>برای مشاهده بیشتر کلیک کنید</p>
-                <a class="btn" href="services.html">نمایش همه ویدئوها</a>
+                <a class="btn" href="{{route('front.blog.index')}}?c=ویدئو">نمایش همه ویدئوها</a>
             </div>
 
         </div>
     </section>
 
 
-    <section class="testimonial__area-two">
+    {{-- <section class="testimonial__area-two">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6">
@@ -228,10 +234,10 @@
         <div class="testimonial__shape-two">
             <img src="assets\img\images\h2_testimonial_shape.png" alt="" data-aos="fade-up" data-aos-delay="400">
         </div>
-    </section>
+    </section> --}}
 
 
-    <section class="our_team__area-six mb-6rem">
+    <section class="our_team__area-six mb-6rem pt-2">
         <div class="container">
             <div class="section-title mb-30 tg-heading-subheading animation-style3 text-center">
                 <span class="sub-title text-capitalize">تازه‌ترین رویدادهای دنیای هوش مصنوعی را در این سایت دنبال کنید!                </span>
@@ -264,7 +270,7 @@
                 @endforeach
             </div>
             <div class="text-center">
-                <a class="btn aos-init aos-animate" data-aos-delay="600" data-aos="fade-up" href="contact.html">نمایش همه رویدادها</a>
+                <a class="btn aos-init aos-animate" data-aos-delay="600" data-aos="fade-up" href="{{route('front.blog.index')}}?c=رویداد">نمایش همه رویدادها</a>
             </div>
         </div>
     </section>
@@ -414,7 +420,7 @@
                             <img src="{{asset('assets\front\img\exhibition\kish-expo.webp')}}" alt="">
                         </div>
                         <div class="project__content-two">
-                            <h2 class="title"><a href="project-details.html">  کیش اکسپو 2025  </a></h2>
+                            <h2 class="title"><a href="">  کیش اکسپو 2025  </a></h2>
                             <span>
                                 تاریخ برگزاری:
                             </span>
@@ -422,7 +428,7 @@
                                 29 دی لغایت 5 بهمن
                             </span>
                             <div class="link-arrow link-arrow-two">
-                                <a href="project-details.html">
+                                <a href="">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 15" fill="none">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6293 3.27956C17.7117 2.80339 17.4427 2.34761 17.0096 2.17811C16.9477 2.15384 16.8824 2.13551 16.8144 2.12375L6.96087 0.419136C6.4166 0.325033 5.89918 0.689841 5.80497 1.23409C5.71085 1.77828 6.0757 2.29576 6.61988 2.38991L14.0947 3.68293L1.3658 12.6573C0.914426 12.9756 0.806485 13.5994 1.12473 14.0508C1.44298 14.5022 2.06688 14.6101 2.51825 14.2919L15.2471 5.31752L13.954 12.7923C13.8599 13.3365 14.2248 13.854 14.7689 13.9481C15.3132 14.0422 15.8306 13.6774 15.9248 13.1332L17.6293 3.27956Z" fill="currentcolor"></path>
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6293 3.27956C17.7117 2.80339 17.4427 2.34761 17.0096 2.17811C16.9477 2.15384 16.8824 2.13551 16.8144 2.12375L6.96087 0.419136C6.4166 0.325033 5.89918 0.689841 5.80497 1.23409C5.71085 1.77828 6.0757 2.29576 6.61988 2.38991L14.0947 3.68293L1.3658 12.6573C0.914426 12.9756 0.806485 13.5994 1.12473 14.0508C1.44298 14.5022 2.06688 14.6101 2.51825 14.2919L15.2471 5.31752L13.954 12.7923C13.8599 13.3365 14.2248 13.854 14.7689 13.9481C15.3132 14.0422 15.8306 13.6774 15.9248 13.1332L17.6293 3.27956Z" fill="currentcolor"></path>
@@ -439,7 +445,7 @@
                             <img src="{{asset('assets\front\img\exhibition\iran-tarakonesh.webp')}}" alt="">
                         </div>
                         <div class="project__content-two">
-                            <h2 class="title"><a href="project-details.html">  کیش اکسپو 2025  </a></h2>
+                            <h2 class="title"><a href="">  کیش اکسپو 2025  </a></h2>
                             <span>
                                 تاریخ برگزاری:
                             </span>
@@ -447,7 +453,7 @@
                                 29 دی لغایت 5 بهمن
                             </span>
                             <div class="link-arrow link-arrow-two">
-                                <a href="project-details.html">
+                                <a href="">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 15" fill="none">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6293 3.27956C17.7117 2.80339 17.4427 2.34761 17.0096 2.17811C16.9477 2.15384 16.8824 2.13551 16.8144 2.12375L6.96087 0.419136C6.4166 0.325033 5.89918 0.689841 5.80497 1.23409C5.71085 1.77828 6.0757 2.29576 6.61988 2.38991L14.0947 3.68293L1.3658 12.6573C0.914426 12.9756 0.806485 13.5994 1.12473 14.0508C1.44298 14.5022 2.06688 14.6101 2.51825 14.2919L15.2471 5.31752L13.954 12.7923C13.8599 13.3365 14.2248 13.854 14.7689 13.9481C15.3132 14.0422 15.8306 13.6774 15.9248 13.1332L17.6293 3.27956Z" fill="currentcolor"></path>
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6293 3.27956C17.7117 2.80339 17.4427 2.34761 17.0096 2.17811C16.9477 2.15384 16.8824 2.13551 16.8144 2.12375L6.96087 0.419136C6.4166 0.325033 5.89918 0.689841 5.80497 1.23409C5.71085 1.77828 6.0757 2.29576 6.61988 2.38991L14.0947 3.68293L1.3658 12.6573C0.914426 12.9756 0.806485 13.5994 1.12473 14.0508C1.44298 14.5022 2.06688 14.6101 2.51825 14.2919L15.2471 5.31752L13.954 12.7923C13.8599 13.3365 14.2248 13.854 14.7689 13.9481C15.3132 14.0422 15.8306 13.6774 15.9248 13.1332L17.6293 3.27956Z" fill="currentcolor"></path>
@@ -465,7 +471,7 @@
                             <img src="{{asset('assets\front\img\exhibition\iran-clean.webp')}}" alt="">
                         </div>
                         <div class="project__content-two">
-                            <h2 class="title"><a href="project-details.html">  کیش اکسپو 2025  </a></h2>
+                            <h2 class="title"><a href="">  کیش اکسپو 2025  </a></h2>
                             <span>
                                 تاریخ برگزاری:
                             </span>
@@ -473,7 +479,7 @@
                                 29 دی لغایت 5 بهمن
                             </span>
                             <div class="link-arrow link-arrow-two">
-                                <a href="project-details.html">
+                                <a href="">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 15" fill="none">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6293 3.27956C17.7117 2.80339 17.4427 2.34761 17.0096 2.17811C16.9477 2.15384 16.8824 2.13551 16.8144 2.12375L6.96087 0.419136C6.4166 0.325033 5.89918 0.689841 5.80497 1.23409C5.71085 1.77828 6.0757 2.29576 6.61988 2.38991L14.0947 3.68293L1.3658 12.6573C0.914426 12.9756 0.806485 13.5994 1.12473 14.0508C1.44298 14.5022 2.06688 14.6101 2.51825 14.2919L15.2471 5.31752L13.954 12.7923C13.8599 13.3365 14.2248 13.854 14.7689 13.9481C15.3132 14.0422 15.8306 13.6774 15.9248 13.1332L17.6293 3.27956Z" fill="currentcolor"></path>
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6293 3.27956C17.7117 2.80339 17.4427 2.34761 17.0096 2.17811C16.9477 2.15384 16.8824 2.13551 16.8144 2.12375L6.96087 0.419136C6.4166 0.325033 5.89918 0.689841 5.80497 1.23409C5.71085 1.77828 6.0757 2.29576 6.61988 2.38991L14.0947 3.68293L1.3658 12.6573C0.914426 12.9756 0.806485 13.5994 1.12473 14.0508C1.44298 14.5022 2.06688 14.6101 2.51825 14.2919L15.2471 5.31752L13.954 12.7923C13.8599 13.3365 14.2248 13.854 14.7689 13.9481C15.3132 14.0422 15.8306 13.6774 15.9248 13.1332L17.6293 3.27956Z" fill="currentcolor"></path>

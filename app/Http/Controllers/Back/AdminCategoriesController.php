@@ -101,7 +101,7 @@ class AdminCategoriesController extends Controller
         $this->deleteChildren($category);
         // حذف پست
         $category->delete();
-        //toastr()->success('دسته بندی با موفیت حذف شد');
+        //toastr()->success('دسته بندی با موفقیت حذف شد');
 
         return redirect()->back();
     }

@@ -152,7 +152,7 @@
                                         <div class="form-group curve">
                                             <label> عنوان وبسایت </label>
                                             <input name="info_site_title" type="text" class="form-control"
-                                                value="{{ old('info_site_title') ? old('info_site_title') : option('info_site_title') }}">
+                                                value="{{ old('info_site_title',option('info_site_title')) }}">
                                         </div>
                                     </div>
 
@@ -160,14 +160,14 @@
                                         <div class="form-group curve">
                                             <label> تلفن </label>
                                             <input name="info_tel" type="text" class="form-control"
-                                                value="{{ old('info_tel') ? old('info_tel') : option('info_tel') }}">
+                                                value="{{ old('info_tel',option('info_tel'))}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group curve">
                                             <label> ایمیل </label>
                                             <input name="info_email" type="email" class="form-control"
-                                                value="{{ old('info_email') ? old('info_email') : option('info_email') }}">
+                                                value="{{ old('info_email',option('info_email')) }}">
                                         </div>
                                     </div>
 
@@ -175,7 +175,7 @@
                                         <div class="form-group curve">
                                             <label> آدرس </label>
                                             <input name="info_address" type="text" class="form-control"
-                                                value="{{ old('info_address') ? old('info_address') : option('info_address') }}">
+                                                value="{{ old('info_address', option('info_address')) }}">
                                         </div>
                                     </div>
 
@@ -185,7 +185,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group curve">
                                             <label>متن فوتر</label>
-                                            <textarea name="info_footer_text" rows="4" class="form-control">{!! old('info_footer_text') ? old('info_footer_text') : option('info_footer_text') !!}</textarea>
+                                            <textarea name="info_footer_text" rows="4" class="form-control">{!! old('info_footer_text',option('info_footer_text')) !!}</textarea>
                                         </div>
                                     </div>
                                 </div>

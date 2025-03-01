@@ -12,7 +12,7 @@ class AdminOrganizationChartController extends Controller
     {
         $charts=OrganizationChart::orderBy('ordering','asc')->get()->toArray();
         $organization_charts=categoriesBuildTree($charts);
-     
+
         return view('back.organization-chart.index',compact('organization_charts'));
     }
 
@@ -101,7 +101,7 @@ class AdminOrganizationChartController extends Controller
         $this->deleteChildren($organizationChart);
         // حذف پست
         $organizationChart->delete();
-        //toastr()->success('دسته بندی با موفیت حذف شد');
+        //toastr()->success('دسته بندی با موفقیت حذف شد');
 
         return redirect()->back();
     }

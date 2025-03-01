@@ -62,9 +62,9 @@
                                     <li class="menu-item-has-children">
                                         <a href="/blog">اخبار</a>
                                         <ul class="sub-menu">
-                                            <li><a href='/blog'>اخبار</a></li>
-                                            <li><a href='/blog?c=رویداد'>رویدادها</a></li>
-                                            <li><a href='/blog?c=نمایشگاه'>نمایشگاه‌ها</a></li>
+                                            <li><a href='{{route('front.blog.index')}}'>اخبار</a></li>
+                                            <li><a href='{{route('front.blog.index')}}?c=رویداد'>رویدادها</a></li>
+                                            <li><a href='{{route('front.blog.index')}}?c=نمایشگاه'>نمایشگاه‌ها</a></li>
                                         </ul>
                                     </li>
                                     <li class="">
@@ -234,7 +234,7 @@
                         <nav class="tgmobile__menu-box">
                             <div class="close-btn"><i class="fas fa-times"></i></div>
                             <div class="nav-logo">
-                                <a href="index.html"><img src="{{ asset(option('info_nav_logo')) }}" alt="Logo"></a>
+                                <a href="/"><img src="{{ asset(option('info_nav_logo')) }}" alt="Logo"></a>
                             </div>
                             {{-- <div class="tgmobile__search">
                                 <form action="#">
@@ -254,21 +254,35 @@
                                 </div>
                                 <div class="social-links">
                                     <ul class="list-wrap">
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
+                                        @if (option('social_telegram'))
+                                        <li><a href="{{ option('social_telegram') }}"><i
+                                                    class="fab fa-telegram"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_instagram'))
+                                        <li><a href="{{ option('social_instagram') }}"><i
+                                                    class="fab fa-instagram"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_whatsapp'))
+                                        <li><a href="{{ option('social_whatsapp') }}"><i
+                                                    class="fab fa-whatsapp"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_facebook'))
+                                        <li><a href="{{ option('social_facebook') }}"><i
+                                                    class="fab fa-facebook-f"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_youtube'))
+                                        <li><a href="{{ option('social_youtube') }}"><i
+                                                    class="fab fa-youtube"></i></a></li>
+                                    @endif
+
+                                    @if (option('social_aparat'))
+                                        <li><a href="{{ option('social_aparat') }}"><i class="fab fa-video"></i></a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="fab fa-twitter"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="fab fa-linkedin-in"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="fab fa-youtube"></i></a>
-                                        </li>
+                                    @endif
                                     </ul>
                                 </div>
                             </div>
@@ -330,7 +344,7 @@
             <button><i class="far fa-window-close"></i></button>
         </div>
         <div class="offCanvas__logo mb-30">
-            <a href="index.html"><img src="{{ asset(option('info_nav_logo')) }}" alt="Logo"></a>
+            <a href="/"><img src="{{ asset(option('info_nav_logo')) }}" alt="Logo"></a>
         </div>
         <div class="offCanvas__side-info mb-30">
             @if (option('info_address'))
@@ -356,10 +370,35 @@
 
         </div>
         <div class="offCanvas__social-icon mt-30">
-            <a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
-            <a href="javascript:void(0)"><i class="fab fa-twitter"></i></a>
-            <a href="javascript:void(0)"><i class="fab fa-google-plus-g"></i></a>
-            <a href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
+            @if (option('social_telegram'))
+            <a href="{{ option('social_telegram') }}"><i
+                        class="fab fa-telegram"></i></a>
+        @endif
+
+        @if (option('social_instagram'))
+            <a href="{{ option('social_instagram') }}"><i
+                        class="fab fa-instagram"></i></a>
+        @endif
+
+        @if (option('social_whatsapp'))
+            <a href="{{ option('social_whatsapp') }}"><i
+                        class="fab fa-whatsapp"></i></a>
+        @endif
+
+        @if (option('social_facebook'))
+            <a href="{{ option('social_facebook') }}"><i
+                        class="fab fa-facebook-f"></i></a>
+        @endif
+
+        @if (option('social_youtube'))
+            <a href="{{ option('social_youtube') }}"><i
+                        class="fab fa-youtube"></i></a>
+        @endif
+
+        @if (option('social_aparat'))
+            <a href="{{ option('social_aparat') }}"><i class="fab fa-video"></i></a>
+
+        @endif
         </div>
     </div>
     <div class="offCanvas__overly"></div>

@@ -23,6 +23,7 @@ input[type=email],
 input[type=number],
 input[name=password],
 input[name=info_tel],
+input.link,
 input[name=password_confirmation]
 {
     direction: ltr;
@@ -40,6 +41,7 @@ input[type=email]::placeholder,
 input[type=number]::placeholder,
 input[name=password]::placeholder,
 input[name=info_tel]::placeholder,
+input.link::placeholder,
 input[name=password_confirmation]::placeholder
  {
     text-align: right;

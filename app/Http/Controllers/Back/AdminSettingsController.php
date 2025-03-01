@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\FooterLink;
 use Illuminate\Http\Request;
 
 class AdminSettingsController extends Controller
@@ -58,7 +59,7 @@ class AdminSettingsController extends Controller
 
 
         toastr()->success('با موفقیت ذخیره شد');
-        return redirect()->route('back.settings.information');
+        return redirect()->route('back.settings.information.index');
     }
 
     private function uploadImage(Request $request, $inputName)
@@ -87,5 +88,32 @@ class AdminSettingsController extends Controller
         // بازگشت مسیر فایل ذخیره شده
         return '/storage/uploads/images/settings/' . $fileName;
     }
+
+    public function socials()
+    {
+        return view('back.settings.socials');
+    }
+    public function socials_store(Request $request)
+    {
+        $request->validate([
+            'social_telegram' => 'nullable|string|max:255',
+            'social_instagram' => 'nullable|string|max:255',
+            'social_whatsapp' => 'nullable|string|max:255',
+            'social_facebook' => 'nullable|string|max:255',
+            'social_youtube' => 'nullable|string|max:255',
+            'social_aparat' => 'nullable|string|max:255',
+        ]);
+
+        foreach ($request->all() as $information => $value) {
+            option_update($information, $value);
+        }
+
+
+        toastr()->success('با موفقیت ذخیره شد');
+        return redirect()->route('back.settings.socials.index');
+
+    }
+
+
 
 }

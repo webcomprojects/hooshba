@@ -76,7 +76,7 @@ class AdminProvinceController extends Controller
     {
         $this->authorize('provinces.delete');
         $province->delete();
-        toastr()->success('استان با موفیت حذف شد');
+        toastr()->success('استان با موفقیت حذف شد');
 
         return redirect()->route('back.provinces.index');
     }
@@ -100,7 +100,7 @@ class AdminProvinceController extends Controller
             $role = Province::find($id['ids']);
             $this->destroy($role, true);
         }
-        toastr()->success('مناطق با موفیت حذف شدند');
+        toastr()->success('مناطق با موفقیت حذف شدند');
 
         return redirect()->route('back.provinces.index');
     }

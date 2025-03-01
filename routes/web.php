@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Back\AdminCategoriesController;
 use App\Http\Controllers\Back\AdminCommitteeController;
 use App\Http\Controllers\Back\AdminDashboardController;
+use App\Http\Controllers\Back\AdminFooterLinksController;
 use App\Http\Controllers\Back\AdminGoalsController;
 use App\Http\Controllers\Back\AdminIntroductionController;
 use App\Http\Controllers\Back\AdminMemberController;
@@ -94,8 +95,20 @@ Route::group(['as' => 'back.', 'prefix' => 'admin/', 'middleware' => ['auth']], 
     Route::resource('categories', AdminCategoriesController::class);
     Route::post('categories/update-ordering', [AdminCategoriesController::class, 'updateOrdering']);
 
-    Route::get('settings/information', [AdminSettingsController::class, 'information'])->name('settings.information');
-    Route::post('settings/information', [AdminSettingsController::class, 'information_store'])->name('settings.information.store');
+    Route::group(['as' => 'settings.', 'prefix' => 'settings/'], function () {
+
+        Route::get('information', [AdminSettingsController::class, 'information'])->name('information.index');
+        Route::post('information', [AdminSettingsController::class, 'information_store'])->name('information.store');
+
+        Route::get('socials', [AdminSettingsController::class, 'socials'])->name('socials.index');
+        Route::post('socials', [AdminSettingsController::class, 'socials_store'])->name('socials.store');
+
+        Route::resource('footerlinks', AdminFooterLinksController::class);
+
+        Route::get('footerlink/groups', [AdminFooterLinksController::class, 'footerLinks_groups'])->name('footerlinks.groups.index');
+        Route::post('footerlink/groups', [AdminFooterLinksController::class, 'footerLinks_groups_store'])->name('footerlinks.groups.store');
+    });
+
 
     Route::group(['as' => 'about-us.', 'prefix' => 'about-us/'], function () {
         Route::resource('organization-chart', AdminOrganizationChartController::class);
