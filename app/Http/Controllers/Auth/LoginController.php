@@ -30,7 +30,7 @@ class LoginController extends Controller
         return 'mobile';
     }
 
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.

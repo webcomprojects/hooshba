@@ -160,7 +160,13 @@
                                         </svg>
                                     </a>
                                     </li>
-                                    <li class="header-btn"><a href="/login" class="btn">ورود</a></li>
+                                    <li class="header-btn">
+                                        @if (Auth::check())
+                                        <a href="/admin" class="btn">ورود به پنل</a>
+                                        @else
+                                        <a href="/login" class="btn">ورود</a>
+                                        @endif
+                                    </li>
                                     <li class="offCanvas-menu">
                                         <a href="javascript:void(0)" class="menu-tigger">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 18 18" fill="none">
