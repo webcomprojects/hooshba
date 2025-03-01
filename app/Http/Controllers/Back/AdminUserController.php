@@ -90,6 +90,10 @@ class AdminUserController extends Controller
     {
         $this->authorize('users.update');
 
+        if($user->level=="creator"){
+            abort(403);
+        }
+
         $request->validate([
             'fullName' => 'required|string|max:255',
             'jobTitle' => 'required|string|max:255',
