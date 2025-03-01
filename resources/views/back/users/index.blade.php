@@ -60,33 +60,36 @@
                             <tbody>
                             @if(count($users))
                                 @foreach($users as $item)
-                                    <tr>
-                                        <td><input class="item-checked" type="checkbox" value="{{$item->id}}"></td>
-                                        {{-- <td  class="text-center">
-                                            <img class="image-thumb-index" @if(!$item->avatar) style="width: 50px;" @endif src="{{ $item->avatar ? asset($item->avatar) : asset('back/assets/images/avatar-empty.png') }}" alt="image">
-                                        </td> --}}
-                                        <td>{{$item->fullName}}</td>
-                                        <td>
-                                            @if($item->level=="user")
-                                                <span class="label label-default">کاربر</span>
-                                            @elseif($item->level=="admin")
-                                                <span class="label label-default">مدیر</span>
-                                            @endif
+                                @if (Auth::user()->level == 'creator' || $item->level != 'creator')
+                                <tr>
+                                    <td><input class="item-checked" type="checkbox" value="{{$item->id}}"></td>
+                                    {{-- <td  class="text-center">
+                                        <img class="image-thumb-index" @if(!$item->avatar) style="width: 50px;" @endif src="{{ $item->avatar ? asset($item->avatar) : asset('back/assets/images/avatar-empty.png') }}" alt="image">
+                                    </td> --}}
+                                    <td>{{$item->fullName}}</td>
+                                    <td>
+                                        @if($item->level=="user")
+                                            <span class="label label-default">کاربر</span>
+                                        @elseif($item->level=="admin")
+                                            <span class="label label-default">مدیر</span>
+                                        @endif
 
-                                        </td>
+                                    </td>
 
-                                        <td>{{$item->mobile}}</td>
-                                        <td>{{$item->email}}</td>
-                                        <td>{{ jDate($item->created_at)->format('%d %B، %Y') }}</td>
-                                        <td>
+                                    <td>{{$item->mobile}}</td>
+                                    <td>{{$item->email}}</td>
+                                    <td>{{ jDate($item->created_at)->format('%d %B، %Y') }}</td>
+                                    <td>
 
 
-                                            <a href="{{route('back.users.edit',['user'=>$item])}}" class="btn btn-info">ویرایش<div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00256;"></div><div class="paper-ripple__waves"></div></div></a>
+                                        <a href="{{route('back.users.edit',['user'=>$item])}}" class="btn btn-info">ویرایش<div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00256;"></div><div class="paper-ripple__waves"></div></div></a>
 
-                                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" data-action="{{route('back.users.destroy',['user'=>$item])}}" class="btn btn-danger delete-modal">حذف<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
+                                            <button data-bs-toggle="modal" data-bs-target="#delete-modal" data-action="{{route('back.users.destroy',['user'=>$item])}}" class="btn btn-danger delete-modal">حذف<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
+                                @endif
+
                                 @endforeach
                             @else
                                 <tr>
