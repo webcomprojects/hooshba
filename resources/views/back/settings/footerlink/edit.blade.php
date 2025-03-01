@@ -56,7 +56,7 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 m-auto m-b-30">
 
-                            <form class="information" action="{{ route('back.settings.footerlinks.update') }}"
+                            <form class="information" action="{{ route('back.settings.footerlinks.update',$footerlink) }}"
                                 role="form" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
