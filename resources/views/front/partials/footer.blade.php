@@ -96,7 +96,9 @@
                     </div>
 
                     @php
-                        $footerlink_groups = json_decode(option('footerlink_groups', []));
+                        $raw_footerlink_groups = option('footerlink_groups', '[]'); // مقدار پیش‌فرض را به رشته JSON تغییر دهید
+                        $footerlink_groups = json_decode($raw_footerlink_groups, true);
+
                         $footerLinks1 = App\Models\FooterLink::where('link_group_id', 0)->get();
                         $footerLinks2 = App\Models\FooterLink::where('link_group_id', 1)->get();
                         $footerLinks3 = App\Models\FooterLink::where('link_group_id', 2)->get();
@@ -153,12 +155,12 @@
                                         <div class="footer-link-list">
                                             <ul class="list-wrap">
                                                 @if (count($footerLinks3))
-                                                @foreach ($footerLinks3 as $footerLink3)
-                                                    <li><a
-                                                            href='{{ $footerLink3->link }}'>{{ $footerLink3->title }}</a>
-                                                    </li>
-                                                @endforeach
-                                            @endif
+                                                    @foreach ($footerLinks3 as $footerLink3)
+                                                        <li><a
+                                                                href='{{ $footerLink3->link }}'>{{ $footerLink3->title }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
                                             </ul>
                                         </div>
                                     </div>
