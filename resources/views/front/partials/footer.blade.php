@@ -115,7 +115,7 @@
 
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                         <div class="row">
-                            @if ($footerlink_groups[0])
+                            @if (@$footerlink_groups[0])
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                     <div class="footer-widget">
                                         <h4 class="fw-title">{{ $footerlink_groups[0] }}</h4>
@@ -135,7 +135,7 @@
                                 </div>
                             @endif
 
-                            @if ($footerlink_groups[1])
+                            @if (@$footerlink_groups[1])
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                     <div class="footer-widget">
                                         <h4 class="fw-title"> {{ $footerlink_groups[1] }}</h4>
@@ -155,7 +155,7 @@
                             @endif
 
 
-                            @if ($footerlink_groups[2])
+                            @if (@$footerlink_groups[2])
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                     <div class="footer-widget">
                                         <h4 class="fw-title"> {{ $footerlink_groups[2] }}</h4>
