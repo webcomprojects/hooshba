@@ -77,7 +77,7 @@
                                                     </div></a>
 
                                                 <button data-bs-toggle="modal" data-bs-target="#delete-modal"
-                                                    data-action="{{ route('back.settings.footerlinks.destroy', $item) }}"
+                                                    data-action="{{ route('back.settings.footerlinks.destroy', ['footerlink'=>$item]) }}"
                                                     class="btn btn-danger delete-modal">حذف<div class="paper-ripple">
                                                         <div class="paper-ripple__background"></div>
                                                         <div class="paper-ripple__waves"></div>
@@ -149,7 +149,7 @@
                                                     </div></a>
 
                                                 <button data-bs-toggle="modal" data-bs-target="#delete-modal"
-                                                    data-action="{{ route('back.settings.footerlinks.destroy', $item) }}"
+                                                    data-action="{{ route('back.settings.footerlinks.destroy', ['footerlink'=>$item]) }}"
                                                     class="btn btn-danger delete-modal">حذف<div class="paper-ripple">
                                                         <div class="paper-ripple__background"></div>
                                                         <div class="paper-ripple__waves"></div>
@@ -221,7 +221,7 @@
                                                     </div></a>
 
                                                 <button data-bs-toggle="modal" data-bs-target="#delete-modal"
-                                                    data-action="{{ route('back.settings.footerlinks.destroy', $item) }}"
+                                                    data-action="{{ route('back.settings.footerlinks.destroy', ['footerlink'=>$item]) }}"
                                                     class="btn btn-danger delete-modal">حذف<div class="paper-ripple">
                                                         <div class="paper-ripple__background"></div>
                                                         <div class="paper-ripple__waves"></div>
