@@ -15,10 +15,11 @@
                 </ul>
 
                 <div class="col-2" style="padding-left: 30px">
-                    <a href="{{route('back.settings.footerlinks.index')}}" class="btn btn-info btn-block" style="margin-top: 6px">
+                    <a href="{{ route('back.settings.footerlinks.index') }}" class="btn btn-info btn-block"
+                        style="margin-top: 6px">
 
                         برگشت
-                         <i class=" fas fa-arrow-left-long"></i>
+                        <i class=" fas fa-arrow-left-long"></i>
                         <div class="paper-ripple">
                             <div class="paper-ripple__background" style="opacity: 0;"></div>
                             <div class="paper-ripple__waves"></div>
@@ -73,7 +74,15 @@
 
 
                                     @php
-                                        $footerlink_groups = json_decode(option('footerlink_groups', []));
+                                        $footerlink_groups = option('footerlink_groups', []);
+
+                                        if (is_array($footerlink_groups)) {
+                                            // اگر آرایه است، نیازی به json_decode نیست
+                                        } elseif (is_string($footerlink_groups)) {
+                                            $footerlink_groups = json_decode($footerlink_groups, true);
+                                        } else {
+                                            $footerlink_groups = []; // مقدار پیش‌فرض در صورت بروز خطا
+                                        }
 
                                     @endphp
                                     <div class="col-md-6">
