@@ -11,14 +11,14 @@ class MainController extends Controller
 
     public function index()
     {
-        $last_posts = Post::with('categories')->whereNull('video')->orWhere('video', 'null')->orderBy('created_at', 'desc')->take(3)->get();
-        $posts = Post::orderBy('created_at', 'desc')->take(4)->get();
+        $last_posts = Post::published()->with('categories')->whereNull('video')->orWhere('video', 'null')->orderBy('created_at', 'desc')->take(3)->get();
+        $posts = Post::published()->orderBy('created_at', 'desc')->take(4)->get();
 
-        $event_posts = Post::with('categories')->whereHas('categories', function ($query) {
+        $event_posts = Post::published()->with('categories')->whereHas('categories', function ($query) {
             $query->where('slug', 'رویداد');
         })->orderBy('created_at', 'desc')->take(10)->get();
 
-        $video_posts = Post::with('categories')->whereHas('categories', function ($query) {
+        $video_posts = Post::published()->with('categories')->whereHas('categories', function ($query) {
             $query->where('slug', 'ویدئو');
         })->orderBy('created_at', 'desc')->take(4)->get();
 
