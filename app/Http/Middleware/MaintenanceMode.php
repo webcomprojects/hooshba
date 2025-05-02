@@ -17,9 +17,9 @@ class MaintenanceMode
     {
         //return redirect('https://emigroup.ir',301);
         //return response()->view('comingsoon.index');
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
-            return response()->view('maintenance');
-        }
+        // if (!auth()->check() || auth()->user()->role !== 'admin') {
+        //     return response()->view('maintenance');
+        // }
         return $next($request);
 
     }
