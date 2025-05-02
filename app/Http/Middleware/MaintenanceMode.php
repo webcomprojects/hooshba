@@ -15,12 +15,12 @@ class MaintenanceMode
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return redirect('https://emigroup.ir',301);
+        //return redirect('https://emigroup.ir',301);
         //return response()->view('comingsoon.index');
-        //if (!auth()->check() || auth()->user()->role !== 'admin') {
-            //return response()->view('maintenance');
-        //}
-        //return $next($request);
+        if (!auth()->check() || auth()->user()->role !== 'admin') {
+            return response()->view('maintenance');
+        }
+        return $next($request);
 
     }
 }
