@@ -20,7 +20,7 @@ $(document).ready(function () {
             }
         });
 
-        
+
     // Nestable for curve mode
     $(".nestable-list.curve").nestable({
         group: 1,
@@ -78,10 +78,12 @@ $(document).ready(function () {
 
                 $('#edit-category-form').attr('action', item.data('action'));
                 $('#edit-category-form input[name=name]').val(response.name);
+                $('#edit-category-form input[name=slug]').val(response.slug);
                 $('#province').val(response.province_id).change();
             },
             beforeSend: function (xhr) {
                 $('#edit-category-form input[name=name]').val(' ');
+                $('#edit-category-form input[name=slug]').val(' ');
                 blockUi('#edit-category-modal .modal-footer');
                 xhr.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'));
             },

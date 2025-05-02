@@ -132,6 +132,15 @@
                             </div>
                         </div>
 
+
+                        <div class="col-md-12">
+                            <div class="form-group curve">
+                                <label> slug </label>
+                                <input name="slug" type="text" class="form-control"
+                                    value="{{ old('slug') }}">
+                            </div>
+                        </div>
+                        .
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>استان</label>

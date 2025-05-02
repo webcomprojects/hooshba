@@ -75,6 +75,9 @@ class AdminCategoriesController extends Controller
     public function update(Request $request,Category $category)
     {
         $slug = sluggable_helper_function($request->name);
+        if($request->slug){
+            $slug =$request->slug;
+        }
         $request->merge(['slug' => $slug]);
         $request->validate([
             'name' => 'required|string|max:255',
