@@ -15,27 +15,17 @@ $('.publish_date_picker').pDatepicker({
     //     $('#publish_date').val(date.toEnglishDigit());
     // }
 });
-
+$(document).on('keydown', '.bootstrap-tagsinput input', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+    }
+});
 
 CKEDITOR.replace('content');
 
 $('#tags').tagsInput({
-    defaultText: 'Ų§ŁŲ²ŁŲÆŁ†',
+    defaultText: 'افزودن',
     width: '100%',
     autocomplete_url: BASE_URL + '/get-tags'
 });
 
-
-$('#tags, select').on('change', function(event) {
-    var $element = $(event.target),
-      $container = $element.closest('.example');
-
-    if (!$element.data('tagsinput'))
-      return;
-
-    var val = $element.val();
-    if (val === null)
-      val = "null";
-    $('code', $('pre.val', $container)).html( ($.isArray(val) ? JSON.stringify(val) : "\"" + val.replace('"', '\\"') + "\"") );
-    $('code', $('pre.items', $container)).html(JSON.stringify($element.tagsinput('items')));
-  }).trigger('change');

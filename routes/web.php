@@ -118,7 +118,7 @@ Route::group(['as' => 'back.', 'prefix' => 'admin/', 'middleware' => ['auth']], 
         Route::resource('goals', AdminGoalsController::class);
         Route::resource('plans', AdminPlansController::class);
     });
-    //Route::get('get-tags', [AdminRoleController::class, 'get_tags'])->name('get-tags');
+    Route::get('get-tags', [MainController::class, 'get_tags'])->name('get-tags');
 
     Route::get('/get-new-captcha', [MainController::class, 'captcha']);
 

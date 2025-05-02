@@ -1,7 +1,20 @@
 @extends('back.layouts.master')
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('assets/back/plugins/jquery-tagsinput/jquery.tagsinput.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets\front\plugins\persian-date\persian-datepicker.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/back/plugins/tagsInput/bootstrap-tagsinput.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/back/plugins/jquery-tagsinput/jquery.tagsinput.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/front/plugins/persian-date/persian-datepicker.min.css') }}">
+
+@endpush
+
+@push('styles')
+<style>
+    .bootstrap-tagsinput {
+        display: block;
+    }
+    .bootstrap-tagsinput .tag {
+        padding: 0px 6px;
+    }
+</style>
 @endpush
 @section('content')
     <div class="row">
@@ -118,6 +131,29 @@
                                         </div>
                                     </div>
 
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-12 col-md-12">
+                                        <div class="form-group curve">
+                                            <label>کلمات کلیدی</label>
+                                            @php
+                                            $tags=null;
+                                            if(old('tags')) {
+                                                $tags=implode(',',old('tags'));
+                                            }
+                                            @endphp
+                                            <input id="tags_tag" name="tags" type="text" class="form-control"
+                                            value="{{ $tags }}" data-role="tagsinput">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>توضیحات سئو</label>
@@ -125,20 +161,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-6">
-                                        <fieldset class="form-group">
-                                            <label>کلمات کلیدی</label>
-                                            <input id="tags" type="text" name="tags" class="form-control"
-                                                data-tagsinput-init="true" style="display: none;">
-                                            <div id="tags_tagsinput" class="tagsinput"
-                                                style="width: 100%; min-height: 100px; height: 100px;">
-                                                <div id="tags_addTag"><input id="tags_tag" value=""
-                                                        data-default="افزودن" class="ui-autocomplete-input"
-                                                        autocomplete="off" style="color: rgb(0, 0, 0); width: 68px;"></div>
-                                                <div class="tags_clear"></div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
+
 
 
                                     <div class="col-md-6">
@@ -201,7 +224,7 @@
 
                                 </div>
 
-
+                        </div>
 
 
                                 <div class="row">
@@ -229,7 +252,7 @@
     </div>
 @endsection
 @push('plugin-scripts')
-<script src="{{ asset('assets/back/plugins/jquery-tagsinput/jquery.tagsinput.min.js') }}"></script>
+<script src="{{ asset('assets/back/plugins/tagsInput/bootstrap-tagsinput.js') }}"></script>
 <script src="{{ asset('assets/back/plugins/ckeditor/ckeditor.js') }}"></script>
 @endpush
 

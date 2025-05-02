@@ -1,7 +1,20 @@
 @extends('back.layouts.master')
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/back/plugins/tagsInput/bootstrap-tagsinput.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/back/plugins/jquery-tagsinput/jquery.tagsinput.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets\front\plugins\persian-date\persian-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/front/plugins/persian-date/persian-datepicker.min.css') }}">
+@endpush
+
+@push('styles')
+    <style>
+        .bootstrap-tagsinput {
+            display: block;
+        }
+
+        .bootstrap-tagsinput .tag {
+            padding: 0px 6px;
+        }
+    </style>
 @endpush
 @section('content')
     <div class="row">
@@ -38,7 +51,7 @@
                     <div class="row">
                         <div class="col-lg-10 col-md-10 m-auto m-b-30">
 
-                            <form action="{{ route('back.posts.update',$post) }}" role="form" method="POST"
+                            <form action="{{ route('back.posts.update', $post) }}" role="form" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
@@ -68,12 +81,14 @@
                                             <label>دسته بندی </label>
                                             <select name="categories[]" class="form-control select2" multiple>
                                                 @foreach ($categories as $item)
-                                                @php
-                                                // بررسی مقادیر قبلی برای فرم و در غیر این صورت استفاده از نقش‌های کاربر
-                                                $cat = old('categories', $post->categories->pluck('id')->toArray());
-                                            @endphp
-                                                    <option
-                                                        {{ in_array($item->id, $cat) ? 'selected' : '' }}
+                                                    @php
+                                                        // بررسی مقادیر قبلی برای فرم و در غیر این صورت استفاده از نقش‌های کاربر
+                                                        $cat = old(
+                                                            'categories',
+                                                            $post->categories->pluck('id')->toArray(),
+                                                        );
+                                                    @endphp
+                                                    <option {{ in_array($item->id, $cat) ? 'selected' : '' }}
                                                         value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endforeach
 
@@ -88,12 +103,15 @@
 
                                                 <select id="province" name="province_id" class="form-control select2">
                                                     @php
-                                                        $provinceSelected=old('province_id') ? old('province_id') : $post->province_id;
+                                                        $provinceSelected = old('province_id')
+                                                            ? old('province_id')
+                                                            : $post->province_id;
                                                     @endphp
-                                                    <option  value="">انتخاب کنید</option>
+                                                    <option value="">انتخاب کنید</option>
                                                     @foreach ($provinces as $province)
                                                         <option {{ $provinceSelected == $province->id ? 'selected' : '' }}
-                                                            value="{{ $province->id }}" data-title="{{ $province->name }}">
+                                                            value="{{ $province->id }}"
+                                                            data-title="{{ $province->name }}">
                                                             {{ $province->name }}</option>
                                                     @endforeach
 
@@ -115,7 +133,7 @@
                                         <div class="form-group curve">
                                             <label> عنوان سئو </label>
                                             <input name="meta_title" type="text" class="form-control"
-                                                value="{{  old('meta_title') ? old('meta_title') : $post->meta_title }}">
+                                                value="{{ old('meta_title') ? old('meta_title') : $post->meta_title }}">
                                         </div>
                                     </div>
 
@@ -123,87 +141,105 @@
                                         <div class="form-group curve">
                                             <label> url </label>
                                             <input name="slug" type="text" class="form-control"
-                                                value="{{  old('slug') ? old('slug') : $post->slug }}">
+                                                value="{{ old('slug') ? old('slug') : $post->slug }}">
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>توضیحات سئو</label>
-                                            <textarea class="form-control" name="meta_description" rows="3" style="height: 96px;">{!!  old('meta_description') ? old('meta_description') : $post->meta_description !!}</textarea>
-                                        </div>
-                                    </div>
+                                    <div class="row">
 
-                                    <div class="col-12 col-md-6">
-                                        <fieldset class="form-group">
-                                            <label>کلمات کلیدی</label>
-                                            <input id="tags" type="text" name="tags" class="form-control"
-                                                data-tagsinput-init="true" style="display: none;">
-                                            <div id="tags_tagsinput" class="tagsinput"
-                                                style="width: 100%; min-height: 100px; height: 100px;">
-                                                <div id="tags_addTag"><input id="tags_tag" value=""
-                                                        data-default="افزودن" class="ui-autocomplete-input"
-                                                        autocomplete="off" style="color: rgb(0, 0, 0); width: 68px;"></div>
-                                                <div class="tags_clear"></div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
+                                        <div class="col-12 col-md-12">
+                                            <div class="form-group curve">
+                                                <label>کلمات کلیدی</label>
 
-
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>لینک ویدئو(کد امبد)</label>
-                                            <textarea class="form-control" name="video" rows="3" style="height: 96px;">{!!  old('video') ? old('video') : $post->video !!}</textarea>
-                                        </div>
-                                    </div>
-
- <div class="col-md-6">
-
-
-                                        <div class="form-group relative">
-                                            <input type="file" name="featured_image" class="form-control">
-                                            <label> تصویر شاخص </label>
-                                            <br>
-                                            <img class="image-thumb-index d-block mb-2" @if(!$post->featured_image) style="width: 50px;" @endif src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/back/images/empty.svg') }}" alt="image">
-
-
-                                            <div class="input-group round">
-                                                <input type="text" class="form-control file-input"
-                                                    placeholder="برای جایگزین تصویر، کلیک کنید">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-success">
-                                                        <i class="icon-picture"></i>
-                                                        آپلود عکس
-                                                        <div class="paper-ripple">
-                                                            <div class="paper-ripple__background"></div>
-                                                            <div class="paper-ripple__waves"></div>
-                                                        </div>
-                                                    </button>
-                                                </span>
-                                            </div><!-- /.input-group -->
-                                            <div class="help-block"></div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <label>
-                                                    @php
-                                                    $is_published=old('is_published') ? old('is_published') : $post->is_published
+                                                @php
+                                                    $tags = null;
+                                                    if (old('tags')) {
+                                                        $tags = implode(',', old('tags'));
+                                                    } else {
+                                                        $tags = $post->getTags;
+                                                    }
                                                 @endphp
-                                                    <input name="is_published"
-                                                        {{ $is_published == '1' ? 'checked' : '' }} value="1"
-                                                        type="checkbox">
-                                                    <label>  انتشار نوشته؟</label>
 
-                                                </label>
+                                                <input id="tags_tag" name="tags" type="text" class="form-control"
+                                                    value="{{ $tags }}" data-role="tagsinput">
+
                                             </div>
                                         </div>
+
                                     </div>
-                                    {{-- <div class="col-md-6">
+
+                                    <div class="row">
+
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>توضیحات سئو</label>
+                                                <textarea class="form-control" name="meta_description" rows="3" style="height: 96px;">{!! old('meta_description') ? old('meta_description') : $post->meta_description !!}</textarea>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>لینک ویدئو(کد امبد)</label>
+                                                <textarea class="form-control" name="video" rows="3" style="height: 96px;">{!! old('video') ? old('video') : $post->video !!}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+
+                                            <div class="form-group relative">
+                                                <input type="file" name="featured_image" class="form-control">
+                                                <label> تصویر شاخص </label>
+                                                <br>
+                                                <img class="image-thumb-index d-block mb-2"
+                                                    @if (!$post->featured_image) style="width: 50px;" @endif
+                                                    src="{{ $post->featured_image ? asset($post->featured_image) : asset('assets/back/images/empty.svg') }}"
+                                                    alt="image">
+
+
+                                                <div class="input-group round">
+                                                    <input type="text" class="form-control file-input"
+                                                        placeholder="برای جایگزین تصویر، کلیک کنید">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-success">
+                                                            <i class="icon-picture"></i>
+                                                            آپلود عکس
+                                                            <div class="paper-ripple">
+                                                                <div class="paper-ripple__background"></div>
+                                                                <div class="paper-ripple__waves"></div>
+                                                            </div>
+                                                        </button>
+                                                    </span>
+                                                </div><!-- /.input-group -->
+                                                <div class="help-block"></div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <label>
+                                                        @php
+                                                            $is_published = old('is_published')
+                                                                ? old('is_published')
+                                                                : $post->is_published;
+                                                        @endphp
+                                                        <input name="is_published"
+                                                            {{ $is_published == '1' ? 'checked' : '' }} value="1"
+                                                            type="checkbox">
+                                                        <label> انتشار نوشته؟</label>
+
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label> تاریخ انتشار</label>
                                             <input id="publish_date_picker" name="slug" type="text" class="form-control publish_date_picker" value="{{old('slug')}}">
@@ -215,9 +251,9 @@
                                         </div>
                                     </div> --}}
 
+                                    </div>
+
                                 </div>
-
-
 
 
                                 <div class="row">
@@ -245,13 +281,13 @@
     </div>
 @endsection
 @push('plugin-scripts')
-<script src="{{ asset('assets/back/plugins/jquery-tagsinput/jquery.tagsinput.min.js') }}"></script>
-<script src="{{ asset('assets/back/plugins/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('assets/back/plugins/tagsInput/bootstrap-tagsinput.js') }}"></script>
+    <script src="{{ asset('assets/back/plugins/ckeditor/ckeditor.js') }}"></script>
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('assets\front\plugins\persian-date\persian-date.min.js') }}"></script>
-    <script src="{{ asset('assets\front\plugins\persian-date\persian-datepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/front/plugins/persian-date/persian-date.min.js') }}"></script>
+    <script src="{{ asset('assets/front/plugins/persian-date/persian-datepicker.min.js') }}"></script>
 
     <script src="{{ asset('assets/back/js/pages/pages/posts/app.js') }}"></script>
 @endpush

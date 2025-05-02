@@ -28,17 +28,17 @@ class AdminPostController extends Controller
 
     public function categories()
     {
-        $cats=Category::where('type','post')->orderBy('ordering','asc')->get()->toArray();
-        $categories=categoriesBuildTree($cats);
-        return view('back.categories.index',compact('categories'));
+        $cats = Category::where('type', 'post')->orderBy('ordering', 'asc')->get()->toArray();
+        $categories = categoriesBuildTree($cats);
+        return view('back.categories.index', compact('categories'));
     }
 
     public function create()
     {
         $this->authorize('posts.create');
-        $categories = Category::where('type', 'post')->orderBy('ordering','asc')->get();
-        $provinces=Province::latest()->Published()->get();
-        return view('back.posts.create', compact('categories','provinces'));
+        $categories = Category::where('type', 'post')->orderBy('ordering', 'asc')->get();
+        $provinces = Province::latest()->Published()->get();
+        return view('back.posts.create', compact('categories', 'provinces'));
     }
 
     public function show($slug)
@@ -62,6 +62,11 @@ class AdminPostController extends Controller
 
         $request->merge(['slug' => $slug]);
 
+        if ($request->input('tags')) {
+            $tags = explode(',', $request->input('tags'));
+            $request->merge(['tags' => $tags]);
+        }
+
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
@@ -78,7 +83,7 @@ class AdminPostController extends Controller
         ]);
 
 
-        $imagePath=null;
+        $imagePath = null;
         if ($request->hasFile('featured_image')) {
             $imagePath = $this->uploadImage($request);
         }
@@ -87,13 +92,13 @@ class AdminPostController extends Controller
             'user_id' => Auth::id(),
             'title' => $request->title,
             'content' => $request->content,
-            'slug' =>$request->slug,
+            'slug' => $request->slug,
             'video' => $request->video,
             'featured_image' => $imagePath,
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
             'is_published' => $request->is_published ? 1 : 0,
-            'published_at'=> now(),
+            'published_at' => now(),
             'province_id' => $request->province_id,
         ]);
 
@@ -120,9 +125,9 @@ class AdminPostController extends Controller
     public function edit(Post $post)
     {
         $this->authorize('posts.update');
-        $categories = Category::where('type', 'post')->orderBy('ordering','asc')->get();
-        $provinces=Province::latest()->Published()->get();
-        return view('back.posts.edit', compact('post','categories','provinces'));
+        $categories = Category::where('type', 'post')->orderBy('ordering', 'asc')->get();
+        $provinces = Province::latest()->Published()->get();
+        return view('back.posts.edit', compact('post', 'categories', 'provinces'));
     }
 
 
@@ -140,10 +145,16 @@ class AdminPostController extends Controller
 
         $request->merge(['slug' => $slug]);
 
+        if ($request->input('tags')) {
+            $tags = explode(',', $request->input('tags'));
+            $request->merge(['tags' => $tags]);
+        }
+
+
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'slug' => 'nullable|string|unique:posts,slug,'.$post->id,
+            'slug' => 'nullable|string|unique:posts,slug,' . $post->id,
             'featured_image' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
             'video' => 'nullable|string',
             'meta_title' => 'nullable||string|max:255',
@@ -156,7 +167,7 @@ class AdminPostController extends Controller
         ]);
 
 
-        $imagePath=$post->featured_image;
+        $imagePath = $post->featured_image;
         if ($request->hasFile('featured_image')) {
 
             if (!empty($post->featured_image) && file_exists(public_path($post->featured_image))) {
@@ -171,13 +182,13 @@ class AdminPostController extends Controller
         $post->update([
             'title' => $request->title,
             'content' => $request->content,
-            'slug' =>$request->slug,
+            'slug' => $request->slug,
             'video' => $request->video,
             'featured_image' => $imagePath,
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
             'is_published' => $request->is_published ? 1 : 0,
-            'published_at'=> now(),
+            'published_at' => now(),
             'province_id' => $request->province_id,
         ]);
 
@@ -316,5 +327,4 @@ class AdminPostController extends Controller
 
         return response()->json($tags);
     }
-
 }
