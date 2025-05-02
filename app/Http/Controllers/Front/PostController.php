@@ -48,8 +48,8 @@ class PostController extends Controller
             });
         }
 
-        $posts = $query->orderBy('created_at', 'desc')->paginate(12);
-        $last_posts = Post::with('categories')->orderBy('created_at', 'desc')->take(4)->get();
+        $posts = $query->orderBy('created_at', 'desc')->published()->paginate(12);
+        $last_posts = Post::with('categories')->orderBy('created_at', 'desc')->published()->take(4)->get();
         $categories = Category::get();
         $tags = Tag::get(); // دریافت همه تگ‌ها برای نمایش در سایدبار
 
