@@ -1516,9 +1516,9 @@ textarea {
 .tg-header__area-four .tgmenu__wrap.home-9 {
   box-shadow: none !important;
 }
-.tg-header__area-four .tgmenu__navbar-wrap ul {
+/* .tg-header__area-four .tgmenu__navbar-wrap ul {
   margin: 0 auto;
-}
+} */
 .tg-header__area-four .tgmenu__navbar-wrap ul li a {
   padding: 14px 10px;
 }
