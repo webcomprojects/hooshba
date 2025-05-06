@@ -70,7 +70,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group curve">
                                             <label> عنوان </label>
-                                            <input name="title" type="text" class="form-control"
+                                            <input id="title" name="title" type="text" class="form-control"
                                                 value="{{ old('title') }}">
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label>استان</label>
                                             <div class="input-group round">
@@ -106,7 +106,7 @@
                                             </div>
 
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -126,7 +126,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group curve">
                                             <label> url </label>
-                                            <input name="slug" type="text" class="form-control"
+                                            <input id="slug" name="slug" type="text" class="form-control"
                                                 value="{{ old('slug') }}">
                                         </div>
                                     </div>
@@ -259,6 +259,6 @@
 @push('scripts')
     <script src="{{ asset('assets\front\plugins\persian-date\persian-date.min.js') }}"></script>
     <script src="{{ asset('assets\front\plugins\persian-date\persian-datepicker.min.js') }}"></script>
-
+    <script src="{{ asset('assets/back/js/slug-generator.js') }}"></script>
     <script src="{{ asset('assets/back/js/pages/pages/posts/app.js') }}"></script>
 @endpush

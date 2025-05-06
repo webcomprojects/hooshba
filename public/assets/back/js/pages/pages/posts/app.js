@@ -23,9 +23,9 @@ $(document).on('keydown', '.bootstrap-tagsinput input', function(event) {
 
 CKEDITOR.replace('content');
 
-$('#tags').tagsInput({
-    defaultText: 'افزودن',
-    width: '100%',
-    autocomplete_url: BASE_URL + '/get-tags'
-});
+// $('#tags').tagsInput({
+//     defaultText: 'افزودن',
+//     width: '100%',
+//     autocomplete_url: BASE_URL + '/get-tags'
+// });
 

@@ -9,9 +9,11 @@ use App\Http\Controllers\Back\AdminFooterLinksController;
 use App\Http\Controllers\Back\AdminGoalsController;
 use App\Http\Controllers\Back\AdminIntroductionController;
 use App\Http\Controllers\Back\AdminMemberController;
+use App\Http\Controllers\Back\AdminMenusController;
 use App\Http\Controllers\Back\AdminOrganizationChartController;
 use App\Http\Controllers\Back\AdminPlansController;
 use App\Http\Controllers\Back\AdminPostController;
+use App\Http\Controllers\Back\AdminPageController;
 use App\Http\Controllers\Back\AdminProvinceController;
 use App\Http\Controllers\Back\AdminRegionController;
 use App\Http\Controllers\Back\AdminRoleController;
@@ -27,6 +29,7 @@ use App\Http\Controllers\Front\MembershipController;
 use App\Http\Controllers\Front\OrganizationChartController;
 use App\Http\Controllers\Front\PlansController;
 use App\Http\Controllers\Front\PostController;
+use App\Http\Controllers\Front\PageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +58,8 @@ Route::group(['as' => 'front.'], function () {
 
     Route::resource('council-members', CouncilMembersController::class);
 
+    Route::resource('pages', PageController::class);
+
     Route::group(['as' => 'about-us.', 'prefix' => 'about-us/'], function () {
         Route::resource('organization-chart', OrganizationChartController::class);
         Route::resource('introduction', IntroductionController::class);
@@ -77,15 +82,17 @@ Route::group(['as' => 'back.', 'prefix' => 'admin/', 'middleware' => ['auth']], 
     Route::get('post/categories', [AdminPostController::class, 'categories'])->name('posts.categories');
     Route::post('posts/multipleDestroy', [AdminPostController::class, 'multipleDestroy'])->name('posts.multipleDestroy');
 
-    Route::resource('committees', AdminCommitteeController::class);
-    Route::get('committee/categories', [AdminCommitteeController::class, 'categories'])->name('committees.categories');
-    Route::post('committees/multipleDestroy', [AdminCommitteeController::class, 'multipleDestroy'])->name('committees.multipleDestroy');
+    Route::resource('pages', AdminPageController::class);
 
-    Route::resource('regions', AdminRegionController::class);
-    Route::post('regions/multipleDestroy', [AdminRegionController::class, 'multipleDestroy'])->name('regions.multipleDestroy');
+    // Route::resource('committees', AdminCommitteeController::class);
+    // Route::get('committee/categories', [AdminCommitteeController::class, 'categories'])->name('committees.categories');
+    // Route::post('committees/multipleDestroy', [AdminCommitteeController::class, 'multipleDestroy'])->name('committees.multipleDestroy');
 
-    Route::resource('provinces', AdminProvinceController::class);
-    Route::post('provinces/multipleDestroy', [AdminProvinceController::class, 'multipleDestroy'])->name('provinces.multipleDestroy');
+    // Route::resource('regions', AdminRegionController::class);
+    // Route::post('regions/multipleDestroy', [AdminRegionController::class, 'multipleDestroy'])->name('regions.multipleDestroy');
+
+    // Route::resource('provinces', AdminProvinceController::class);
+    // Route::post('provinces/multipleDestroy', [AdminProvinceController::class, 'multipleDestroy'])->name('provinces.multipleDestroy');
 
 
     Route::resource('members', AdminMemberController::class);
@@ -107,6 +114,9 @@ Route::group(['as' => 'back.', 'prefix' => 'admin/', 'middleware' => ['auth']], 
 
         Route::get('footerlink/groups', [AdminFooterLinksController::class, 'footerLinks_groups'])->name('footerlinks.groups.index');
         Route::post('footerlink/groups', [AdminFooterLinksController::class, 'footerLinks_groups_store'])->name('footerlinks.groups.store');
+
+        Route::resource('menus', AdminMenusController::class);
+        Route::post('menus/update-ordering', [AdminMenusController::class, 'updateOrdering']);
     });
 
 

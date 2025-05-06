@@ -46,27 +46,27 @@ class PermissionSeeder extends Seeder
                 ]
             ],
 
-            'committees' => [
-                'title'  => 'مدیریت کمیته‌ها',
-                'values' => [
-                    'index'  => 'لیست کمیته‌ها',
-                    'create' => 'ایجاد کمیته',
-                    'update' => 'ویرایش کمیته',
-                    'delete' => 'حذف کمیته',
-                    'category' => 'دسته بندی',
-                ]
-            ],
+            // 'committees' => [
+            //     'title'  => 'مدیریت کمیته‌ها',
+            //     'values' => [
+            //         'index'  => 'لیست کمیته‌ها',
+            //         'create' => 'ایجاد کمیته',
+            //         'update' => 'ویرایش کمیته',
+            //         'delete' => 'حذف کمیته',
+            //         'category' => 'دسته بندی',
+            //     ]
+            // ],
 
-            'members' => [
-                'title'  => 'مدیریت اعضا',
-                'values' => [
-                    'index'  => 'لیست اعضا',
-                    'create' => 'افزودن عضو',
-                    'update' => 'ویرایش عضو',
-                    'delete' => 'حذف عضو',
-                    'category' => 'دسته بندی',
-                ]
-            ],
+            // 'members' => [
+            //     'title'  => 'مدیریت اعضا',
+            //     'values' => [
+            //         'index'  => 'لیست اعضا',
+            //         'create' => 'افزودن عضو',
+            //         'update' => 'ویرایش عضو',
+            //         'delete' => 'حذف عضو',
+            //         'category' => 'دسته بندی',
+            //     ]
+            // ],
 
             'permissions' => [
                 'title'  => 'مدیریت مجوزها',
@@ -97,25 +97,44 @@ class PermissionSeeder extends Seeder
                 ]
             ],
 
-            'provinces' => [
-                'title'  => 'مدیریت استان‌ها',
+            'settings' => [
+                'title'  => 'تنظیمات',
                 'values' => [
-                    'index'  => 'لیست استان‌ها',
-                    'create' => 'ایجاد استان',
-                    'update' => 'ویرایش استان',
-                    'delete' => 'حذف استان',
+                    'general' => 'تنظیمات عمومی',
+                    'menu' => 'منو',
+                    'social' => 'شبکه های اجتماعی',
+                    'footerLinks' => 'لینک های فوتر',
+                ]
+            ],
+            'pages' => [
+                'title'  => 'مدیریت صفحات',
+                'values' => [
+                    'index'  => 'لیست صفحات',
+                    'create' => 'ایجاد صفحه',
+                    'update' => 'ویرایش صفحه',
+                    'delete' => 'حذف صفحه',
                 ]
             ],
 
-            'regions' => [
-                'title'  => 'مدیریت مناطق',
-                'values' => [
-                    'index'  => 'لیست مناطق',
-                    'create' => 'ایجاد منطقه',
-                    'update' => 'ویرایش منطقه',
-                    'delete' => 'حذف منطقه',
-                ]
-            ],
+            // 'provinces' => [
+            //     'title'  => 'مدیریت استان‌ها',
+            //     'values' => [
+            //         'index'  => 'لیست استان‌ها',
+            //         'create' => 'ایجاد استان',
+            //         'update' => 'ویرایش استان',
+            //         'delete' => 'حذف استان',
+            //     ]
+            // ],
+
+            // 'regions' => [
+            //     'title'  => 'مدیریت مناطق',
+            //     'values' => [
+            //         'index'  => 'لیست مناطق',
+            //         'create' => 'ایجاد منطقه',
+            //         'update' => 'ویرایش منطقه',
+            //         'delete' => 'حذف منطقه',
+            //     ]
+            // ],
         ];
 
         foreach ($permissions as $name => $value) {

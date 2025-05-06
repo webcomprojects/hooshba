@@ -46,14 +46,14 @@ input[name=password_confirmation]::placeholder
  {
     text-align: right;
 }
-.edit-category-item{
+.edit-category-item,.edit-menu-item{
     padding: 5px 6px;
     background: #171014b0;
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
 }
-.remove-category-item{
+.remove-category-item,.remove-menu-item{
     padding: 5px 6px;
     background: #171014b0;
     color: #fff;
@@ -64,7 +64,7 @@ input[name=password_confirmation]::placeholder
 .dd-item, .dd-empty, .dd-placeholder{
     position: relative;
 }
-.operation-category-item{
+.operation-category-item,.operation-menu-item{
     position: absolute;
     right: 5px;
     z-index: 1;

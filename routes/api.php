@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\RegionController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\PageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('posts/front-all-posts', [PostController::class, 'frontAllPosts']);
 Route::get('posts/front-single-post', [PostController::class, 'frontSinglePost']);
 
+Route::get('pages/front-all-pages', [PageController::class, 'frontAllPages']);
+Route::get('pages/front-single-page', [PageController::class, 'frontSinglePage']);
+
 Route::get('committees/front-all-committees', [CommitteeController::class, 'frontAllCommittees']);
 Route::get('committees/front-single-committee', [CommitteeController::class, 'frontSingleCommittee']);
 
@@ -67,6 +71,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('posts/draft', [PostController::class, 'draft']);
     Route::post('posts/{id}/edit', [PostController::class, 'update']);
     Route::apiResource('posts', PostController::class);
+
+    Route::get('pages/published', [PageController::class, 'published']);
+    Route::get('pages/draft', [PageController::class, 'draft']);
+    Route::post('pages/{id}/edit', [PageController::class, 'update']);
+    Route::apiResource('pages', PageController::class);
 
     Route::get('committees/published', [CommitteeController::class, 'published']);
     Route::get('committees/draft', [CommitteeController::class, 'draft']);

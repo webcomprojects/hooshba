@@ -78,15 +78,38 @@
                         </a>
                     </li>
                     @endcan
-
-
-
-
                 </ul>
             </li>
             @endcan
 
-            @can('committees')
+            @can('pages')
+            <li class="{{ open_class(['back.pages.*']) }}">
+                <a href="#" class="dropdown-toggle">
+                    <i class="fas fa-file-alt"></i>
+                    <span>صفحات</span>
+                </a>
+                <ul>
+                    @can('pages.index')
+                    <li>
+                        <a href="{{route('back.pages.index')}}" class="{{ active_class('back.pages.index') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>لیست صفحات</span>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('pages.create')
+                    <li>
+                        <a href="{{route('back.pages.create')}}" class="{{ active_class('back.pages.create') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span>ایجاد صفحه</span>
+                        </a>
+                    </li>
+                    @endcan
+                </ul>
+            </li>
+            @endcan
+
+            {{-- @can('committees')
             <li class="{{ open_class(['back.committees.*']) }}">
                 <a href="#" class="dropdown-toggle">
                     <i class="  fas fa-users-rectangle"></i>
@@ -124,7 +147,7 @@
 
                 </ul>
             </li>
-            @endcan
+            @endcan --}}
 
 
             @can('roles')
@@ -159,7 +182,7 @@
             </li>
             @endcan
 
-
+{{--
             @can('regions')
             <li class="{{ open_class(['back.regions.*']) }}">
                 <a href="#" class="dropdown-toggle">
@@ -222,9 +245,9 @@
 
                 </ul>
             </li>
-            @endcan
+            @endcan --}}
 
-            @can('members')
+            {{-- @can('members')
             <li class="{{ open_class(['back.members.*']) }}">
                 <a href="#" class="dropdown-toggle">
                     <i class="  fas fa-people-group"></i>
@@ -248,24 +271,13 @@
                         </a>
                     </li>
                     @endcan
-{{--
-                    @can('members.category')
-
-                    <li>
-                        <a href="{{route('back.members.categories')}}" class="{{ active_class('back.members.categories') }}">
-                            <i class="far fa-circle-dot"></i>
-                            <span>دسته بندی </span>
-                        </a>
-                    </li>
-                    @endcan --}}
-
 
                 </ul>
             </li>
-            @endcan
+            @endcan --}}
 
 
-            @can('provinces')
+            {{-- @can('provinces')
             <li class="{{ open_class(['back.about-us.*']) }}">
                 <a href="#" class="dropdown-toggle">
                     <i class="   fas fa-chalkboard-user"></i>
@@ -313,16 +325,16 @@
 
                 </ul>
             </li>
-            @endcan
+            @endcan --}}
 
-            @can('provinces')
+            @can('settings')
             <li class="{{ open_class(['back.settings.*']) }}">
                 <a href="#" class="dropdown-toggle">
                     <i class="   icon-settings"></i>
                     <span> تنظیمات </span>
                 </a>
                 <ul>
-                    @can('provinces.index')
+                    @can('settings.general')
                     <li class="">
                         <a href="{{route('back.settings.information.index')}}" class="{{ active_class('back.settings.information.index')}}">
                             <i class="far fa-circle-dot"></i>
@@ -330,7 +342,16 @@
                         </a>
                     </li>
                     @endcan
-                    @can('provinces.create')
+                     @can('settings.menu')
+
+                    <li>
+                        <a href="{{route('back.settings.menus.index')}}" class="{{ active_class('back.settings.menus.index') }}">
+                            <i class="far fa-circle-dot"></i>
+                            <span> منوها</span>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('settings.social')
 
                     <li>
                         <a href="{{route('back.settings.socials.index')}}" class="{{ active_class('back.settings.socials.index') }}">
@@ -339,7 +360,8 @@
                         </a>
                     </li>
                     @endcan
-                    @can('provinces.create')
+
+                    @can('settings.footerLinks')
 
                     <li>
                         <a href="{{route('back.settings.footerlinks.index')}}" class="{{ active_class('back.settings.footerlinks.index') }}">
