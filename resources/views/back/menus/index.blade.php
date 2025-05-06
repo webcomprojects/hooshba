@@ -141,6 +141,13 @@
                             </div>
                         </div>
 
+                        <div class="col-md-12">
+                            <div class="form-group curve">
+                                <label> نام کلاس </label>
+                                <input name="class_name" type="text" class="form-control"
+                                    value="{{ old('class_name') }}" placeholder="مثال: menu-item-has-children">
+                            </div>
+                        </div>
 
                         <p class="text-right">
                             <button class="btn btn-success btn-block">

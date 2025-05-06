@@ -79,11 +79,13 @@ $(document).ready(function () {
                 $('#edit-menu-form').attr('action', item.data('action'));
                 $('#edit-menu-form input[name=name]').val(response.name);
                 $('#edit-menu-form input[name=link]').val(response.link);
+                $('#edit-menu-form input[name=class_name]').val(response.class_name);
                 $('#province').val(response.province_id).change();
             },
             beforeSend: function (xhr) {
                 $('#edit-menu-form input[name=name]').val(' ');
-                $('#edit-menu-form input[name=slug]').val(' ');
+                $('#edit-menu-form input[name=link]').val(' ');
+                $('#edit-menu-form input[name=class_name]').val(' ');
                 blockUi('#edit-menu-modal .modal-footer');
                 xhr.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'));
             },

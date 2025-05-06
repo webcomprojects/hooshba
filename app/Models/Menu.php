@@ -13,6 +13,7 @@ class Menu extends Model
         'name',
         'parent_id',
         'link',
+        'class_name',
         'ordering'
     ];
 

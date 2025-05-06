@@ -17,21 +17,18 @@ class AdminMenusController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'name' => 'required|string|max:255',
+            'class_name' => 'nullable|string|max:255',
         ]);
         $maxOrdering = Menu::max('ordering');
         Menu::create([
             'name' => $request->name,
+            'class_name' => $request->class_name,
             'ordering' => $maxOrdering + 1
         ]);
 
-       // toastr()->success('دسته بندی با موفیت اضافه شد');
-
-
         return redirect()->route('back.settings.menus.index');
-
     }
 
     public function updateOrdering(Request $request)
@@ -69,23 +66,19 @@ class AdminMenusController extends Controller
 
     public function update(Request $request,Menu $menu)
     {
-        $slug = sluggable_helper_function($request->name);
-        if($request->slug){
-            $slug =$request->slug;
-        }
-        $request->merge(['slug' => $slug]);
         $request->validate([
             'name' => 'required|string|max:255',
+            'link' => 'nullable|string|max:255',
+            'class_name' => 'nullable|string|max:255',
         ]);
 
         $menu->update([
             'name' => $request->name,
             'link' => $request->link,
+            'class_name' => $request->class_name,
         ]);
-       // toastr()->success('دسته بندی با موفیت ویرایش شد');
 
         return redirect()->back();
-
     }
 
     public function destroy(Menu $menu)

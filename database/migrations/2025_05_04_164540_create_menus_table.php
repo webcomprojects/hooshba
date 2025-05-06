@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('parent_id')->nullable();
             $table->string('name');
             $table->text('link')->nullable();
+            $table->string('class_name')->nullable();
             $table->bigInteger('ordering')->nullable();
             $table->timestamps();
         });
