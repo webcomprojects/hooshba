@@ -17,24 +17,24 @@
                     </ul>
                 </div>
                 <div class="col-lg-6">
-                    <ul class="tg-header__top-right tg-header__top-right-four list-wrap">
-                        <li class="flex-md-column">
-                            <span>
-                                <img width="100" src="{{ asset('assets/front/img/besmellah.svg') }}" alt="">
-                            </span>
-                            <span class="d-flex">
-                                <p class="font-weight-700 color-white">
-                                    مقام معظم رهبری:
-                                </p>
-                                <p class="color-white font-s-15p">
-                                    برعمق هوش مصنوعی مسلط شوید.
-                                </p>
-                            </span>
-                        </li>
-                        <li>
-                            <img src="{{ asset('assets/front/img/rahbari-image.webp') }}" alt="">
-                        </li>
-                    </ul>
+                    <!--<ul class="tg-header__top-right tg-header__top-right-four list-wrap">-->
+                    <!--    <li class="flex-md-column">-->
+                    <!--        <span>-->
+                    <!--            <img width="100" src="{{ asset('assets/front/img/besmellah.svg') }}" alt="">-->
+                    <!--        </span>-->
+                    <!--        <span class="d-flex">-->
+                    <!--            <p class="font-weight-700 color-white">-->
+                    <!--                مقام معظم رهبری:-->
+                    <!--            </p>-->
+                    <!--            <p class="color-white font-s-15p">-->
+                    <!--                برعمق هوش مصنوعی مسلط شوید.-->
+                    <!--            </p>-->
+                    <!--        </span>-->
+                    <!--    </li>-->
+                    <!--    <li>-->
+                    <!--        <img src="{{ asset('assets/front/img/rahbari-image.webp') }}" alt="">-->
+                    <!--    </li>-->
+                    <!--</ul>-->
                 </div>
             </div>
         </div>
@@ -54,7 +54,9 @@
                                 <a href="/"><img src="{{ asset(option('info_nav_logo')) }}" alt="Logo"></a>
                             </div>
                             <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
-                                @include('front.partials.menu-header')
+             @include('front.partials.menu-header')
+
+
                             </div>
                             <div class="tgmenu__action tgmenu__action-four d-none d-md-block">
                                 <ul class="list-wrap">
