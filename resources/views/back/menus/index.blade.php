@@ -39,7 +39,7 @@
 
                             <div class="col-md-8 m-auto">
 
-                                <form action="{{ route('back.categories.store') }}" role="form" method="POST"
+                                <form action="{{ route('back.settings.menus.store') }}" role="form" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     @if ($errors->any())
