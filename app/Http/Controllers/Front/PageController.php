@@ -10,7 +10,7 @@ class PageController extends Controller
 {
     public function show($slug)
     {
-        $page = Page::where('slug', $slug)->first();
+        $page = Page::where('slug', $slug)->published()->first();
 
         if (!$page) {
             throw new ModelNotFoundException('صفحه مورد نظر یافت نشد.');
